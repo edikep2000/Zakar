@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="_ConvertModelWizard_Files\UpgradeReferences.xslt"?>
+<UpgradeLog>
+  <Events>
+    <Event EventType="Error" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Zakar.csproj" Message="Assembly References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Zakar.csproj" Message="Project References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Zakar.csproj" Message="Import Directives" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\packages.config" Message="Assembly References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\packages.config" Message="Http Handlers" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\packages.config" Message="Handlers (IIS7+)" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\packages.config" Message="Config Sections" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\packages.config" Message="Render Extensions" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\packages.config" Message="packages.config" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Views\Web.config" Message="Assembly References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Views\Web.config" Message="Http Handlers" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Views\Web.config" Message="Handlers (IIS7+)" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Views\Web.config" Message="Config Sections" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Views\Web.config" Message="Render Extensions" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Views\Web.config" Message="Web.config" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.config" Message="Assembly References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.config" Message="Http Handlers" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.config" Message="Handlers (IIS7+)" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.config" Message="Config Sections" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.config" Message="Render Extensions" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.config" Message="Web.config" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.Debug.config" Message="Assembly References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.Debug.config" Message="Http Handlers" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.Debug.config" Message="Handlers (IIS7+)" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.Debug.config" Message="Config Sections" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.Debug.config" Message="Render Extensions" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.Debug.config" Message="Web.Debug.config" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.Release.config" Message="Assembly References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.Release.config" Message="Http Handlers" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.Release.config" Message="Handlers (IIS7+)" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.Release.config" Message="Config Sections" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.Release.config" Message="Render Extensions" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Web.Release.config" Message="Web.Release.config" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar\Zakar.csproj" Message="Zakar" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Models\Zakar.Models.csproj" Message="Assembly References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Models\Zakar.Models.csproj" Message="Project References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Models\Zakar.Models.csproj" Message="Import Directives" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Models\App.Config" Message="Assembly References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Models\App.Config" Message="Http Handlers" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Models\App.Config" Message="Handlers (IIS7+)" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Models\App.Config" Message="Config Sections" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Models\App.Config" Message="Render Extensions" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Models\App.Config" Message="App.Config" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Models\Zakar.Models.csproj" Message="Zakar.Models" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Common\Zakar.Common.csproj" Message="Assembly References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Common\Zakar.Common.csproj" Message="Project References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Common\Zakar.Common.csproj" Message="Import Directives" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Common\Zakar.Common.csproj" Message="Zakar.Common" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.ViewModels\Zakar.ViewModels.csproj" Message="Assembly References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.ViewModels\Zakar.ViewModels.csproj" Message="Project References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.ViewModels\Zakar.ViewModels.csproj" Message="Import Directives" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.ViewModels\Zakar.ViewModels.csproj" Message="Zakar.ViewModels" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.DataAccess\Zakar.DataAccess.csproj" Message="Assembly References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.DataAccess\Zakar.DataAccess.csproj" Message="Project References" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.DataAccess\Zakar.DataAccess.csproj" Message="Import Directives" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.DataAccess\Zakar.DataAccess.csproj" Message="Zakar.DataAccess" />
+    <Event EventType="Success" Action="Analyze" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.sln" Message="Zakar" />
+    <Event EventType="Success" Action="Upgrade" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Models\Zakar.Models.csproj" Message="Assembly References" />
+    <Event EventType="Success" Action="Upgrade" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.Models\Zakar.Models.csproj" Message="Zakar.Models" />
+    <Event EventType="Success" Action="Upgrade" SourceItem="c:\Users\edikep2000\documents\visual studio 2013\Projects\Zakar\Zakar.sln" Message="Zakar" />
+  </Events>
+</UpgradeLog>

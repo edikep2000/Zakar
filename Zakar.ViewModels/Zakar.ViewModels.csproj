@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C998E3FD-450B-4048-8125-7326F5B6629A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Zakar.ViewModels</RootNamespace>
+    <AssemblyName>Zakar.ViewModels</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Telerik.OpenAccess, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnalyticsModels\LineChartModel.cs" />
+    <Compile Include="AnalyticsModels\PieChartModel.cs" />
+    <Compile Include="CellGroupSearchModel.cs" />
+    <Compile Include="CellGroupViewModel.cs" />
+    <Compile Include="ChurchSearchModel.cs" />
+    <Compile Include="ChurchViewModel.cs" />
+    <Compile Include="ClientAccessModel.cs" />
+    <Compile Include="CurrencyViewModel.cs" />
+    <Compile Include="DashboardModel.cs" />
+    <Compile Include="EmailMessageViewModel.cs" />
+    <Compile Include="EmailModels\PartnershipLogFileCreatedMailModel.cs" />
+    <Compile Include="EmailModels\PartnershipArmFileCreatedMailModel.cs" />
+    <Compile Include="EmailModels\PartnershipFileCreatedMailModel.cs" />
+    <Compile Include="GroupViewModel.cs" />
+    <Compile Include="MonthEnums.cs" />
+    <Compile Include="NonValidatedPartnershipRecordViewModel.cs" />
+    <Compile Include="NotificationSearchModel.cs" />
+    <Compile Include="NotificationsPartialsModel.cs" />
+    <Compile Include="NotificationViewModel.cs" />
+    <Compile Include="PartnerRankingViewModel.cs" />
+    <Compile Include="PartnerSearchModel.cs" />
+    <Compile Include="PartnershipArmRankingViewModel.cs" />
+    <Compile Include="PartnershipArmReportObject.cs" />
+    <Compile Include="PartnershipArmUploadedObject.cs" />
+    <Compile Include="ISMSMessage.cs" />
+    <Compile Include="LocalPasswordModel.cs" />
+    <Compile Include="LoginModel.cs" />
+    <Compile Include="MonthModel.cs" />
+    <Compile Include="PartnerFileEnum.cs" />
+    <Compile Include="PartnerFileListProducer.cs" />
+    <Compile Include="PartnerPartnershipObject.cs" />
+    <Compile Include="PartnerSearchCriteria.cs" />
+    <Compile Include="PartnershipArmViewModel.cs" />
+    <Compile Include="PartnershipLogObject.cs" />
+    <Compile Include="PartnershipResultModel.cs" />
+    <Compile Include="PartnershipSearchModel.cs" />
+    <Compile Include="PartnershipViewModel.cs" />
+    <Compile Include="PartnerUploadObject.cs" />
+    <Compile Include="PartnerViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueuedNotificationSearchModel.cs" />
+    <Compile Include="QueuedNotificationViewModel.cs" />
+    <Compile Include="SMSMessage.cs" />
+    <Compile Include="SMSMessageViewModel.cs" />
+    <Compile Include="SummaryViewModel.cs" />
+    <Compile Include="SystemInfoViewModel.cs" />
+    <Compile Include="SystemSettingsViewModel.cs" />
+    <Compile Include="UploadView.cs" />
+    <Compile Include="UserSearchModel.cs" />
+    <Compile Include="UserViewModel.cs" />
+    <Compile Include="ValidatedPartnershipRecordViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Zakar.Models\Zakar.Models.csproj">
+      <Project>{C50145E6-A244-4F1F-B41F-90D1925B4A00}</Project>
+      <Name>Zakar.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\PagedList.css" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,1168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DomainModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="2.0.0.0" name="EntitiesModel" namespace="Zakar.Models" showPropertiesCompartment="true" xmlns="http://www.telerik.com/ORM">
+  <orm:orm name="EntitiesModel" backend="mssql" xmlns:orm="http://tempuri.org/ORM">
+    <orm:namespace name="Zakar.Models" default="true">
+      <orm:class name="Webpages_Role" uniqueId="3690aeac-1ebb-4788-ab37-c96f744d21d1">
+        <orm:table name="webpages_Roles" schema="dbo" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="RoleId" />
+          </orm:key-generator>
+          <orm:single-field field-name="_roleId" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_roleId" property="RoleId" behavior="readwrite" uniqueId="71edd66d-70ba-4e4c-a116-13ba7804e627" type="System.Int32">
+          <orm:column name="RoleId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_roleName" property="RoleName" behavior="readwrite" uniqueId="144f6459-ea2a-48bb-ac71-8eacda74a1ec" type="System.String">
+          <orm:column name="RoleName" sql-type="nvarchar" nullable="false" length="256" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_userProfiles" property="UserProfiles" behavior="readwrite" uniqueId="02e57cc9-59c6-416d-9d46-82efba9a84b4" type="Zakar.Models.UserProfile">
+          <orm:collection element-class="Zakar.Models.UserProfile" inverse-field="_webpages_Roles" order-by="" uniqueId="9c089a2a-f754-408b-8b80-7b0440cd85c5" />
+        </orm:field>
+        <orm:index name="UQ__webpages__8A2B6160007323F3" unique="true">
+          <orm:columnMapping>
+            <orm:column name="RoleName" sql-type="nvarchar" nullable="false" length="256" scale="0" ado-type="UnicodeStringVariableLength" />
+          </orm:columnMapping>
+        </orm:index>
+      </orm:class>
+      <orm:class name="Webpages_OAuthMembership" uniqueId="957340f7-1720-4686-87dc-cd195d0814d2">
+        <orm:table name="webpages_OAuthMembership" schema="dbo" />
+        <orm:identity>
+          <orm:multiple-field>
+            <orm:single-field field-name="_provider" />
+            <orm:single-field field-name="_providerUserId" />
+          </orm:multiple-field>
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_provider" property="Provider" behavior="readwrite" uniqueId="198be972-6b47-4297-8f76-31c36fb21f58" type="System.String">
+          <orm:column name="Provider" sql-type="nvarchar" nullable="false" length="30" scale="0" primary-key="true" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_providerUserId" property="ProviderUserId" behavior="readwrite" uniqueId="47b7cc5a-322e-4bb7-9d62-2bc7f7b30cf4" type="System.String">
+          <orm:column name="ProviderUserId" sql-type="nvarchar" nullable="false" length="100" scale="0" primary-key="true" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_userId" property="UserId" behavior="readwrite" uniqueId="6f839017-a7c8-4a39-bcf7-8809cf662664" type="System.Int32">
+          <orm:column name="UserId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+      </orm:class>
+      <orm:class name="Webpages_Membership" uniqueId="b89bdadd-b624-4faa-8319-1a4b46b063e8">
+        <orm:table name="webpages_Membership" schema="dbo" />
+        <orm:identity>
+          <orm:single-field field-name="_userId" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_userId" property="UserId" behavior="readwrite" uniqueId="e45c5865-a4ac-4d2b-b9b5-ca505f67a1f8" type="System.Int32">
+          <orm:column name="UserId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_createDate" property="CreateDate" behavior="readwrite" uniqueId="16662863-a8a9-4a9f-86fc-fdb509809016" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="CreateDate" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_confirmationToken" property="ConfirmationToken" behavior="readwrite" uniqueId="813955d0-56c0-4d43-a54d-f8ef9b16fa10" type="System.String">
+          <orm:column name="ConfirmationToken" sql-type="nvarchar" nullable="true" length="128" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_isConfirmed" property="IsConfirmed" behavior="readwrite" uniqueId="45b205d1-8d87-40ac-bd28-5840304e0a9d" type="System.Nullable`1[[System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="IsConfirmed" sql-type="bit" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Bit" />
+        </orm:field>
+        <orm:field name="_lastPasswordFailureDate" property="LastPasswordFailureDate" behavior="readwrite" uniqueId="adff2d03-7a2b-4efe-b724-6717abe8b0cc" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="LastPasswordFailureDate" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_passwordFailuresSinceLastSuccess" property="PasswordFailuresSinceLastSuccess" behavior="readwrite" uniqueId="8d3f1b86-9893-475f-9903-8ad8d6c8baea" type="System.Int32">
+          <orm:column name="PasswordFailuresSinceLastSuccess" sql-type="int" nullable="false" length="0" scale="0" has-default-value="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_password" property="Password" behavior="readwrite" uniqueId="c700d205-2c45-4def-ab1a-cfd4515f5d23" type="System.String">
+          <orm:column name="Password" sql-type="nvarchar" nullable="false" length="128" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_passwordChangedDate" property="PasswordChangedDate" behavior="readwrite" uniqueId="9b86bfc6-301d-47d4-a793-9a6336fde383" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="PasswordChangedDate" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_passwordSalt" property="PasswordSalt" behavior="readwrite" uniqueId="a027f339-b9d1-4e9c-b567-7c9604126eea" type="System.String">
+          <orm:column name="PasswordSalt" sql-type="nvarchar" nullable="false" length="128" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_passwordVerificationToken" property="PasswordVerificationToken" behavior="readwrite" uniqueId="128b4432-d8dc-487c-a952-b1d0c044d0f2" type="System.String">
+          <orm:column name="PasswordVerificationToken" sql-type="nvarchar" nullable="true" length="128" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_passwordVerificationTokenExpirationDate" property="PasswordVerificationTokenExpirationDate" behavior="readwrite" uniqueId="a2cf8de0-0da7-4394-93e1-06eb26f2f2eb" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="PasswordVerificationTokenExpirationDate" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        </orm:field>
+      </orm:class>
+      <orm:class name="UserProfile" uniqueId="19aa867e-5422-48e5-a6d7-8c9bf3519c34">
+        <orm:table name="UserProfile" schema="dbo" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="UserId" />
+          </orm:key-generator>
+          <orm:single-field field-name="_userId" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_userId" property="UserId" behavior="readwrite" uniqueId="a7d6a251-b15f-4d58-8b00-1ce5e54386e1" type="System.Int32">
+          <orm:column name="UserId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_userName" property="UserName" behavior="readwrite" uniqueId="34cc6647-6a5a-4271-a4ee-352a7eb22bda" type="System.String">
+          <orm:column name="UserName" sql-type="nvarchar(max)" nullable="true" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_firstName" property="FirstName" behavior="readwrite" uniqueId="8fe5fb81-a657-404c-8294-7c2f7c749ca0" type="System.String">
+          <orm:column name="FirstName" sql-type="nvarchar(max)" nullable="true" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_lastName" property="LastName" behavior="readwrite" uniqueId="9dedf3c4-be26-423c-86d5-0fedb43fe4a6" type="System.String">
+          <orm:column name="LastName" sql-type="nvarchar(max)" nullable="true" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_phoneNumber" property="PhoneNumber" behavior="readwrite" uniqueId="8fd31b7b-851f-49a9-9ed8-7ded7bea8e47" type="System.String">
+          <orm:column name="PhoneNumber" sql-type="nvarchar(max)" nullable="true" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_churchId" property="ChurchId" behavior="readwrite" uniqueId="038a0096-0c9d-4d2e-8d6c-e658860b1def" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="ChurchId" sql-type="int" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_webpages_Roles" property="Webpages_Roles" behavior="readwrite" uniqueId="555de1e8-4b9d-4c5b-b4b9-088341384616" type="Zakar.Models.Webpages_Role">
+          <orm:join-table uniqueId="9c089a2a-f754-408b-8b80-7b0440cd85c5" association-name="UserProfilesHaveWebpages_Roles">
+            <orm:table name="webpages_UsersInRoles" schema="dbo" join-table="true" />
+            <orm:owner>
+              <orm:constraint name="fk_UserId" schema="dbo" delete-action="dbdefaultrule" destination-table="UserProfile">
+                <orm:column name="UserId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" ado-type="Int32" target-class="Zakar.Models.UserProfile" target-field="_userId" />
+              </orm:constraint>
+            </orm:owner>
+            <orm:value>
+              <orm:constraint name="fk_RoleId" schema="dbo" delete-action="dbdefaultrule" destination-table="webpages_Roles">
+                <orm:column name="RoleId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" ado-type="Int32" target-class="Zakar.Models.Webpages_Role" target-field="_roleId" />
+              </orm:constraint>
+            </orm:value>
+          </orm:join-table>
+        </orm:field>
+      </orm:class>
+      <orm:class name="SystemSetting" uniqueId="dc0c3951-c106-430f-b417-89f1f91861c6">
+        <orm:table name="SystemSettings" schema="dbo" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="Id" />
+          </orm:key-generator>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_id" property="Id" behavior="readwrite" uniqueId="375986c4-bdb8-48da-b29d-bbb01d2c9591" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_name" property="Name" behavior="readwrite" uniqueId="ec27e1e9-c9ab-4bd3-9ef2-dbd00df3e207" type="System.String">
+          <orm:column name="Name" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_value" property="Value" behavior="readwrite" uniqueId="d5a3eed5-e10d-456d-aa73-423da7bb18ca" type="System.String">
+          <orm:column name="Value" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+      </orm:class>
+      <orm:class name="Setting" uniqueId="89c9b6c8-b663-481c-897f-9aca30ed69e9">
+        <orm:table name="Settings" schema="dbo" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="Id" />
+          </orm:key-generator>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_id" property="Id" behavior="readwrite" uniqueId="a86a2330-fd49-44a7-81ac-d1c6462de136" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_name" property="Name" behavior="readwrite" uniqueId="9e52dc3f-4959-454a-9420-65f5ae944ac6" type="System.String">
+          <orm:column name="Name" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_value" property="Value" behavior="readwrite" uniqueId="8c20d037-656d-419c-9f94-2eeddaa5f044" type="System.String">
+          <orm:column name="Value" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+      </orm:class>
+      <orm:class name="QueuedNotification" uniqueId="c4d084d0-3f20-4439-b837-05cdbdaf1c4d">
+        <orm:table name="QueuedNotifications" schema="dbo" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="Id" />
+          </orm:key-generator>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_id" property="Id" behavior="readwrite" uniqueId="39a11ed8-9628-468a-a918-3cfd65653c1e" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_dateToBeSent" property="DateToBeSent" behavior="readwrite" uniqueId="a9382c2c-3733-42cf-b2fc-97e922e40915" type="System.DateTime">
+          <orm:column name="DateToBeSent" sql-type="datetime" nullable="false" length="0" scale="0" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_recipientAddress" property="RecipientAddress" behavior="readwrite" uniqueId="c596a9b2-d71f-4925-b853-38b40c2d2089" type="System.String">
+          <orm:column name="RecipientAddress" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_message" property="Message" behavior="readwrite" uniqueId="a2ba676e-6750-480c-8604-9c15aca4c461" type="System.String">
+          <orm:column name="Message" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_retriesAttempt" property="RetriesAttempt" behavior="readwrite" uniqueId="c2e65c66-016a-43fa-9343-27b94f7e0c49" type="System.Int32">
+          <orm:column name="RetriesAttempt" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_lastTried" property="LastTried" behavior="readwrite" uniqueId="ed429369-baea-458e-8b68-61a2cede0544" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="LastTried" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_notificationCateoryCategoryId" property="NotificationCateoryCategoryId" behavior="readwrite" uniqueId="4d3bc8b3-ea35-4014-83c5-d6e43f6dad08" type="System.Int32">
+          <orm:column name="NotificationCateoryCategoryId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_churchId" property="ChurchId" behavior="readwrite" uniqueId="b4a2667d-5fb8-4600-ad91-d12e3d1f7c06" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="ChurchId" sql-type="int" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_notificationCategory" property="NotificationCategory" behavior="readwrite" uniqueId="18f9017c-9e8e-4cd3-b0c5-40c75d78b77b" type="Zakar.Models.NotificationCategory">
+          <orm:reference uniqueId="03ea46f7-f6ba-4b53-84b4-0d18c46a95e3" association-name="QueuedNotificationHasNotificationCategory">
+            <orm:sharedfield name="_notificationCateoryCategoryId" target-class="Zakar.Models.NotificationCategory" target-field="_categoryId" />
+            <orm:constraint name="FK_NotificationCateoryQueuedNotifications" schema="dbo" delete-action="dbdefaultrule" destination-table="NotificationCategories" />
+          </orm:reference>
+        </orm:field>
+        <orm:index name="IX_FK_NotificationCateoryQueuedNotifications">
+          <orm:columnMapping>
+            <orm:column name="NotificationCateoryCategoryId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+      </orm:class>
+      <orm:class name="Partnership" uniqueId="ed2072f6-a1b7-4f51-8b81-669f10f38e54">
+        <orm:table name="Partnerships" schema="dbo" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="Id" />
+          </orm:key-generator>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_id" property="Id" behavior="readwrite" uniqueId="6da14db5-5546-43b1-b48d-a3e4773d7b8a" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_partnershipArmId" property="PartnershipArmId" behavior="readwrite" uniqueId="d1044f47-c294-44bd-8856-637b2991d2df" type="System.Int32">
+          <orm:column name="PartnershipArmId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_partnerId" property="PartnerId" behavior="readwrite" uniqueId="14bf120e-e6e9-4bac-b5b1-5c97342e1649" type="System.Int32">
+          <orm:column name="PartnerId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_amount" property="Amount" behavior="readwrite" uniqueId="ae358eec-c13f-46ab-9831-756aab23d573" type="System.Decimal">
+          <orm:column name="Amount" sql-type="decimal" nullable="false" length="18" scale="2" ado-type="Decimal" />
+        </orm:field>
+        <orm:field name="_month" property="Month" behavior="readwrite" uniqueId="bbfd1af1-b6f6-4d7a-bcad-268a706495a1" type="System.Int32">
+          <orm:column name="Month" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_year" property="Year" behavior="readwrite" uniqueId="60b40d54-0265-4a04-96df-a3371aed4a18" type="System.Int32">
+          <orm:column name="Year" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_currencyId" property="CurrencyId" behavior="readwrite" uniqueId="08bcfe58-2ce7-48ef-a43b-e7436ab4c7a9" type="System.Int32">
+          <orm:column name="CurrencyId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_dateCreated" property="DateCreated" behavior="readwrite" uniqueId="8e724441-008a-4688-8dc5-4b62d5845f4a" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="DateCreated" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_partnershipArm" property="PartnershipArm" behavior="readwrite" uniqueId="ce8cba39-5260-464a-92bd-7c410a0ef99a" type="Zakar.Models.PartnershipArm">
+          <orm:reference uniqueId="da7334d0-d68d-413e-8bc2-c277253bed49" association-name="PartnershipHasPartnershipArm">
+            <orm:sharedfield name="_partnershipArmId" target-class="Zakar.Models.PartnershipArm" target-field="_id" />
+            <orm:constraint name="FK_PartnershipArmPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="PartnershipArms" />
+          </orm:reference>
+        </orm:field>
+        <orm:field name="_partner" property="Partner" behavior="readwrite" uniqueId="059c6f58-84c2-45bb-bd88-88e23b0e0efb" type="Zakar.Models.Partner">
+          <orm:reference uniqueId="2c78b20c-08ff-4399-a94b-2ec78a3369bd" association-name="PartnershipHasPartner">
+            <orm:sharedfield name="_partnerId" target-class="Zakar.Models.Partner" target-field="_id" />
+            <orm:constraint name="FK_PartnerPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="Partners" />
+          </orm:reference>
+        </orm:field>
+        <orm:field name="_currency" property="Currency" behavior="readwrite" uniqueId="0d1cb284-e773-46d4-a80e-589e2d8cd049" type="Zakar.Models.Currency">
+          <orm:reference uniqueId="ff94042d-d547-4913-bf21-eab6cbbb01a6" association-name="PartnershipHasCurrency">
+            <orm:sharedfield name="_currencyId" target-class="Zakar.Models.Currency" target-field="_id" />
+            <orm:constraint name="FK_CurrencyPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="Currencies" />
+          </orm:reference>
+        </orm:field>
+        <orm:index name="IX_FK_PartnershipArmPartnership">
+          <orm:columnMapping>
+            <orm:column name="PartnershipArmId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:index name="IX_FK_PartnerPartnership">
+          <orm:columnMapping>
+            <orm:column name="PartnerId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:index name="IX_FK_CurrencyPartnership">
+          <orm:columnMapping>
+            <orm:column name="CurrencyId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+      </orm:class>
+      <orm:class name="PartnershipArm" uniqueId="7fd0b57f-19f8-43b6-8317-990bb4732183">
+        <orm:table name="PartnershipArms" schema="dbo" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="Id" />
+          </orm:key-generator>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_id" property="Id" behavior="readwrite" uniqueId="9fb7c15c-2e5a-42bc-bb4d-bb85e8889a3c" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_name" property="Name" behavior="readwrite" uniqueId="7aa13d99-eaa1-402e-a8d9-24a3b83e6b25" type="System.String">
+          <orm:column name="Name" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_description" property="Description" behavior="readwrite" uniqueId="e0c45ba9-0544-443d-a90a-2d9be8a87195" type="System.String">
+          <orm:column name="Description" sql-type="nvarchar(max)" nullable="true" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_shortFormName" property="ShortFormName" behavior="readwrite" uniqueId="0dba790b-7d4e-480a-a412-268dfdde38c0" type="System.String">
+          <orm:column name="ShortFormName" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_deleted" property="Deleted" behavior="readwrite" uniqueId="8bd061e4-1a88-4abd-b680-c53e1ac21fca" type="System.Boolean">
+          <orm:column name="Deleted" sql-type="bit" nullable="false" length="0" scale="0" has-default-value="true" ado-type="Bit" />
+        </orm:field>
+        <orm:field name="_dateDeleted" property="DateDeleted" behavior="readwrite" uniqueId="dc8364d5-2bf8-4f2a-9de8-68dbb9e09fb8" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="DateDeleted" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_partnerships" property="Partnerships" behavior="readwrite" uniqueId="9dd0eb8b-3d95-4654-bdfc-a0370ab9b5aa" type="Zakar.Models.Partnership">
+          <orm:collection element-class="Zakar.Models.Partnership" inverse-field="_partnershipArm" order-by="" uniqueId="da7334d0-d68d-413e-8bc2-c277253bed49" />
+        </orm:field>
+        <orm:field name="_nonValidatedPartnershipRecords" property="NonValidatedPartnershipRecords" behavior="readwrite" uniqueId="90e27cd8-7224-4347-aeff-fb2927e29224" type="Zakar.Models.NonValidatedPartnershipRecord">
+          <orm:collection element-class="Zakar.Models.NonValidatedPartnershipRecord" inverse-field="_partnershipArm1" order-by="" uniqueId="9bbb6462-edfd-4e2d-a808-261b8f1f6a1c" />
+        </orm:field>
+      </orm:class>
+      <orm:class name="Partner" uniqueId="611d3049-18e7-4416-8410-132c163247bf">
+        <orm:table name="Partners" schema="dbo" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="Id" />
+          </orm:key-generator>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_id" property="Id" behavior="readwrite" uniqueId="1ade9303-8290-4e59-921e-5157f5cb6404" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_title" property="Title" behavior="readwrite" uniqueId="7b5b7221-4d7c-4a6b-9946-7860571c9afd" type="System.String">
+          <orm:column name="Title" sql-type="nvarchar" nullable="false" length="25" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_firstName" property="FirstName" behavior="readwrite" uniqueId="3f07eba1-cc68-4ef2-a61d-16ea2083215d" type="System.String">
+          <orm:column name="FirstName" sql-type="nvarchar" nullable="false" length="50" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_lastName" property="LastName" behavior="readwrite" uniqueId="f1d621d0-ea4f-45ca-8c6f-196d1d9d5407" type="System.String">
+          <orm:column name="LastName" sql-type="nvarchar" nullable="false" length="50" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_email" property="Email" behavior="readwrite" uniqueId="950da53f-8faa-4ff1-baf0-be2a8e28ed8e" type="System.String">
+          <orm:column name="Email" sql-type="nvarchar" nullable="false" length="100" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_yookosId" property="YookosId" behavior="readwrite" uniqueId="9ae2098b-4a38-463e-b557-6406cd75a64f" type="System.String">
+          <orm:column name="YookosId" sql-type="nvarchar" nullable="true" length="30" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_phone" property="Phone" behavior="readwrite" uniqueId="6e46f959-1aa5-48e0-8fa5-1572e93f4144" type="System.String">
+          <orm:column name="Phone" sql-type="nvarchar" nullable="false" length="50" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_dateCreated" property="DateCreated" behavior="readwrite" uniqueId="4040509a-2d1c-4e12-8c79-81e0cbdc622d" type="System.DateTime">
+          <orm:column name="DateCreated" sql-type="datetime" nullable="false" length="0" scale="0" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_churchId" property="ChurchId" behavior="readwrite" uniqueId="075bf1fe-529d-4f28-b8ee-01d9a2fd39c9" type="System.Int32">
+          <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_deleted" property="Deleted" behavior="readwrite" uniqueId="b6b0c8b6-13ca-418f-802f-338346bc95e4" type="System.Boolean">
+          <orm:column name="Deleted" sql-type="bit" nullable="false" length="0" scale="0" ado-type="Bit" />
+        </orm:field>
+        <orm:field name="_dateDeleted" property="DateDeleted" behavior="readwrite" uniqueId="c360026c-4421-4292-9fd3-1522da2b301a" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="DateDeleted" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_church" property="Church" behavior="readwrite" uniqueId="76200382-8339-4e62-bf0d-5930c2677791" type="Zakar.Models.Church">
+          <orm:reference uniqueId="40703e4d-f3a2-4c49-93fa-52f0215faab4" association-name="PartnerHasChurch">
+            <orm:sharedfield name="_churchId" target-class="Zakar.Models.Church" target-field="_churchId" />
+            <orm:constraint name="FK_Partners_Churches" schema="dbo" delete-action="cascade" destination-table="Churches" />
+          </orm:reference>
+        </orm:field>
+        <orm:field name="_partnerships" property="Partnerships" behavior="readwrite" uniqueId="1fcd1db0-1a10-4ad5-af81-9d11af0d6782" type="Zakar.Models.Partnership">
+          <orm:collection element-class="Zakar.Models.Partnership" inverse-field="_partner" order-by="" uniqueId="2c78b20c-08ff-4399-a94b-2ec78a3369bd" />
+        </orm:field>
+        <orm:field name="_nonValidatedPartnershipRecords" property="NonValidatedPartnershipRecords" behavior="readwrite" uniqueId="ac29830c-1906-430f-a783-e14258edcd74" type="Zakar.Models.NonValidatedPartnershipRecord">
+          <orm:collection element-class="Zakar.Models.NonValidatedPartnershipRecord" inverse-field="_partner1" order-by="" uniqueId="20c3a43a-13d5-4394-ad1c-8ae592dcb737" />
+        </orm:field>
+      </orm:class>
+      <orm:class name="Notification" uniqueId="aa2e9c80-ec64-4faf-ab26-61b2dd986f22">
+        <orm:table name="Notifications" schema="dbo" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="Id" />
+          </orm:key-generator>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_id" property="Id" behavior="readwrite" uniqueId="363694e2-91b4-4e78-a612-84c512604168" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_dateSent" property="DateSent" behavior="readwrite" uniqueId="5ae2baa6-c413-4301-a1ed-512d1499ffbd" type="System.DateTime">
+          <orm:column name="DateSent" sql-type="datetime" nullable="false" length="0" scale="0" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_recipientAddress" property="RecipientAddress" behavior="readwrite" uniqueId="b7a92712-f491-4b55-9aa2-d182bc0feb77" type="System.String">
+          <orm:column name="RecipientAddress" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_message" property="Message" behavior="readwrite" uniqueId="b0cf66c9-d1b6-443c-8d58-e58a1f19e32d" type="System.String">
+          <orm:column name="Message" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_isSent" property="IsSent" behavior="readwrite" uniqueId="d7b5a56e-c655-49e5-9c0c-7e6d765c7d10" type="System.Boolean">
+          <orm:column name="IsSent" sql-type="bit" nullable="false" length="0" scale="0" ado-type="Bit" />
+        </orm:field>
+        <orm:field name="_notificationCateoryCategoryId" property="NotificationCateoryCategoryId" behavior="readwrite" uniqueId="add69c8c-da15-4553-ae5d-44667fc56fc7" type="System.Int32">
+          <orm:column name="NotificationCateoryCategoryId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_churchId" property="ChurchId" behavior="readwrite" uniqueId="564ab7eb-2f87-47f0-8cf4-241b5849ef85" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="ChurchId" sql-type="int" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_notificationCategory" property="NotificationCategory" behavior="readwrite" uniqueId="04fb5daa-bf03-49e0-b096-f0d1dd79bf50" type="Zakar.Models.NotificationCategory">
+          <orm:reference uniqueId="1ecf09fe-92e3-412e-8e8e-965ba55d9e95" association-name="NotificationHasNotificationCategory">
+            <orm:sharedfield name="_notificationCateoryCategoryId" target-class="Zakar.Models.NotificationCategory" target-field="_categoryId" />
+            <orm:constraint name="FK_NotificationCateoryNotifications" schema="dbo" delete-action="dbdefaultrule" destination-table="NotificationCategories" />
+          </orm:reference>
+        </orm:field>
+        <orm:index name="IX_FK_NotificationCateoryNotifications">
+          <orm:columnMapping>
+            <orm:column name="NotificationCateoryCategoryId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+      </orm:class>
+      <orm:class name="NotificationCategory" uniqueId="63fb4046-cf3c-4f40-ac1a-300e89b5c403">
+        <orm:table name="NotificationCategories" schema="dbo" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="CategoryId" />
+          </orm:key-generator>
+          <orm:single-field field-name="_categoryId" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_categoryId" property="CategoryId" behavior="readwrite" uniqueId="c3a60d1f-e6da-44b5-a9c6-96dd66295535" type="System.Int32">
+          <orm:column name="CategoryId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_name" property="Name" behavior="readwrite" uniqueId="3360e86d-9bce-44fa-8f72-41e86597b69c" type="System.String">
+          <orm:column name="Name" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_queuedNotifications" property="QueuedNotifications" behavior="readwrite" uniqueId="62916ece-2546-4085-b38f-eb4e3665d089" type="Zakar.Models.QueuedNotification">
+          <orm:collection element-class="Zakar.Models.QueuedNotification" inverse-field="_notificationCategory" order-by="" uniqueId="03ea46f7-f6ba-4b53-84b4-0d18c46a95e3" />
+        </orm:field>
+        <orm:field name="_notifications" property="Notifications" behavior="readwrite" uniqueId="2bd7309c-804d-4598-ae04-65e8724109b3" type="Zakar.Models.Notification">
+          <orm:collection element-class="Zakar.Models.Notification" inverse-field="_notificationCategory" order-by="" uniqueId="1ecf09fe-92e3-412e-8e8e-965ba55d9e95" />
+        </orm:field>
+      </orm:class>
+      <orm:class name="NonValidatedPartnershipRecord" uniqueId="cc888d0d-1759-4c27-8b57-ee6607416ead">
+        <orm:table name="NonValidatedPartnershipRecords" schema="dbo" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="Id" />
+          </orm:key-generator>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_id" property="Id" behavior="readwrite" uniqueId="2376fccc-a828-47b7-b3dc-ea082c64d39a" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_partnershipArm" property="PartnershipArm" behavior="readwrite" uniqueId="70d465bf-210c-413d-94fc-288fba3eaebe" type="System.Int32">
+          <orm:column name="PartnershipArm" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_partner" property="Partner" behavior="readwrite" uniqueId="4b590cd7-14e7-4f2a-b530-5e1a7b6a319b" type="System.Int32">
+          <orm:column name="Partner" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_amount" property="Amount" behavior="readwrite" uniqueId="1755fe48-cb55-4c93-bef9-3ddaaaf92a20" type="System.Decimal">
+          <orm:column name="Amount" sql-type="decimal" nullable="false" length="18" scale="2" ado-type="Decimal" />
+        </orm:field>
+        <orm:field name="_month" property="Month" behavior="readwrite" uniqueId="159700b4-32a8-463f-9a46-44fd280553e1" type="System.Int32">
+          <orm:column name="Month" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_year" property="Year" behavior="readwrite" uniqueId="713e9254-4793-4db8-b723-931c3b55401a" type="System.Int32">
+          <orm:column name="Year" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_currency" property="Currency" behavior="readwrite" uniqueId="313512d0-ce3f-4922-a716-933883e5da52" type="System.Int32">
+          <orm:column name="Currency" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_dateCreated" property="DateCreated" behavior="readwrite" uniqueId="4df187a2-931a-402e-ba0f-b114e6b10af1" type="System.DateTime">
+          <orm:column name="DateCreated" sql-type="datetime" nullable="false" length="0" scale="0" has-default-value="true" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_partnershipArm1" property="PartnershipArm1" behavior="readwrite" uniqueId="08ee3f90-0251-473c-ac3a-858de7d1e38f" type="Zakar.Models.PartnershipArm">
+          <orm:reference uniqueId="9bbb6462-edfd-4e2d-a808-261b8f1f6a1c" association-name="NonValidatedPartnershipRecordHasPartnershipArm">
+            <orm:sharedfield name="_partnershipArm" target-class="Zakar.Models.PartnershipArm" target-field="_id" />
+            <orm:constraint name="FK_NonValidatedPartnershipRecords_PartnershipArms" schema="dbo" delete-action="cascade" destination-table="PartnershipArms" />
+          </orm:reference>
+        </orm:field>
+        <orm:field name="_partner1" property="Partner1" behavior="readwrite" uniqueId="efe77ebd-2c0e-4817-86ad-92d60c98c8e9" type="Zakar.Models.Partner">
+          <orm:reference uniqueId="20c3a43a-13d5-4394-ad1c-8ae592dcb737" association-name="NonValidatedPartnershipRecordHasPartner">
+            <orm:sharedfield name="_partner" target-class="Zakar.Models.Partner" target-field="_id" />
+            <orm:constraint name="FK_NonValidatedPartnershipRecords_Partners" schema="dbo" delete-action="cascade" destination-table="Partners" />
+          </orm:reference>
+        </orm:field>
+      </orm:class>
+      <orm:class name="Group" uniqueId="73c54b29-d813-4d20-8d46-81c4b34bf03c">
+        <orm:table name="Groups" schema="dbo" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="Id" />
+          </orm:key-generator>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_id" property="Id" behavior="readwrite" uniqueId="5f97c6a3-9935-4e8c-bd51-e4526d2996d8" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_name" property="Name" behavior="readwrite" uniqueId="83d27a28-780d-4fcf-9d10-648a1422de9c" type="System.String">
+          <orm:column name="Name" sql-type="nvarchar" nullable="false" length="100" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_churches" property="Churches" behavior="readwrite" uniqueId="0b6ace56-5d9d-42e5-ab7c-da75b4a160e5" type="Zakar.Models.Church">
+          <orm:collection element-class="Zakar.Models.Church" inverse-field="_group" order-by="" uniqueId="8652b109-361f-4eed-bb74-0b3cd7456531" />
+        </orm:field>
+      </orm:class>
+      <orm:class name="Currency" uniqueId="c93b8563-2213-4596-bf79-fab4a4faf732">
+        <orm:table name="Currencies" schema="dbo" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="Id" />
+          </orm:key-generator>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_id" property="Id" behavior="readwrite" uniqueId="05a6eb21-ce39-4b2c-800d-aa7d0c5506d5" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_name" property="Name" behavior="readwrite" uniqueId="a9d3d48b-ac85-415a-aa25-c29f2c8d91d3" type="System.String">
+          <orm:column name="Name" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_symbol" property="Symbol" behavior="readwrite" uniqueId="2f55a5a1-dc13-48c0-ad5a-c334631dcbe1" type="System.String">
+          <orm:column name="Symbol" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_isDefaultCurrency" property="IsDefaultCurrency" behavior="readwrite" uniqueId="139c653e-70d1-4965-97cd-d032c3c2be24" type="System.Nullable`1[[System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="IsDefaultCurrency" sql-type="bit" nullable="true" length="0" scale="0" ado-type="Bit" />
+        </orm:field>
+        <orm:field name="_conversionRateToDefault" property="ConversionRateToDefault" behavior="readwrite" uniqueId="01f41da0-5612-4384-88f3-3a62c943ca12" type="System.Decimal">
+          <orm:column name="ConversionRateToDefault" sql-type="decimal" nullable="false" length="18" scale="2" ado-type="Decimal" />
+        </orm:field>
+        <orm:field name="_partnerships" property="Partnerships" behavior="readwrite" uniqueId="b367e752-9452-49c0-9a99-3926db675a78" type="Zakar.Models.Partnership">
+          <orm:collection element-class="Zakar.Models.Partnership" inverse-field="_currency" order-by="" uniqueId="ff94042d-d547-4913-bf21-eab6cbbb01a6" />
+        </orm:field>
+      </orm:class>
+      <orm:class name="Church" uniqueId="a3f79e2c-a062-4c51-a529-18e6d578da24">
+        <orm:table name="Churches" schema="dbo" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="ChurchId" />
+          </orm:key-generator>
+          <orm:single-field field-name="_churchId" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_churchId" property="ChurchId" behavior="readwrite" uniqueId="a5e6b117-6f26-4dbf-bf08-65326bb6d9e7" type="System.Int32">
+          <orm:column name="churchId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_name" property="Name" behavior="readwrite" uniqueId="632bfc31-41b7-4b3c-91bb-db2bf4b6cced" type="System.String">
+          <orm:column name="Name" sql-type="nvarchar" nullable="false" length="100" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_groupId" property="GroupId" behavior="readwrite" uniqueId="c279f4db-5723-49a8-8496-b80efee01b92" type="System.Int32">
+          <orm:column name="GroupId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_defaultCurrencyId" property="DefaultCurrencyId" behavior="readwrite" uniqueId="653e5f14-96aa-4ebe-892b-572db861c87e" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="DefaultCurrencyId" sql-type="int" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_group" property="Group" behavior="readwrite" uniqueId="7bd692f9-460d-4dbf-af6f-4ecdb2867346" type="Zakar.Models.Group">
+          <orm:reference uniqueId="8652b109-361f-4eed-bb74-0b3cd7456531" association-name="ChurchHasGroup">
+            <orm:sharedfield name="_groupId" target-class="Zakar.Models.Group" target-field="_id" />
+            <orm:constraint name="FK_GroupChurch" schema="dbo" delete-action="cascade" destination-table="Groups" />
+          </orm:reference>
+        </orm:field>
+        <orm:field name="_partners" property="Partners" behavior="readwrite" uniqueId="08320e72-4a53-4284-bcbc-ff44078f275a" type="Zakar.Models.Partner">
+          <orm:collection element-class="Zakar.Models.Partner" inverse-field="_church" order-by="" uniqueId="40703e4d-f3a2-4c49-93fa-52f0215faab4" />
+        </orm:field>
+        <orm:index name="IX_FK_GroupChurch">
+          <orm:columnMapping>
+            <orm:column name="GroupId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+      </orm:class>
+    </orm:namespace>
+    <orm:schema schema="dbo">
+      <orm:table name="webpages_UsersInRoles" schema="dbo" join-table="true">
+        <orm:column name="UserId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" ado-type="Int32" />
+        <orm:column name="RoleId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" ado-type="Int32" />
+        <orm:constraint name="fk_UserId" schema="dbo" delete-action="dbdefaultrule" destination-table="UserProfile">
+          <orm:column name="UserId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" ado-type="Int32" />
+        </orm:constraint>
+        <orm:constraint name="fk_RoleId" schema="dbo" delete-action="dbdefaultrule" destination-table="webpages_Roles">
+          <orm:column name="RoleId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" ado-type="Int32" />
+        </orm:constraint>
+      </orm:table>
+      <orm:table name="webpages_Roles" schema="dbo">
+        <orm:column name="RoleId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="RoleName" sql-type="nvarchar" nullable="false" length="256" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:index name="UQ__webpages__8A2B6160007323F3" unique="true">
+          <orm:columnMapping>
+            <orm:column name="RoleName" sql-type="nvarchar" nullable="false" length="256" scale="0" ado-type="UnicodeStringVariableLength" />
+          </orm:columnMapping>
+        </orm:index>
+      </orm:table>
+      <orm:table name="webpages_OAuthMembership" schema="dbo">
+        <orm:column name="Provider" sql-type="nvarchar" nullable="false" length="30" scale="0" primary-key="true" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="ProviderUserId" sql-type="nvarchar" nullable="false" length="100" scale="0" primary-key="true" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="UserId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+      </orm:table>
+      <orm:table name="webpages_Membership" schema="dbo">
+        <orm:column name="UserId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" ado-type="Int32" />
+        <orm:column name="CreateDate" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        <orm:column name="ConfirmationToken" sql-type="nvarchar" nullable="true" length="128" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="IsConfirmed" sql-type="bit" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Bit" />
+        <orm:column name="LastPasswordFailureDate" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        <orm:column name="PasswordFailuresSinceLastSuccess" sql-type="int" nullable="false" length="0" scale="0" has-default-value="true" ado-type="Int32" />
+        <orm:column name="Password" sql-type="nvarchar" nullable="false" length="128" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="PasswordChangedDate" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        <orm:column name="PasswordSalt" sql-type="nvarchar" nullable="false" length="128" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="PasswordVerificationToken" sql-type="nvarchar" nullable="true" length="128" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="PasswordVerificationTokenExpirationDate" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+      </orm:table>
+      <orm:table name="UserProfile" schema="dbo">
+        <orm:column name="UserId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="UserName" sql-type="nvarchar(max)" nullable="true" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="FirstName" sql-type="nvarchar(max)" nullable="true" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="LastName" sql-type="nvarchar(max)" nullable="true" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="PhoneNumber" sql-type="nvarchar(max)" nullable="true" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="ChurchId" sql-type="int" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int32" />
+      </orm:table>
+      <orm:table name="SystemSettings" schema="dbo">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="Name" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="Value" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+      </orm:table>
+      <orm:table name="Settings" schema="dbo">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="Name" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="Value" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+      </orm:table>
+      <orm:table name="QueuedNotifications" schema="dbo">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="DateToBeSent" sql-type="datetime" nullable="false" length="0" scale="0" ado-type="DateTime" />
+        <orm:column name="RecipientAddress" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="Message" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="RetriesAttempt" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="LastTried" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        <orm:column name="NotificationCateoryCategoryId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="ChurchId" sql-type="int" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int32" />
+        <orm:index name="IX_FK_NotificationCateoryQueuedNotifications">
+          <orm:columnMapping>
+            <orm:column name="NotificationCateoryCategoryId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:constraint name="FK_NotificationCateoryQueuedNotifications" schema="dbo" delete-action="dbdefaultrule" destination-table="NotificationCategories">
+          <orm:column name="NotificationCateoryCategoryId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:constraint>
+      </orm:table>
+      <orm:table name="Partnerships" schema="dbo">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="PartnershipArmId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="PartnerId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="Amount" sql-type="decimal" nullable="false" length="18" scale="2" ado-type="Decimal" />
+        <orm:column name="Month" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="Year" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="CurrencyId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="DateCreated" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        <orm:index name="IX_FK_PartnershipArmPartnership">
+          <orm:columnMapping>
+            <orm:column name="PartnershipArmId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:index name="IX_FK_PartnerPartnership">
+          <orm:columnMapping>
+            <orm:column name="PartnerId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:index name="IX_FK_CurrencyPartnership">
+          <orm:columnMapping>
+            <orm:column name="CurrencyId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:constraint name="FK_PartnershipArmPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="PartnershipArms">
+          <orm:column name="PartnershipArmId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:constraint>
+        <orm:constraint name="FK_PartnerPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="Partners">
+          <orm:column name="PartnerId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:constraint>
+        <orm:constraint name="FK_CurrencyPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="Currencies">
+          <orm:column name="CurrencyId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:constraint>
+      </orm:table>
+      <orm:table name="PartnershipArms" schema="dbo">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="Name" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="Description" sql-type="nvarchar(max)" nullable="true" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="ShortFormName" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="Deleted" sql-type="bit" nullable="false" length="0" scale="0" has-default-value="true" ado-type="Bit" />
+        <orm:column name="DateDeleted" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+      </orm:table>
+      <orm:table name="Partners" schema="dbo">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="Title" sql-type="nvarchar" nullable="false" length="25" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="FirstName" sql-type="nvarchar" nullable="false" length="50" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="LastName" sql-type="nvarchar" nullable="false" length="50" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="Email" sql-type="nvarchar" nullable="false" length="100" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="YookosId" sql-type="nvarchar" nullable="true" length="30" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="Phone" sql-type="nvarchar" nullable="false" length="50" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="DateCreated" sql-type="datetime" nullable="false" length="0" scale="0" ado-type="DateTime" />
+        <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="Deleted" sql-type="bit" nullable="false" length="0" scale="0" ado-type="Bit" />
+        <orm:column name="DateDeleted" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        <orm:constraint name="FK_Partners_Churches" schema="dbo" delete-action="cascade" destination-table="Churches">
+          <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:constraint>
+      </orm:table>
+      <orm:table name="Notifications" schema="dbo">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="DateSent" sql-type="datetime" nullable="false" length="0" scale="0" ado-type="DateTime" />
+        <orm:column name="RecipientAddress" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="Message" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="IsSent" sql-type="bit" nullable="false" length="0" scale="0" ado-type="Bit" />
+        <orm:column name="NotificationCateoryCategoryId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="ChurchId" sql-type="int" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int32" />
+        <orm:index name="IX_FK_NotificationCateoryNotifications">
+          <orm:columnMapping>
+            <orm:column name="NotificationCateoryCategoryId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:constraint name="FK_NotificationCateoryNotifications" schema="dbo" delete-action="dbdefaultrule" destination-table="NotificationCategories">
+          <orm:column name="NotificationCateoryCategoryId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:constraint>
+      </orm:table>
+      <orm:table name="NotificationCategories" schema="dbo">
+        <orm:column name="CategoryId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="Name" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+      </orm:table>
+      <orm:table name="NonValidatedPartnershipRecords" schema="dbo">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="PartnershipArm" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="Partner" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="Amount" sql-type="decimal" nullable="false" length="18" scale="2" ado-type="Decimal" />
+        <orm:column name="Month" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="Year" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="Currency" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="DateCreated" sql-type="datetime" nullable="false" length="0" scale="0" has-default-value="true" ado-type="DateTime" />
+        <orm:constraint name="FK_NonValidatedPartnershipRecords_PartnershipArms" schema="dbo" delete-action="cascade" destination-table="PartnershipArms">
+          <orm:column name="PartnershipArm" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:constraint>
+        <orm:constraint name="FK_NonValidatedPartnershipRecords_Partners" schema="dbo" delete-action="cascade" destination-table="Partners">
+          <orm:column name="Partner" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:constraint>
+      </orm:table>
+      <orm:table name="Groups" schema="dbo">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="Name" sql-type="nvarchar" nullable="false" length="100" scale="0" ado-type="UnicodeStringVariableLength" />
+      </orm:table>
+      <orm:table name="Currencies" schema="dbo">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="Name" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="Symbol" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="IsDefaultCurrency" sql-type="bit" nullable="true" length="0" scale="0" ado-type="Bit" />
+        <orm:column name="ConversionRateToDefault" sql-type="decimal" nullable="false" length="18" scale="2" ado-type="Decimal" />
+      </orm:table>
+      <orm:table name="Churches" schema="dbo">
+        <orm:column name="churchId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="Name" sql-type="nvarchar" nullable="false" length="100" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="GroupId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="DefaultCurrencyId" sql-type="int" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int32" />
+        <orm:index name="IX_FK_GroupChurch">
+          <orm:columnMapping>
+            <orm:column name="GroupId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:constraint name="FK_GroupChurch" schema="dbo" delete-action="cascade" destination-table="Groups">
+          <orm:column name="GroupId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:constraint>
+      </orm:table>
+    </orm:schema>
+    <orm:relational-naming-settings>
+      <orm:source-strategy>Property</orm:source-strategy>
+      <orm:remove-camel-case>False</orm:remove-camel-case>
+    </orm:relational-naming-settings>
+  </orm:orm>
+  <ModelSettings xmlns="">
+    <AppConfigConnectionPropertyName>Unibencellinfo_partnershipConnection</AppConfigConnectionPropertyName>
+    <AppConfigConnectionString>Data Source=184.168.194.51;Initial Catalog=unibencellinfo_partnership;Persist Security Info=True;User ID=edikep2000;Password=anderson2013</AppConfigConnectionString>
+    <NamingSettings>
+      <ClassRules>
+        <CaseMode>PascalCase</CaseMode>
+        <PluralizationMode>Singularize</PluralizationMode>
+      </ClassRules>
+      <FieldRules>
+        <AddPrefix>_</AddPrefix>
+        <CaseMode>CamelCase</CaseMode>
+      </FieldRules>
+      <PropertyRules>
+        <CaseMode>PascalCase</CaseMode>
+      </PropertyRules>
+      <NavigationPropertyRules />
+    </NamingSettings>
+    <CodeGenerationSettings>
+      <ImplementINotifyPropertyChanging>true</ImplementINotifyPropertyChanging>
+      <ImplementINotifyPropertyChanged>true</ImplementINotifyPropertyChanged>
+      <GenerateDataAnnotationAttributes>true</GenerateDataAnnotationAttributes>
+      <MappingDefinitionType>Attributes</MappingDefinitionType>
+    </CodeGenerationSettings>
+    <SchemaUpdateSettings />
+    <BackendConfigurationSettings>
+      <BackendConfiguration>
+        <Backend>MsSql</Backend>
+        <ProviderName>System.Data.SqlClient</ProviderName>
+      </BackendConfiguration>
+    </BackendConfigurationSettings>
+  </ModelSettings>
+  <Types>
+    <DomainClass Id="3690aeac-1ebb-4788-ab37-c96f744d21d1" name="Webpages_Role" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="RoleId">
+      <Property Id="71edd66d-70ba-4e4c-a116-13ba7804e627" name="RoleId" type="Int32" label="RoleId : Int32" kind="Persistent" identity="true" fieldName="_roleId" />
+      <Property Id="144f6459-ea2a-48bb-ac71-8eacda74a1ec" name="RoleName" label="RoleName : String" kind="Persistent" fieldName="_roleName" />
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="24ad84eb-99a8-4c0f-9354-a48e68ce7008">
+          <NavigationalProperty Id="02e57cc9-59c6-416d-9d46-82efba9a84b4" name="UserProfiles" type="IList&lt;UserProfile&gt;" label="UserProfiles : IList&lt;UserProfile&gt;" nullable="true" kind="Persistent" fieldName="_userProfiles" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+    <DomainClass Id="957340f7-1720-4686-87dc-cd195d0814d2" name="Webpages_OAuthMembership" namespace="Zakar.Models" showPropertiesCompartment="true" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true">
+      <Property Id="198be972-6b47-4297-8f76-31c36fb21f58" name="Provider" label="Provider : String" kind="Persistent" identity="true" fieldName="_provider" />
+      <Property Id="47b7cc5a-322e-4bb7-9d62-2bc7f7b30cf4" name="ProviderUserId" label="ProviderUserId : String" kind="Persistent" identity="true" fieldName="_providerUserId" />
+      <Property Id="6f839017-a7c8-4a39-bcf7-8809cf662664" name="UserId" type="Int32" label="UserId : Int32" kind="Persistent" fieldName="_userId" />
+    </DomainClass>
+    <DomainClass Id="b89bdadd-b624-4faa-8319-1a4b46b063e8" name="Webpages_Membership" namespace="Zakar.Models" showPropertiesCompartment="true" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true">
+      <Property Id="e45c5865-a4ac-4d2b-b9b5-ca505f67a1f8" name="UserId" type="Int32" label="UserId : Int32" kind="Persistent" identity="true" fieldName="_userId" />
+      <Property Id="813955d0-56c0-4d43-a54d-f8ef9b16fa10" name="ConfirmationToken" label="ConfirmationToken : String" kind="Persistent" fieldName="_confirmationToken" />
+      <Property Id="16662863-a8a9-4a9f-86fc-fdb509809016" name="CreateDate" type="DateTime" label="CreateDate : DateTime" nullable="true" kind="Persistent" fieldName="_createDate" />
+      <Property Id="45b205d1-8d87-40ac-bd28-5840304e0a9d" name="IsConfirmed" type="Boolean" label="IsConfirmed : Boolean" nullable="true" kind="Persistent" fieldName="_isConfirmed" />
+      <Property Id="adff2d03-7a2b-4efe-b724-6717abe8b0cc" name="LastPasswordFailureDate" type="DateTime" label="LastPasswordFailureDate : DateTime" nullable="true" kind="Persistent" fieldName="_lastPasswordFailureDate" />
+      <Property Id="c700d205-2c45-4def-ab1a-cfd4515f5d23" name="Password" label="Password : String" kind="Persistent" fieldName="_password" />
+      <Property Id="9b86bfc6-301d-47d4-a793-9a6336fde383" name="PasswordChangedDate" type="DateTime" label="PasswordChangedDate : DateTime" nullable="true" kind="Persistent" fieldName="_passwordChangedDate" />
+      <Property Id="8d3f1b86-9893-475f-9903-8ad8d6c8baea" name="PasswordFailuresSinceLastSuccess" type="Int32" label="PasswordFailuresSinceLastSuccess : Int32" kind="Persistent" fieldName="_passwordFailuresSinceLastSuccess" />
+      <Property Id="a027f339-b9d1-4e9c-b567-7c9604126eea" name="PasswordSalt" label="PasswordSalt : String" kind="Persistent" fieldName="_passwordSalt" />
+      <Property Id="128b4432-d8dc-487c-a952-b1d0c044d0f2" name="PasswordVerificationToken" label="PasswordVerificationToken : String" kind="Persistent" fieldName="_passwordVerificationToken" />
+      <Property Id="a2cf8de0-0da7-4394-93e1-06eb26f2f2eb" name="PasswordVerificationTokenExpirationDate" type="DateTime" label="PasswordVerificationTokenExpirationDate : DateTime" nullable="true" kind="Persistent" fieldName="_passwordVerificationTokenExpirationDate" />
+    </DomainClass>
+    <DomainClass Id="19aa867e-5422-48e5-a6d7-8c9bf3519c34" name="UserProfile" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="UserId">
+      <Property Id="a7d6a251-b15f-4d58-8b00-1ce5e54386e1" name="UserId" type="Int32" label="UserId : Int32" kind="Persistent" identity="true" fieldName="_userId" />
+      <Property Id="038a0096-0c9d-4d2e-8d6c-e658860b1def" name="ChurchId" type="Int32" label="ChurchId : Int32" nullable="true" kind="Persistent" fieldName="_churchId" />
+      <Property Id="8fe5fb81-a657-404c-8294-7c2f7c749ca0" name="FirstName" label="FirstName : String" kind="Persistent" fieldName="_firstName" />
+      <Property Id="9dedf3c4-be26-423c-86d5-0fedb43fe4a6" name="LastName" label="LastName : String" kind="Persistent" fieldName="_lastName" />
+      <Property Id="8fd31b7b-851f-49a9-9ed8-7ded7bea8e47" name="PhoneNumber" label="PhoneNumber : String" kind="Persistent" fieldName="_phoneNumber" />
+      <Property Id="34cc6647-6a5a-4271-a4ee-352a7eb22bda" name="UserName" label="UserName : String" kind="Persistent" fieldName="_userName" />
+      <AssociationTargets>
+        <Association Id="9c089a2a-f754-408b-8b80-7b0440cd85c5" name="UserProfilesHaveWebpages_Roles">
+          <DomainClassMoniker name="/EntitiesModel/Webpages_Role" />
+          <targetNavigationalProperty>
+            <associationDefinesTargetProperty Id="bf5e9675-885c-450e-890b-c65f28047594">
+              <NavigationalPropertyMoniker name="/EntitiesModel/Webpages_Role/UserProfiles" />
+            </associationDefinesTargetProperty>
+          </targetNavigationalProperty>
+          <sourceNavigationalProperty>
+            <associationDefinesSourceProperty Id="9dc9aac1-c322-4496-95e7-d1c1adae7cd2">
+              <NavigationalPropertyMoniker name="/EntitiesModel/UserProfile/Webpages_Roles" />
+            </associationDefinesSourceProperty>
+          </sourceNavigationalProperty>
+        </Association>
+      </AssociationTargets>
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="0dcd957a-202f-4823-9987-a64d1035694f">
+          <NavigationalProperty Id="555de1e8-4b9d-4c5b-b4b9-088341384616" name="Webpages_Roles" type="IList&lt;Webpages_Role&gt;" label="Webpages_Roles : IList&lt;Webpages_Role&gt;" nullable="true" kind="Persistent" fieldName="_webpages_Roles" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+    <DomainClass Id="dc0c3951-c106-430f-b417-89f1f91861c6" name="SystemSetting" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+      <Property Id="375986c4-bdb8-48da-b29d-bbb01d2c9591" name="Id" type="Int32" label="Id : Int32" kind="Persistent" identity="true" fieldName="_id" />
+      <Property Id="ec27e1e9-c9ab-4bd3-9ef2-dbd00df3e207" name="Name" label="Name : String" kind="Persistent" fieldName="_name" />
+      <Property Id="d5a3eed5-e10d-456d-aa73-423da7bb18ca" name="Value" label="Value : String" kind="Persistent" fieldName="_value" />
+    </DomainClass>
+    <DomainClass Id="89c9b6c8-b663-481c-897f-9aca30ed69e9" name="Setting" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+      <Property Id="a86a2330-fd49-44a7-81ac-d1c6462de136" name="Id" type="Int32" label="Id : Int32" kind="Persistent" identity="true" fieldName="_id" />
+      <Property Id="9e52dc3f-4959-454a-9420-65f5ae944ac6" name="Name" label="Name : String" kind="Persistent" fieldName="_name" />
+      <Property Id="8c20d037-656d-419c-9f94-2eeddaa5f044" name="Value" label="Value : String" kind="Persistent" fieldName="_value" />
+    </DomainClass>
+    <DomainClass Id="c4d084d0-3f20-4439-b837-05cdbdaf1c4d" name="QueuedNotification" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+      <Property Id="39a11ed8-9628-468a-a918-3cfd65653c1e" name="Id" type="Int32" label="Id : Int32" kind="Persistent" identity="true" fieldName="_id" />
+      <Property Id="b4a2667d-5fb8-4600-ad91-d12e3d1f7c06" name="ChurchId" type="Int32" label="ChurchId : Int32" nullable="true" kind="Persistent" fieldName="_churchId" />
+      <Property Id="a9382c2c-3733-42cf-b2fc-97e922e40915" name="DateToBeSent" type="DateTime" label="DateToBeSent : DateTime" kind="Persistent" fieldName="_dateToBeSent" />
+      <Property Id="ed429369-baea-458e-8b68-61a2cede0544" name="LastTried" type="DateTime" label="LastTried : DateTime" nullable="true" kind="Persistent" fieldName="_lastTried" />
+      <Property Id="a2ba676e-6750-480c-8604-9c15aca4c461" name="Message" label="Message : String" kind="Persistent" fieldName="_message" />
+      <Property Id="4d3bc8b3-ea35-4014-83c5-d6e43f6dad08" name="NotificationCateoryCategoryId" type="Int32" label="NotificationCateoryCategoryId : Int32" kind="Persistent" fieldName="_notificationCateoryCategoryId" />
+      <Property Id="c596a9b2-d71f-4925-b853-38b40c2d2089" name="RecipientAddress" label="RecipientAddress : String" kind="Persistent" fieldName="_recipientAddress" />
+      <Property Id="c2e65c66-016a-43fa-9343-27b94f7e0c49" name="RetriesAttempt" type="Int32" label="RetriesAttempt : Int32" kind="Persistent" fieldName="_retriesAttempt" />
+      <AssociationTargets>
+        <Association Id="03ea46f7-f6ba-4b53-84b4-0d18c46a95e3" SourceMultiplicity="One" name="QueuedNotificationHasNotificationCategory">
+          <DomainClassMoniker name="/EntitiesModel/NotificationCategory" />
+          <targetNavigationalProperty>
+            <associationDefinesTargetProperty Id="c9c139b4-bc87-4c73-8f05-4afc3f69ee5d">
+              <NavigationalPropertyMoniker name="/EntitiesModel/NotificationCategory/QueuedNotifications" />
+            </associationDefinesTargetProperty>
+          </targetNavigationalProperty>
+          <sourceNavigationalProperty>
+            <associationDefinesSourceProperty Id="c9881e4c-2b48-420e-b2b5-1b1cf0448ef2">
+              <NavigationalPropertyMoniker name="/EntitiesModel/QueuedNotification/NotificationCategory" />
+            </associationDefinesSourceProperty>
+          </sourceNavigationalProperty>
+        </Association>
+      </AssociationTargets>
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="093cfc37-b8ab-4bc6-85ab-8b1b5fa2e318">
+          <NavigationalProperty Id="18f9017c-9e8e-4cd3-b0c5-40c75d78b77b" name="NotificationCategory" type="NotificationCategory" label="NotificationCategory : NotificationCategory" nullable="true" kind="Persistent" fieldName="_notificationCategory" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+    <DomainClass Id="ed2072f6-a1b7-4f51-8b81-669f10f38e54" name="Partnership" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+      <Property Id="6da14db5-5546-43b1-b48d-a3e4773d7b8a" name="Id" type="Int32" label="Id : Int32" kind="Persistent" identity="true" fieldName="_id" />
+      <Property Id="ae358eec-c13f-46ab-9831-756aab23d573" name="Amount" type="Decimal" label="Amount : Decimal" kind="Persistent" fieldName="_amount" />
+      <Property Id="08bcfe58-2ce7-48ef-a43b-e7436ab4c7a9" name="CurrencyId" type="Int32" label="CurrencyId : Int32" kind="Persistent" fieldName="_currencyId" />
+      <Property Id="8e724441-008a-4688-8dc5-4b62d5845f4a" name="DateCreated" type="DateTime" label="DateCreated : DateTime" nullable="true" kind="Persistent" fieldName="_dateCreated" />
+      <Property Id="bbfd1af1-b6f6-4d7a-bcad-268a706495a1" name="Month" type="Int32" label="Month : Int32" kind="Persistent" fieldName="_month" />
+      <Property Id="14bf120e-e6e9-4bac-b5b1-5c97342e1649" name="PartnerId" type="Int32" label="PartnerId : Int32" kind="Persistent" fieldName="_partnerId" />
+      <Property Id="d1044f47-c294-44bd-8856-637b2991d2df" name="PartnershipArmId" type="Int32" label="PartnershipArmId : Int32" kind="Persistent" fieldName="_partnershipArmId" />
+      <Property Id="60b40d54-0265-4a04-96df-a3371aed4a18" name="Year" type="Int32" label="Year : Int32" kind="Persistent" fieldName="_year" />
+      <AssociationTargets>
+        <Association Id="da7334d0-d68d-413e-8bc2-c277253bed49" SourceMultiplicity="One" name="PartnershipHasPartnershipArm">
+          <DomainClassMoniker name="/EntitiesModel/PartnershipArm" />
+          <targetNavigationalProperty>
+            <associationDefinesTargetProperty Id="b982ed69-2dba-4262-96b3-df9cde0b5b8a">
+              <NavigationalPropertyMoniker name="/EntitiesModel/PartnershipArm/Partnerships" />
+            </associationDefinesTargetProperty>
+          </targetNavigationalProperty>
+          <sourceNavigationalProperty>
+            <associationDefinesSourceProperty Id="797fbf13-565c-4b3b-add2-726c79cb6121">
+              <NavigationalPropertyMoniker name="/EntitiesModel/Partnership/PartnershipArm" />
+            </associationDefinesSourceProperty>
+          </sourceNavigationalProperty>
+        </Association>
+        <Association Id="2c78b20c-08ff-4399-a94b-2ec78a3369bd" SourceMultiplicity="One" name="PartnershipHasPartner">
+          <DomainClassMoniker name="/EntitiesModel/Partner" />
+          <targetNavigationalProperty>
+            <associationDefinesTargetProperty Id="9f00eda6-02ce-4825-88a9-73c509c0f39b">
+              <NavigationalPropertyMoniker name="/EntitiesModel/Partner/Partnerships" />
+            </associationDefinesTargetProperty>
+          </targetNavigationalProperty>
+          <sourceNavigationalProperty>
+            <associationDefinesSourceProperty Id="8024302e-6d1c-4a2f-8e42-8a2b61313f7c">
+              <NavigationalPropertyMoniker name="/EntitiesModel/Partnership/Partner" />
+            </associationDefinesSourceProperty>
+          </sourceNavigationalProperty>
+        </Association>
+        <Association Id="ff94042d-d547-4913-bf21-eab6cbbb01a6" SourceMultiplicity="One" name="PartnershipHasCurrency">
+          <DomainClassMoniker name="/EntitiesModel/Currency" />
+          <targetNavigationalProperty>
+            <associationDefinesTargetProperty Id="01d13c1f-ed0b-46a2-a584-185e32c531db">
+              <NavigationalPropertyMoniker name="/EntitiesModel/Currency/Partnerships" />
+            </associationDefinesTargetProperty>
+          </targetNavigationalProperty>
+          <sourceNavigationalProperty>
+            <associationDefinesSourceProperty Id="94aa3ce0-3e65-4fc2-a268-78f74bef8465">
+              <NavigationalPropertyMoniker name="/EntitiesModel/Partnership/Currency" />
+            </associationDefinesSourceProperty>
+          </sourceNavigationalProperty>
+        </Association>
+      </AssociationTargets>
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="0e61d04e-27a3-4775-be72-521067c4e93c">
+          <NavigationalProperty Id="ce8cba39-5260-464a-92bd-7c410a0ef99a" name="PartnershipArm" type="PartnershipArm" label="PartnershipArm : PartnershipArm" nullable="true" kind="Persistent" fieldName="_partnershipArm" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+        <classHasNavigationalProperties Id="3653b3ed-6e85-4070-aaac-0b31c6ab0284">
+          <NavigationalProperty Id="059c6f58-84c2-45bb-bd88-88e23b0e0efb" name="Partner" type="Partner" label="Partner : Partner" nullable="true" kind="Persistent" fieldName="_partner" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+        <classHasNavigationalProperties Id="1937addf-33d0-4117-9a88-65c88c84aef1">
+          <NavigationalProperty Id="0d1cb284-e773-46d4-a80e-589e2d8cd049" name="Currency" type="Currency" label="Currency : Currency" nullable="true" kind="Persistent" fieldName="_currency" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+    <DomainClass Id="7fd0b57f-19f8-43b6-8317-990bb4732183" name="PartnershipArm" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+      <Property Id="9fb7c15c-2e5a-42bc-bb4d-bb85e8889a3c" name="Id" type="Int32" label="Id : Int32" kind="Persistent" identity="true" fieldName="_id" />
+      <Property Id="dc8364d5-2bf8-4f2a-9de8-68dbb9e09fb8" name="DateDeleted" type="DateTime" label="DateDeleted : DateTime" nullable="true" kind="Persistent" fieldName="_dateDeleted" />
+      <Property Id="8bd061e4-1a88-4abd-b680-c53e1ac21fca" name="Deleted" type="Boolean" label="Deleted : Boolean" kind="Persistent" fieldName="_deleted" />
+      <Property Id="e0c45ba9-0544-443d-a90a-2d9be8a87195" name="Description" label="Description : String" kind="Persistent" fieldName="_description" />
+      <Property Id="7aa13d99-eaa1-402e-a8d9-24a3b83e6b25" name="Name" label="Name : String" kind="Persistent" fieldName="_name" />
+      <Property Id="0dba790b-7d4e-480a-a412-268dfdde38c0" name="ShortFormName" label="ShortFormName : String" kind="Persistent" fieldName="_shortFormName" />
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="5c7c891b-daa3-4554-9df0-c26673b5cd7e">
+          <NavigationalProperty Id="9dd0eb8b-3d95-4654-bdfc-a0370ab9b5aa" name="Partnerships" type="IList&lt;Partnership&gt;" label="Partnerships : IList&lt;Partnership&gt;" nullable="true" kind="Persistent" fieldName="_partnerships" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+        <classHasNavigationalProperties Id="61f8c0b9-901b-4f2d-ac3b-58c36d64a53c">
+          <NavigationalProperty Id="90e27cd8-7224-4347-aeff-fb2927e29224" name="NonValidatedPartnershipRecords" type="IList&lt;NonValidatedPartnershipRecord&gt;" label="NonValidatedPartnershipRecords : IList&lt;NonValidatedPartnershipRecord&gt;" nullable="true" kind="Persistent" fieldName="_nonValidatedPartnershipRecords" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+    <DomainClass Id="611d3049-18e7-4416-8410-132c163247bf" name="Partner" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+      <Property Id="1ade9303-8290-4e59-921e-5157f5cb6404" name="Id" type="Int32" label="Id : Int32" kind="Persistent" identity="true" fieldName="_id" />
+      <Property Id="075bf1fe-529d-4f28-b8ee-01d9a2fd39c9" name="ChurchId" type="Int32" label="ChurchId : Int32" kind="Persistent" fieldName="_churchId" />
+      <Property Id="4040509a-2d1c-4e12-8c79-81e0cbdc622d" name="DateCreated" type="DateTime" label="DateCreated : DateTime" kind="Persistent" fieldName="_dateCreated" />
+      <Property Id="c360026c-4421-4292-9fd3-1522da2b301a" name="DateDeleted" type="DateTime" label="DateDeleted : DateTime" nullable="true" kind="Persistent" fieldName="_dateDeleted" />
+      <Property Id="b6b0c8b6-13ca-418f-802f-338346bc95e4" name="Deleted" type="Boolean" label="Deleted : Boolean" kind="Persistent" fieldName="_deleted" />
+      <Property Id="950da53f-8faa-4ff1-baf0-be2a8e28ed8e" name="Email" label="Email : String" kind="Persistent" fieldName="_email" />
+      <Property Id="3f07eba1-cc68-4ef2-a61d-16ea2083215d" name="FirstName" label="FirstName : String" kind="Persistent" fieldName="_firstName" />
+      <Property Id="f1d621d0-ea4f-45ca-8c6f-196d1d9d5407" name="LastName" label="LastName : String" kind="Persistent" fieldName="_lastName" />
+      <Property Id="6e46f959-1aa5-48e0-8fa5-1572e93f4144" name="Phone" label="Phone : String" kind="Persistent" fieldName="_phone" />
+      <Property Id="7b5b7221-4d7c-4a6b-9946-7860571c9afd" name="Title" label="Title : String" kind="Persistent" fieldName="_title" />
+      <Property Id="9ae2098b-4a38-463e-b557-6406cd75a64f" name="YookosId" label="YookosId : String" kind="Persistent" fieldName="_yookosId" />
+      <AssociationTargets>
+        <Association Id="40703e4d-f3a2-4c49-93fa-52f0215faab4" SourceMultiplicity="One" name="PartnerHasChurch">
+          <DomainClassMoniker name="/EntitiesModel/Church" />
+          <targetNavigationalProperty>
+            <associationDefinesTargetProperty Id="e12cb0ad-54f6-44a1-8167-11e03c49dd78">
+              <NavigationalPropertyMoniker name="/EntitiesModel/Church/Partners" />
+            </associationDefinesTargetProperty>
+          </targetNavigationalProperty>
+          <sourceNavigationalProperty>
+            <associationDefinesSourceProperty Id="55a53ea9-27e9-4f90-a044-0fb296669a78">
+              <NavigationalPropertyMoniker name="/EntitiesModel/Partner/Church" />
+            </associationDefinesSourceProperty>
+          </sourceNavigationalProperty>
+        </Association>
+      </AssociationTargets>
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="c0f0677f-dbd6-4395-a377-d27e2ee36afc">
+          <NavigationalProperty Id="1fcd1db0-1a10-4ad5-af81-9d11af0d6782" name="Partnerships" type="IList&lt;Partnership&gt;" label="Partnerships : IList&lt;Partnership&gt;" nullable="true" kind="Persistent" fieldName="_partnerships" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+        <classHasNavigationalProperties Id="cbe39ca2-2acb-4108-b8b8-94702b63fb44">
+          <NavigationalProperty Id="76200382-8339-4e62-bf0d-5930c2677791" name="Church" type="Church" label="Church : Church" nullable="true" kind="Persistent" fieldName="_church" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+        <classHasNavigationalProperties Id="5270f9f3-516c-4af7-bb5e-a94b06383be5">
+          <NavigationalProperty Id="ac29830c-1906-430f-a783-e14258edcd74" name="NonValidatedPartnershipRecords" type="IList&lt;NonValidatedPartnershipRecord&gt;" label="NonValidatedPartnershipRecords : IList&lt;NonValidatedPartnershipRecord&gt;" nullable="true" kind="Persistent" fieldName="_nonValidatedPartnershipRecords" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+    <DomainClass Id="aa2e9c80-ec64-4faf-ab26-61b2dd986f22" name="Notification" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+      <Property Id="363694e2-91b4-4e78-a612-84c512604168" name="Id" type="Int32" label="Id : Int32" kind="Persistent" identity="true" fieldName="_id" />
+      <Property Id="564ab7eb-2f87-47f0-8cf4-241b5849ef85" name="ChurchId" type="Int32" label="ChurchId : Int32" nullable="true" kind="Persistent" fieldName="_churchId" />
+      <Property Id="5ae2baa6-c413-4301-a1ed-512d1499ffbd" name="DateSent" type="DateTime" label="DateSent : DateTime" kind="Persistent" fieldName="_dateSent" />
+      <Property Id="d7b5a56e-c655-49e5-9c0c-7e6d765c7d10" name="IsSent" type="Boolean" label="IsSent : Boolean" kind="Persistent" fieldName="_isSent" />
+      <Property Id="b0cf66c9-d1b6-443c-8d58-e58a1f19e32d" name="Message" label="Message : String" kind="Persistent" fieldName="_message" />
+      <Property Id="add69c8c-da15-4553-ae5d-44667fc56fc7" name="NotificationCateoryCategoryId" type="Int32" label="NotificationCateoryCategoryId : Int32" kind="Persistent" fieldName="_notificationCateoryCategoryId" />
+      <Property Id="b7a92712-f491-4b55-9aa2-d182bc0feb77" name="RecipientAddress" label="RecipientAddress : String" kind="Persistent" fieldName="_recipientAddress" />
+      <AssociationTargets>
+        <Association Id="1ecf09fe-92e3-412e-8e8e-965ba55d9e95" SourceMultiplicity="One" name="NotificationHasNotificationCategory">
+          <DomainClassMoniker name="/EntitiesModel/NotificationCategory" />
+          <targetNavigationalProperty>
+            <associationDefinesTargetProperty Id="19904130-a70e-4aae-ad87-219b4cc15a68">
+              <NavigationalPropertyMoniker name="/EntitiesModel/NotificationCategory/Notifications" />
+            </associationDefinesTargetProperty>
+          </targetNavigationalProperty>
+          <sourceNavigationalProperty>
+            <associationDefinesSourceProperty Id="9cf63e3c-1996-4c0e-bb59-87104d42037a">
+              <NavigationalPropertyMoniker name="/EntitiesModel/Notification/NotificationCategory" />
+            </associationDefinesSourceProperty>
+          </sourceNavigationalProperty>
+        </Association>
+      </AssociationTargets>
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="46aa34d3-4230-405a-afdd-4b006d8c9eac">
+          <NavigationalProperty Id="04fb5daa-bf03-49e0-b096-f0d1dd79bf50" name="NotificationCategory" type="NotificationCategory" label="NotificationCategory : NotificationCategory" nullable="true" kind="Persistent" fieldName="_notificationCategory" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+    <DomainClass Id="63fb4046-cf3c-4f40-ac1a-300e89b5c403" name="NotificationCategory" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="CategoryId">
+      <Property Id="c3a60d1f-e6da-44b5-a9c6-96dd66295535" name="CategoryId" type="Int32" label="CategoryId : Int32" kind="Persistent" identity="true" fieldName="_categoryId" />
+      <Property Id="3360e86d-9bce-44fa-8f72-41e86597b69c" name="Name" label="Name : String" kind="Persistent" fieldName="_name" />
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="d988853e-881b-490a-bf34-568bd77a05f1">
+          <NavigationalProperty Id="62916ece-2546-4085-b38f-eb4e3665d089" name="QueuedNotifications" type="IList&lt;QueuedNotification&gt;" label="QueuedNotifications : IList&lt;QueuedNotification&gt;" nullable="true" kind="Persistent" fieldName="_queuedNotifications" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+        <classHasNavigationalProperties Id="8319d6c5-8384-41a5-beea-9255bdfb2cda">
+          <NavigationalProperty Id="2bd7309c-804d-4598-ae04-65e8724109b3" name="Notifications" type="IList&lt;Notification&gt;" label="Notifications : IList&lt;Notification&gt;" nullable="true" kind="Persistent" fieldName="_notifications" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+    <DomainClass Id="cc888d0d-1759-4c27-8b57-ee6607416ead" name="NonValidatedPartnershipRecord" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+      <Property Id="2376fccc-a828-47b7-b3dc-ea082c64d39a" name="Id" type="Int32" label="Id : Int32" kind="Persistent" identity="true" fieldName="_id" />
+      <Property Id="1755fe48-cb55-4c93-bef9-3ddaaaf92a20" name="Amount" type="Decimal" label="Amount : Decimal" kind="Persistent" fieldName="_amount" />
+      <Property Id="313512d0-ce3f-4922-a716-933883e5da52" name="Currency" type="Int32" label="Currency : Int32" kind="Persistent" fieldName="_currency" />
+      <Property Id="4df187a2-931a-402e-ba0f-b114e6b10af1" name="DateCreated" type="DateTime" label="DateCreated : DateTime" kind="Persistent" fieldName="_dateCreated" />
+      <Property Id="159700b4-32a8-463f-9a46-44fd280553e1" name="Month" type="Int32" label="Month : Int32" kind="Persistent" fieldName="_month" />
+      <Property Id="4b590cd7-14e7-4f2a-b530-5e1a7b6a319b" name="Partner" type="Int32" label="Partner : Int32" kind="Persistent" fieldName="_partner" />
+      <Property Id="70d465bf-210c-413d-94fc-288fba3eaebe" name="PartnershipArm" type="Int32" label="PartnershipArm : Int32" kind="Persistent" fieldName="_partnershipArm" />
+      <Property Id="713e9254-4793-4db8-b723-931c3b55401a" name="Year" type="Int32" label="Year : Int32" kind="Persistent" fieldName="_year" />
+      <AssociationTargets>
+        <Association Id="9bbb6462-edfd-4e2d-a808-261b8f1f6a1c" SourceMultiplicity="One" name="NonValidatedPartnershipRecordHasPartnershipArm">
+          <DomainClassMoniker name="/EntitiesModel/PartnershipArm" />
+          <targetNavigationalProperty>
+            <associationDefinesTargetProperty Id="b7670d5f-9b3f-4db2-a01f-140eb033c564">
+              <NavigationalPropertyMoniker name="/EntitiesModel/PartnershipArm/NonValidatedPartnershipRecords" />
+            </associationDefinesTargetProperty>
+          </targetNavigationalProperty>
+          <sourceNavigationalProperty>
+            <associationDefinesSourceProperty Id="0100fec2-8169-4734-abc8-e1bc1762c587">
+              <NavigationalPropertyMoniker name="/EntitiesModel/NonValidatedPartnershipRecord/PartnershipArm1" />
+            </associationDefinesSourceProperty>
+          </sourceNavigationalProperty>
+        </Association>
+        <Association Id="20c3a43a-13d5-4394-ad1c-8ae592dcb737" SourceMultiplicity="One" name="NonValidatedPartnershipRecordHasPartner">
+          <DomainClassMoniker name="/EntitiesModel/Partner" />
+          <targetNavigationalProperty>
+            <associationDefinesTargetProperty Id="c8aecd36-160c-4e8b-973a-7acf556fcf6c">
+              <NavigationalPropertyMoniker name="/EntitiesModel/Partner/NonValidatedPartnershipRecords" />
+            </associationDefinesTargetProperty>
+          </targetNavigationalProperty>
+          <sourceNavigationalProperty>
+            <associationDefinesSourceProperty Id="c59b3478-ed85-46d7-a168-de8a955517d8">
+              <NavigationalPropertyMoniker name="/EntitiesModel/NonValidatedPartnershipRecord/Partner1" />
+            </associationDefinesSourceProperty>
+          </sourceNavigationalProperty>
+        </Association>
+      </AssociationTargets>
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="470ef515-e09d-4f30-8e51-5d42f9cddda1">
+          <NavigationalProperty Id="08ee3f90-0251-473c-ac3a-858de7d1e38f" name="PartnershipArm1" type="PartnershipArm" label="PartnershipArm1 : PartnershipArm" nullable="true" kind="Persistent" fieldName="_partnershipArm1" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+        <classHasNavigationalProperties Id="d8c2567b-dd60-4d80-baf8-1ee765046282">
+          <NavigationalProperty Id="efe77ebd-2c0e-4817-86ad-92d60c98c8e9" name="Partner1" type="Partner" label="Partner1 : Partner" nullable="true" kind="Persistent" fieldName="_partner1" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+    <DomainClass Id="73c54b29-d813-4d20-8d46-81c4b34bf03c" name="Group" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+      <Property Id="5f97c6a3-9935-4e8c-bd51-e4526d2996d8" name="Id" type="Int32" label="Id : Int32" kind="Persistent" identity="true" fieldName="_id" />
+      <Property Id="83d27a28-780d-4fcf-9d10-648a1422de9c" name="Name" label="Name : String" kind="Persistent" fieldName="_name" />
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="1af21af8-3c48-494d-b56e-b6e8728f4917">
+          <NavigationalProperty Id="0b6ace56-5d9d-42e5-ab7c-da75b4a160e5" name="Churches" type="IList&lt;Church&gt;" label="Churches : IList&lt;Church&gt;" nullable="true" kind="Persistent" fieldName="_churches" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+    <DomainClass Id="c93b8563-2213-4596-bf79-fab4a4faf732" name="Currency" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+      <Property Id="05a6eb21-ce39-4b2c-800d-aa7d0c5506d5" name="Id" type="Int32" label="Id : Int32" kind="Persistent" identity="true" fieldName="_id" />
+      <Property Id="01f41da0-5612-4384-88f3-3a62c943ca12" name="ConversionRateToDefault" type="Decimal" label="ConversionRateToDefault : Decimal" kind="Persistent" fieldName="_conversionRateToDefault" />
+      <Property Id="139c653e-70d1-4965-97cd-d032c3c2be24" name="IsDefaultCurrency" type="Boolean" label="IsDefaultCurrency : Boolean" nullable="true" kind="Persistent" fieldName="_isDefaultCurrency" />
+      <Property Id="a9d3d48b-ac85-415a-aa25-c29f2c8d91d3" name="Name" label="Name : String" kind="Persistent" fieldName="_name" />
+      <Property Id="2f55a5a1-dc13-48c0-ad5a-c334631dcbe1" name="Symbol" label="Symbol : String" kind="Persistent" fieldName="_symbol" />
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="e49e21bd-3bcc-4c92-af19-8d284e155af1">
+          <NavigationalProperty Id="b367e752-9452-49c0-9a99-3926db675a78" name="Partnerships" type="IList&lt;Partnership&gt;" label="Partnerships : IList&lt;Partnership&gt;" nullable="true" kind="Persistent" fieldName="_partnerships" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+    <DomainClass Id="a3f79e2c-a062-4c51-a529-18e6d578da24" name="Church" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="ChurchId">
+      <Property Id="a5e6b117-6f26-4dbf-bf08-65326bb6d9e7" name="ChurchId" type="Int32" label="ChurchId : Int32" kind="Persistent" identity="true" fieldName="_churchId" />
+      <Property Id="653e5f14-96aa-4ebe-892b-572db861c87e" name="DefaultCurrencyId" type="Int32" label="DefaultCurrencyId : Int32" nullable="true" kind="Persistent" fieldName="_defaultCurrencyId" />
+      <Property Id="c279f4db-5723-49a8-8496-b80efee01b92" name="GroupId" type="Int32" label="GroupId : Int32" kind="Persistent" fieldName="_groupId" />
+      <Property Id="632bfc31-41b7-4b3c-91bb-db2bf4b6cced" name="Name" label="Name : String" kind="Persistent" fieldName="_name" />
+      <AssociationTargets>
+        <Association Id="8652b109-361f-4eed-bb74-0b3cd7456531" SourceMultiplicity="One" name="ChurchHasGroup">
+          <DomainClassMoniker name="/EntitiesModel/Group" />
+          <targetNavigationalProperty>
+            <associationDefinesTargetProperty Id="c1de690f-c46d-4f5d-ac2a-099c98d3bab5">
+              <NavigationalPropertyMoniker name="/EntitiesModel/Group/Churches" />
+            </associationDefinesTargetProperty>
+          </targetNavigationalProperty>
+          <sourceNavigationalProperty>
+            <associationDefinesSourceProperty Id="45af1d28-ad33-4811-af94-1e3dfd7bb5da">
+              <NavigationalPropertyMoniker name="/EntitiesModel/Church/Group" />
+            </associationDefinesSourceProperty>
+          </sourceNavigationalProperty>
+        </Association>
+      </AssociationTargets>
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="504941ff-811a-4780-8036-86cd63519a4d">
+          <NavigationalProperty Id="08320e72-4a53-4284-bcbc-ff44078f275a" name="Partners" type="IList&lt;Partner&gt;" label="Partners : IList&lt;Partner&gt;" nullable="true" kind="Persistent" fieldName="_partners" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+        <classHasNavigationalProperties Id="a6012698-3852-454e-9174-0281d4f96f3f">
+          <NavigationalProperty Id="7bd692f9-460d-4dbf-af6f-4ecdb2867346" name="Group" type="Group" label="Group : Group" nullable="true" kind="Persistent" fieldName="_group" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+  </Types>
+  <domainContext>
+    <domainModelHasDomainContext Id="4ac031ae-7aea-4b84-a9c1-1a2fd5f819bd">
+      <domainContainer name="EntitiesModel" namespace="Zakar.Models" showPropertiesCompartment="true">
+        <entitySetProperty name="Webpages_Roles" namespace="Zakar.Models" type="Webpages_Role" label="Webpages_Roles : IQueryable&lt;Zakar.Models.Webpages_Role&gt;" />
+        <entitySetProperty name="Webpages_OAuthMemberships" namespace="Zakar.Models" type="Webpages_OAuthMembership" label="Webpages_OAuthMemberships : IQueryable&lt;Zakar.Models.Webpages_OAuthMembership&gt;" />
+        <entitySetProperty name="Webpages_Memberships" namespace="Zakar.Models" type="Webpages_Membership" label="Webpages_Memberships : IQueryable&lt;Zakar.Models.Webpages_Membership&gt;" />
+        <entitySetProperty name="UserProfiles" namespace="Zakar.Models" type="UserProfile" label="UserProfiles : IQueryable&lt;Zakar.Models.UserProfile&gt;" />
+        <entitySetProperty name="SystemSettings" namespace="Zakar.Models" type="SystemSetting" label="SystemSettings : IQueryable&lt;Zakar.Models.SystemSetting&gt;" />
+        <entitySetProperty name="Settings" namespace="Zakar.Models" type="Setting" label="Settings : IQueryable&lt;Zakar.Models.Setting&gt;" />
+        <entitySetProperty name="QueuedNotifications" namespace="Zakar.Models" type="QueuedNotification" label="QueuedNotifications : IQueryable&lt;Zakar.Models.QueuedNotification&gt;" />
+        <entitySetProperty name="Partnerships" namespace="Zakar.Models" type="Partnership" label="Partnerships : IQueryable&lt;Zakar.Models.Partnership&gt;" />
+        <entitySetProperty name="PartnershipArms" namespace="Zakar.Models" type="PartnershipArm" label="PartnershipArms : IQueryable&lt;Zakar.Models.PartnershipArm&gt;" />
+        <entitySetProperty name="Partners" namespace="Zakar.Models" type="Partner" label="Partners : IQueryable&lt;Zakar.Models.Partner&gt;" />
+        <entitySetProperty name="Notifications" namespace="Zakar.Models" type="Notification" label="Notifications : IQueryable&lt;Zakar.Models.Notification&gt;" />
+        <entitySetProperty name="NotificationCategories" namespace="Zakar.Models" type="NotificationCategory" label="NotificationCategories : IQueryable&lt;Zakar.Models.NotificationCategory&gt;" />
+        <entitySetProperty name="NonValidatedPartnershipRecords" namespace="Zakar.Models" type="NonValidatedPartnershipRecord" label="NonValidatedPartnershipRecords : IQueryable&lt;Zakar.Models.NonValidatedPartnershipRecord&gt;" />
+        <entitySetProperty name="Groups" namespace="Zakar.Models" type="Group" label="Groups : IQueryable&lt;Zakar.Models.Group&gt;" />
+        <entitySetProperty name="Currencies" namespace="Zakar.Models" type="Currency" label="Currencies : IQueryable&lt;Zakar.Models.Currency&gt;" />
+        <entitySetProperty name="Churches" namespace="Zakar.Models" type="Church" label="Churches : IQueryable&lt;Zakar.Models.Church&gt;" />
+      </domainContainer>
+    </domainModelHasDomainContext>
+  </domainContext>
+</DomainModel>
