@@ -54,7 +54,23 @@
     <Compile Include="Service\PartnershipArmService.cs" />
     <Compile Include="Service\PartnershipService.cs" />
     <Compile Include="Service\QueuedNotificationService.cs" />
+    <Compile Include="Service\ReportBuilder\PartnerDrillDownReportBuilder.cs" />
+    <Compile Include="Service\ReportBuilder\PartnershipArmDrillDownReportBuilder.cs" />
+    <Compile Include="Service\ReportBuilder\PartnershipSummaryReportBuilder.cs" />
+    <Compile Include="Service\ReportBuilder\PartnersPartnershipReportBuilder.cs" />
+    <Compile Include="Service\ReportBuilder\PartnersRankingBuilder.cs" />
+    <Compile Include="Service\ReportBuilder\YearReportBuilder.cs" />
     <Compile Include="Service\SystemSettingsService.cs" />
+    <Compile Include="Utils\ChurchGroupFactory.cs" />
+    <Compile Include="Utils\SettingsFactory.cs" />
+    <Compile Include="Utils\CurrencyFactory.cs" />
+    <Compile Include="Utils\GroupFactory.cs" />
+    <Compile Include="Utils\NotificationFactory.cs" />
+    <Compile Include="Utils\NotificationsCategoryFactory.cs" />
+    <Compile Include="Utils\PartnerFactory.cs" />
+    <Compile Include="Utils\PartnershipArmFactory.cs" />
+    <Compile Include="Utils\PartnershipFactory.cs" />
+    <Compile Include="Utils\QueuedNotificationFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zakar.Models\Zakar.Models.csproj">

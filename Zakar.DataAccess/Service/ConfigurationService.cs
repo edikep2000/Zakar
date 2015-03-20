@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using Zakar.DataAccess.Utils;
 using Zakar.Models;
 
 namespace Zakar.DataAccess.Service
@@ -23,11 +24,11 @@ namespace Zakar.DataAccess.Service
                 bool flag = value;
                 entity.Name = settingsName;
                 entity.Value = flag.ToString();
-                create(entity);
+                Create(entity);
             }
             catch (Exception exception)
             {
-                throw exception;
+                throw;
             }
         }
 
@@ -39,19 +40,19 @@ namespace Zakar.DataAccess.Service
                 int num = Convert.ToInt32(value);
                 entity.Name = settingsName;
                 entity.Value = num.ToString();
-                create(entity);
+                Create(entity);
             }
             catch (InvalidCastException exception)
             {
-                throw exception;
+                throw;
             }
             catch (FormatException exception2)
             {
-                throw exception2;
+                throw;
             }
             catch (OverflowException exception3)
             {
-                throw exception3;
+                throw;
             }
         }
 
@@ -62,16 +63,16 @@ namespace Zakar.DataAccess.Service
             {
                 entity.Name = settingsName;
                 entity.Value = value;
-                create(entity);
+                Create(entity);
             }
             catch (Exception exception)
             {
-                throw exception;
+                throw;
             }
         }
 
 
-        public void create(Setting entity)
+        public void Create(Setting entity)
         {
             if (entity != null)
             {
