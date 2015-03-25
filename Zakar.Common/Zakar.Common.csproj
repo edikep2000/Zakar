@@ -30,6 +30,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML">
+      <HintPath>..\packages\ClosedXML.0.76.0\lib\net40-client\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Mvc.Mailer">
+      <HintPath>..\packages\MvcMailer.4.5\lib\45\Mvc.Mailer.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -38,23 +58,116 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Telerik.OpenAccess, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL" />
+    <Reference Include="WebMatrix.WebData, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\IMessageBuilder.cs" />
+    <Compile Include="Builders\PartnerAlertSmsBuilder.cs" />
+    <Compile Include="Builders\PartnerAnalyticsBuilder.cs" />
+    <Compile Include="Builders\PartnershipAlertSMSBuilder.cs" />
+    <Compile Include="Builders\PartnershipAnalyticsBuilder.cs" />
+    <Compile Include="Caching\AspNetRumtimeCacheManager.cs" />
+    <Compile Include="Caching\ICacheManager.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Converters\NotificationToSmsTranslator.cs" />
+    <Compile Include="Converters\QueuedNotificationsConverter.cs" />
+    <Compile Include="Enums\MonthEnums.cs" />
+    <Compile Include="Enums\PartnerFileEnum.cs" />
+    <Compile Include="Enums\SettingsEnum.cs" />
+    <Compile Include="Enums\SystemsSettingsEnum.cs" />
+    <Compile Include="Events\EventArgs\PartnerCreatedEventArgs.cs" />
+    <Compile Include="Events\EventArgs\PartnerFileUploadedEventArgs.cs" />
+    <Compile Include="Events\EventConsumers\EventConsumers.cs" />
+    <Compile Include="Events\EventConsumers\PartnerListProcessedEventArgs.cs" />
+    <Compile Include="Events\EventConsumers\PartnershipLogCreatedEventArgs.cs" />
+    <Compile Include="Events\EventConsumers\PartnershipLogFileUploadedEventArgs.cs" />
+    <Compile Include="Events\EventConsumers\PartnershipLogProcessedEventArgs.cs" />
+    <Compile Include="Events\EventConsumers\PasswordResetEventArgs.cs" />
+    <Compile Include="Events\EventConsumers\QueuedNotificationEventArgs.cs" />
+    <Compile Include="FileHandlers\IFileHandler.cs" />
+    <Compile Include="FileHandlers\PartnershipArmExcelFileHandler.cs" />
+    <Compile Include="FileHandlers\PartnershipLogExcelFileHandler.cs" />
+    <Compile Include="FileHandlers\PartnerUploadExcelFileHandler.cs" />
+    <Compile Include="Filters\BipScoreMessageSender.cs" />
+    <Compile Include="Filters\EmailNotificationJob.cs" />
+    <Compile Include="Filters\Partner.cs" />
+    <Compile Include="Filters\PartnershipArm.cs" />
+    <Compile Include="Filters\PartnershipLog.cs" />
+    <Compile Include="Filters\SilverStreetMessageSender.cs" />
+    <Compile Include="Filters\SMSNotificationJob.cs" />
+    <Compile Include="Filters\XWireLessMessageSender.cs" />
+    <Compile Include="Formatters\IPhoneNumberFormatter.cs" />
+    <Compile Include="Formatters\PhoneNumberFormatter.cs" />
+    <Compile Include="ListItemBuilders\ChurchListBuilder.cs" />
+    <Compile Include="ListItemBuilders\CurrencyListBuilder.cs" />
+    <Compile Include="ListItemBuilders\MonthListBuilder.cs" />
+    <Compile Include="ListItemBuilders\PartnershipArmListBuilder.cs" />
+    <Compile Include="ListItemBuilders\PartnerTitleListBuilder.cs" />
+    <Compile Include="ListItemBuilders\YearListBuilder.cs" />
+    <Compile Include="Messaging\BipscoreSMSMessageSender.cs" />
+    <Compile Include="Messaging\SilverStreetSMSMessageSender.cs" />
+    <Compile Include="Messaging\IMessageSender.cs" />
+    <Compile Include="Messaging\XWirelessMessageSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\PagedList.css" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Zakar.DataAccess\Zakar.DataAccess.csproj">
+      <Project>{5F49A54A-A1BE-4977-ABBA-52BF9C7FF4E8}</Project>
+      <Name>Zakar.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zakar.Models\Zakar.Models.csproj">
+      <Project>{C50145E6-A244-4F1F-B41F-90D1925B4A00}</Project>
+      <Name>Zakar.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zakar.ViewModels\Zakar.ViewModels.csproj">
+      <Project>{C998E3FD-450B-4048-8125-7326F5B6629A}</Project>
+      <Name>Zakar.ViewModels</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
