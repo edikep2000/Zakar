@@ -7,15 +7,16 @@ namespace Zakar.DataAccess
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly OpenAccessContext _context;
+        private readonly IUnitOfWork _context;
 
-        public Repository(OpenAccessContext ctx)
+        public Repository(IUnitOfWork ctx)
         {
             _context = ctx;
         }
         public IQueryable<T> GetAll()
         {
             return _context.GetAll<T>();
+           
         }
 
         public IQueryable<T> Find(Expression<Func<T, bool>> predicate)

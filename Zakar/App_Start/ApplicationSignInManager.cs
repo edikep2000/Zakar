@@ -3,10 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using Zakar.App_Start;
 using Zakar.Models;
 
-namespace Zakar
+namespace Zakar.App_Start
 {
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
