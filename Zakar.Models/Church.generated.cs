@@ -113,6 +113,27 @@ namespace Zakar.Models
 			}
 		}
 		
+		private string _uniqueId;
+		[Column("unique_id", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		[Storage("_uniqueId")]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
+		public virtual string UniqueId
+		{
+			get
+			{
+				return this._uniqueId;
+			}
+			set
+			{
+				if(this._uniqueId != value)
+				{
+					this.OnPropertyChanging("UniqueId");
+					this._uniqueId = value;
+					this.OnPropertyChanged("UniqueId");
+				}
+			}
+		}
+		
 		private Group _group;
 		[ForeignKeyAssociation(ConstraintName = "FK_GroupChurch", SharedFields = "GroupId", TargetFields = "Id")]
 		[Storage("_group")]

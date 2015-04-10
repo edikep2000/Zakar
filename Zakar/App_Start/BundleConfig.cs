@@ -19,6 +19,13 @@ namespace Zakar
             bundles.Add(new StyleBundle("~/font-awesome/css").Include(
                 "~/fonts/font-awesome/css/font-awesome.min.css", new CssRewriteUrlTransform()));
 
+            bundles.Add(new StyleBundle("~/kendo/css").Include("~/Content/kendo/2014.3.1411/kendo.common.min.css",
+                "~/Content/kendo/2014.3.1411/kendo.mobile.all.min.css",
+                "~/Content/kendo/2014.3.1411/kendo.dataviz.min.css",
+                "~/Content/kendo/2014.3.1411/kendo.metro.min.css",
+                "~/Content/kendo/2014.3.1411/kendo.dataviz.metro.min.css"));
+            
+            
             // jQuery
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 "~/Scripts/jquery-2.1.1.min.js"));
@@ -33,7 +40,7 @@ namespace Zakar
 
             // Bootstrap
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/bootstrap.min.js"));
+                "~/Scripts/bootstrap.min.js", "~/Scripts/bootstrapPopup.js"));
 
             // Inspinia script
             bundles.Add(new ScriptBundle("~/bundles/inspinia").Include(
@@ -286,6 +293,16 @@ namespace Zakar
             bundles.Add(new ScriptBundle("~/plugins/tinycon").Include(
                 "~/Scripts/plugins/tinycon/tinycon.min.js"));
 
+            bundles.Add(new ScriptBundle("~/kendo/js").Include("~/Scripts/kendo/2014.3.1411/jszip.min.js",
+                "~/Scripts/kendo/2014.3.1411/kendo.all.min.js",
+                "~/Scripts/kendo/2014.3.1411/kendo.aspnetmvc.min.js",
+                "~/Scripts/kendo.modernizr.custom.js"));
+
+            //AwesomeMVC
+            bundles.Add(new ScriptBundle("~/scripts/awesomemvc").Include(
+                     "~/Scripts/AwesomeMvc.js", "~/Scripts/Site.js"));
+            bundles.Add(new StyleBundle("~/content/awesomemvc").Include(
+            "~/Content/themes/bui/Site.css", "~/Content/themes/bui/AwesomeMvc.css"));
         }
     }
 

@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Manage Zones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var recordExists = ViewBag.IsViewEmpty is bool && (bool)ViewBag.IsViewEmpty;
+}
+@Html.Partial("_headerPartial")
+
+@Html.Awe().InitPopupForm().Url(Url.Action("ZoneCreate", "Setup")).Name("createZone").Group("Zone").Modal(true).Title("New Zone").OkText("Save Changes").CancelText("Cancel")
+@Html.Awe().InitPopupForm().Url(Url.Action("ZoneDelete", "Setup")).Name("deleteZone").Group("Zone").Modal(true).Title("Confirm Delete").OkText("OK").CancelText("NO")
+@Html.Awe().InitPopupForm().Url(Url.Action("ZoneEdit", "Setup")).Name("editZone").Group("Zone").Modal(true).Title("Edit Zone").OkText("Save Changes").CancelText("Discard Changes")
+@Html.Awe().InitPopup().Name("detailsZone").Url(Url.Action("ZoneDetails", "Setup")).Group("Zone").Modal(true).Title("Zone Details")
+
+
+<br/>
+<br/>
+<div class="wrapper wrapper-content white-bg">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                @if (recordExists)
+                {
+                    @Html.Awe().Grid("grdZone").Groupable(false).Url(Url.Action("ZoneRead", "Zone")).PageSize(20).Columns(new Column()
+                    {
+                        Name = "Name",
+                        Header = "Zone"
+                    },
+                        new Column()
+                        {
+                            Name = "GroupCount",
+                            Header = "Group Count",
+                            Width = 100
+                        },
+                        new Column()
+                        {
+                            ClientFormat = "<button type='button' rel='tooltip' title='Edit Zone' class='btn btn-primary' onclick=\"awe.open('editZone', { params:{ id: .Id } })\"><i class='fa fa-edit'></i></button>",
+                            Width = 20
+                        },
+                        new Column()
+                        {
+                            ClientFormat = "<button type='button' rel='tooltip' title='Delete Zone' class='btn btn-primary' onclick=\"awe.open('deleteZone', { params:{ id: .Id } })\"><i class='fa fa-trash-o'></i></button>",
+                            Width = 20
+                        }, new Column()
+                        {
+                            ClientFormat = "<button type='button' rel='tooltip' title='View Summary' class='btn btn-primary' onclick=\"awe.open('detailsZone', { params:{ id: .Id } })\"><i class='fa fa-folder-open'></i></button>",
+                            Width = 20
+                        })
+                }
+                else
+                {
+                    <div class="well">
+                        <h3>Sorry</h3>
+                        Sorry but there is nothing to display
+                        <br/>
+                        <button type="button" onclick="awe.open('createZone')" class="btn  btn-primary">New Zone</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/scripts/awesomemvc")
+
+}
+
+@section Styles{
+    @Styles.Render("~/content/awesomemvc")
+}

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Telerik.OpenAccess.Util;
 using Zakar.Models;
 
 namespace Zakar.DataAccess.Service

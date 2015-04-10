@@ -14,5 +14,7 @@ namespace Zakar.ViewModels
 
         [Required, StringLength(50)]
         public string Name { get; set; }
+
+        public string UniqueId { get; set; }
     }
 }

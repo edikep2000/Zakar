@@ -22,7 +22,7 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[NamingSettings(SourceStrategy = NamingSourceStrategy.Property, RemoveLeadingUnderscores = true, ResolveReservedWords = true, UseDelimitedSQL = true, WordBreak = "_")]
+	[NamingSettings(SourceStrategy = NamingSourceStrategy.Property, ResolveReservedWords = true, UseDelimitedSQL = true, WordBreak = "_")]
 	public partial class EntitiesModel : OpenAccessContext, IEntitiesModelUnitOfWork
 	{
 		private static string connectionStringName = @"Unibencellinfo_partnershipConnection";
@@ -179,11 +179,23 @@ namespace Zakar.Models
 			}
 		}
 		
+		public IQueryable<Zone> Zones 
+		{
+			get
+			{
+				return this.GetAll<Zone>();
+			}
+		}
+		
 		public static BackendConfiguration GetBackendConfiguration()
 		{
 			BackendConfiguration backend = new BackendConfiguration();
 			backend.Backend = "MsSql";
 			backend.ProviderName = "System.Data.SqlClient";
+			backend.Logging.MetricStoreSnapshotInterval = 0;
+			backend.SecondLevelCache.Enabled = true;
+			backend.SecondLevelCache.CacheQueryResults = true;
+			backend.ConnectionPool.Pool = ConnectionPoolType.ADOManaged;
 		
 			CustomizeBackendConfiguration(ref backend);
 		
@@ -261,6 +273,10 @@ namespace Zakar.Models
 			get;
 		}
 		IQueryable<Church> Churches
+		{
+			get;
+		}
+		IQueryable<Zone> Zones
 		{
 			get;
 		}

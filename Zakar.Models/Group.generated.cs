@@ -72,6 +72,68 @@ namespace Zakar.Models
 			}
 		}
 		
+		private int _zoneId;
+		[Column("zone_id", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
+		[Storage("_zoneId")]
+		[System.ComponentModel.DataAnnotations.Required()]
+		public virtual int ZoneId
+		{
+			get
+			{
+				return this._zoneId;
+			}
+			set
+			{
+				if(this._zoneId != value)
+				{
+					this.OnPropertyChanging("ZoneId");
+					this._zoneId = value;
+					this.OnPropertyChanged("ZoneId");
+				}
+			}
+		}
+		
+		private string _uniqueId;
+		[Column("unique_id", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		[Storage("_uniqueId")]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
+		public virtual string UniqueId
+		{
+			get
+			{
+				return this._uniqueId;
+			}
+			set
+			{
+				if(this._uniqueId != value)
+				{
+					this.OnPropertyChanging("UniqueId");
+					this._uniqueId = value;
+					this.OnPropertyChanged("UniqueId");
+				}
+			}
+		}
+		
+		private Zone _zone;
+		[ForeignKeyAssociation(SharedFields = "ZoneId", TargetFields = "Id")]
+		[Storage("_zone")]
+		public virtual Zone Zone
+		{
+			get
+			{
+				return this._zone;
+			}
+			set
+			{
+				if(this._zone != value)
+				{
+					this.OnPropertyChanging("Zone");
+					this._zone = value;
+					this.OnPropertyChanged("Zone");
+				}
+			}
+		}
+		
 		private IList<Church> _churches = new List<Church>();
 		[Collection(InverseProperty = "Group")]
 		[Storage("_churches")]

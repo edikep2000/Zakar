@@ -1,4 +1,6 @@
-﻿@using Zakar.Common.Inspinia_MVC5
+﻿@using System.Threading
+@using Zakar.Common
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +22,10 @@
     <!-- Primary Inspinia style -->     
     @Styles.Render("~/font-awesome/css")                                                
     @Styles.Render("~/Content/css")
+	<!--This bundle was moved by the Telerik VS Extensions for compatibility reasons-->
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
 </head>
 <body>
 
@@ -52,15 +58,26 @@
     <!-- End wrapper-->
 
     <!-- Section for main scripts render -->
-    @Scripts.Render("~/bundles/jquery")
+    
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/plugins/slimScroll")
     @Scripts.Render("~/bundles/inspinia")
 
     <!-- Skin config script - only for demo purpose-->
     @Scripts.Render("~/bundles/skinConfig")
-
-    <!-- Handler for local scripts -->
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
     @RenderSection("scripts", required: false)
+    
+    <script>
+    var root = '@Url.Content("~")';
+    var popupMod = 'bootstrap';
+    var isMobileOrTablet = '@Utils.IsMobileOrTablet()' == "True";
+    var dateFormat = '@AweUtil.ConvertTojQueryDateFormat(Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern)';
+    init(dateFormat, isMobileOrTablet);
+    $(function () { documentReady(root, popupMod); });
+    $.fn.bootstrapBtn = $.fn.button.noConflict();
+    </script>
+
 </body>
 </html>

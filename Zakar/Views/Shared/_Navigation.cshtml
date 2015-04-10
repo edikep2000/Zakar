@@ -28,12 +28,15 @@
                 </div>
             </li>
             <li class="@Html.IsSelected(controller: "Dashboards")">
-                <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
+                <a href="@Url.Action("Index", "Home")"><i class=""></i> <span class="nav-label">Portal Setup</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(action: "Dashboard_1")"><a href="@Url.Action("Dashboard_1", "Dashboards")">Dashboard v.1</a></li>
-                    <li class="@Html.IsSelected(action: "Dashboard_2")"><a href="@Url.Action("Dashboard_2", "Dashboards")">Dashboard v.2</a></li>
-                    <li class="@Html.IsSelected(action: "Dashboard_3")"><a href="@Url.Action("Dashboard_3", "Dashboards")">Dashboard v.3</a></li>
-                    <li class="@Html.IsSelected(action: "Dashboard_4_1")"><a href="@Url.Action("Dashboard_4_1", "Dashboards")">Dashboard v.4</a></li>
+                    <li class="@Html.IsSelected(action: "ZoneIndex")"><a href="@Url.Action("ZoneIndex", "Setup")">Zones</a></li>
+                    <li class="@Html.IsSelected(action: "GroupIndex")"><a href="@Url.Action("GroupIndex", "Setup")">Groups</a></li>
+                    <li class="@Html.IsSelected(action: "ChapterIndex")"><a href="@Url.Action("ChapterIndex", "Setup")">Chapters</a></li>
+                    <li class="@Html.IsSelected(action: "PCFIndex")"><a href="@Url.Action("PCFIndex", "Setup")">PCFs</a></li>
+                    <li class="@Html.IsSelected(action: "CellIndex")"><a href="@Url.Action("CellIndex", "Setup")">Cells</a></li>
+                    <li class="@Html.IsSelected(action: "ArmIndex")"><a href="@Url.Action("ArmIndex", "Setup")">Partnership Arms</a></li>
+                    <li class="@Html.IsSelected(action: "CurrencyIndex")"><a href="@Url.Action("CurrencyIndex", "Setup")">Currencies</a></li>
                 </ul>
             </li>
             <li class="@Html.IsSelected(controller: "Layouts")">
