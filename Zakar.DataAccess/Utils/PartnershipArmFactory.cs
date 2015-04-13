@@ -7,7 +7,7 @@ namespace Zakar.DataAccess.Utils
     {
         public static PartnershipArm BuildNew()
         {
-            return new PartnershipArm { DateDeleted = new DateTime?(DateTime.Now.AddYears(-1)), Deleted = false, Description = "No Description" };
+            return new PartnershipArm();
         }
     }
 }

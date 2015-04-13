@@ -130,6 +130,7 @@
     <Compile Include="Filters\XWireLessMessageSender.cs" />
     <Compile Include="Formatters\IPhoneNumberFormatter.cs" />
     <Compile Include="Formatters\PhoneNumberFormatter.cs" />
+    <Compile Include="IDGenerators\UniqueIdGenerator.cs" />
     <Compile Include="ListItemBuilders\ChurchListBuilder.cs" />
     <Compile Include="ListItemBuilders\CurrencyListBuilder.cs" />
     <Compile Include="ListItemBuilders\MonthListBuilder.cs" />

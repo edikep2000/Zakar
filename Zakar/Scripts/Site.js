@@ -28,25 +28,73 @@ function init(dateFormat, isMobileOrTablet) {
 }
 
 //on document ready
-
 function documentReady(root, popupMod) {
-    consistentSearchTxt();
+
+
+  consistentSearchTxt();
     $(document).ajaxComplete(consistentSearchTxt);
- 
+
     //parsing the unobtrusive attributes when we get content via ajax
-    $(document).ajaxComplete(function() {
+    $(document).ajaxComplete(function () {
         $.validator.unobtrusive.parse(document);
     });
 
-  
 
 
-    awe.popup = function(o) {
+    //show code directive
+    $('.code').hide().before('<br/>').before($('<span class="shcode">show code</span>').click(function () {
+        var btn = $(this);
+        btn.toggleClass("hideCode showCode");
+
+        if (btn.hasClass("hideCode")) {
+            btn.html("hide code");
+            $(this).next().fadeIn();
+        } else {
+            btn.html("show code");
+            $(this).next().fadeOut();
+        }
+    }));
+
+    awe.popup = function (o) {
         return bootstrapPopup(o);
     };
     /*endpopup*/
-}
 
+    //change popup
+    $('#chPopupMod').change(function () {
+        var p = $('#chPopupMod').val();
+        var v = $('#chTheme').val().split("|");
+        var theme = v[0];
+        popupMod = p;
+
+        $('.awe-popup').each(function () {
+            if ($(this).data('api'))
+                $(this).data('api').close();
+        });
+
+        $('.awe-multilookup, .awe-lookup').each(function () { $(this).data('api').initPopup(); });
+    });
+
+    //change theme
+    $('#chTheme').change(function () {
+        var newmod = $('#chPopupMod').val();
+        var v = $('#chTheme').val().split("|");
+        var theme = v[0];
+        var jqTheme = v[1];
+
+        $('#jqStyle').attr('href', "http://code.jquery.com/ui/1.11.1/themes/" + jqTheme + "/jquery-ui.min.css");
+        $('#aweStyle').attr('href', root + "Content/themes/" + theme + "/AwesomeMvc.css?v=3");
+        $('#demoStyle').attr('href', root + "Content/themes/" + theme + "/Site.css?v=3");
+        $.post(root + "Settings/Change", { theme: theme, popupMod: newmod }, function () {
+            setTimeout(function () {
+                $('.awe-grid').each(
+                    function () {
+                        $(this).data('api').lay();
+                    });
+            }, 500);
+        });
+    });
+}
 
 // on ie hitting enter doesn't trigger change, 
 // all searchtxt inputs will trigger change on enter in all browsers
@@ -74,10 +122,19 @@ function consistentSearchTxt() {
     });
 }
 
-
+function handleAnchors() {
+    var anchor = location.hash.replace('#', '').replace(/\(|\)|:|\.|\;|\\|\/|\?|,/g, '');
+    $('h3,h2').each(function (_, e) {
+        var $e = $(e);
+        var name = $e.html().trim().replace(/ /g, '-').replace(/\(|\)|:|\.|\;|\\|\/|\?|,/g, '');
+        $e.append("<a class='anchor' name='" + name + "' href='#" + name + "'><i class='glyphicon glyphicon-link'></i></a>");
+        if (name == anchor) {
+            $e.addClass("awe-changing").removeClass('awe-changing', 3000);
+        }
+    });
+}
 
 var lastw = 0;
-
 
 
 //wrap ajaxlists for horizontal scrolling on small screens
@@ -97,6 +154,7 @@ function wrapLists() {
 
 
 function setjQueryValidateDateFormat(format) {
+    //setting the correct date format for jquery.validate
     jQuery.validator.addMethod(
         'date',
         function (value, element, params) {
@@ -174,3 +232,18 @@ function refreshGrid(gridId) {
         $("#" + gridId).data('api').load();
     };
 }
+
+
+
+
+//google analytics
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-27119754-1']);
+_gaq.push(['_setDomainName', 'aspnetawesome.com']);
+_gaq.push(['_trackPageview']);
+
+(function () {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();

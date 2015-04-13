@@ -23,7 +23,7 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table("Partnerships", SchemaName = "dbo")]
+	[Table("Partnerships", SchemaName = "dbo", UpdateSchema = true)]
 	[ConcurrencyControl(OptimisticConcurrencyControlStrategy.Changed)]
 	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class Partnership : INotifyPropertyChanging, INotifyPropertyChanged

@@ -47,6 +47,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cell.generated.cs">
+      <DependentUpon>EntitiesModel.rlinq</DependentUpon>
+    </Compile>
     <Compile Include="Church.generated.cs">
       <DependentUpon>EntitiesModel.rlinq</DependentUpon>
     </Compile>
@@ -77,6 +80,9 @@
       <DependentUpon>EntitiesModel.rlinq</DependentUpon>
     </Compile>
     <Compile Include="PartnershipArm.generated.cs">
+      <DependentUpon>EntitiesModel.rlinq</DependentUpon>
+    </Compile>
+    <Compile Include="PCF.generated.cs">
       <DependentUpon>EntitiesModel.rlinq</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,6 +129,11 @@
     <Content Include="Unibencellinfo_partnershipConnection%282015-04-09 15-25-30%29.rlinq.sql" />
     <Content Include="Unibencellinfo_partnershipConnection%282015-04-09 15-29-05%29.rlinq.sql" />
     <Content Include="Unibencellinfo_partnershipConnection%282015-04-09 15-29-38%29.rlinq.sql" />
+    <Content Include="Unibencellinfo_partnershipConnection%282015-04-11 19-22-19%29.rlinq.sql" />
+    <Content Include="Unibencellinfo_partnershipConnection%282015-04-11 19-24-23%29.rlinq.sql" />
+    <Content Include="Unibencellinfo_partnershipConnection%282015-04-11 19-25-46%29.rlinq.sql" />
+    <Content Include="Unibencellinfo_partnershipConnection%282015-04-12 15-18-19%29.rlinq.sql" />
+    <Content Include="Unibencellinfo_partnershipConnection%282015-04-13 06-02-58%29.rlinq.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Condition="Exists('$(MSBuildExtensionsPath)\OpenAccess.targets')" Project="$(MSBuildExtensionsPath)\OpenAccess.targets" />

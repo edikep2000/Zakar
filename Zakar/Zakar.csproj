@@ -75,8 +75,9 @@
     <Reference Include="Mvc.Mailer">
       <HintPath>..\packages\MvcMailer.4.5\lib\45\Mvc.Mailer.dll</HintPath>
     </Reference>
-    <Reference Include="Omu.AwesomeMvc">
-      <HintPath>..\..\..\..\..\Desktop\awesomemvcdemo\libs\Omu.AwesomeMvc.dll</HintPath>
+    <Reference Include="Omu.AwesomeMvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=9c6fbba722ea1caf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\edikep2000\Desktop\bin\mvc5\Omu.AwesomeMvc.dll</HintPath>
     </Reference>
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -218,6 +219,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AjaxListController.cs" />
     <Compile Include="Controllers\ArmsController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -663,6 +665,64 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Images\a1.jpg" />
+    <Content Include="Images\a2.jpg" />
+    <Content Include="Images\a3.jpg" />
+    <Content Include="Images\a4.jpg" />
+    <Content Include="Images\a5.jpg" />
+    <Content Include="Images\a6.jpg" />
+    <Content Include="Images\a7.jpg" />
+    <Content Include="Images\a8.jpg" />
+    <Content Include="Images\angular_logo.png" />
+    <Content Include="Images\dashbard4_1.jpg" />
+    <Content Include="Images\dashbard4_2.jpg" />
+    <Content Include="Images\email_1.jpg" />
+    <Content Include="Images\email_2.jpg" />
+    <Content Include="Images\email_3.jpg" />
+    <Content Include="Images\full_height.jpg" />
+    <Content Include="Images\gallery\1.jpg" />
+    <Content Include="Images\gallery\10.jpg" />
+    <Content Include="Images\gallery\10s.jpg" />
+    <Content Include="Images\gallery\11.jpg" />
+    <Content Include="Images\gallery\11s.jpg" />
+    <Content Include="Images\gallery\12.jpg" />
+    <Content Include="Images\gallery\12s.jpg" />
+    <Content Include="Images\gallery\1s.jpg" />
+    <Content Include="Images\gallery\2.jpg" />
+    <Content Include="Images\gallery\2s.jpg" />
+    <Content Include="Images\gallery\3.jpg" />
+    <Content Include="Images\gallery\3s.jpg" />
+    <Content Include="Images\gallery\4.jpg" />
+    <Content Include="Images\gallery\4s.jpg" />
+    <Content Include="Images\gallery\5.jpg" />
+    <Content Include="Images\gallery\5s.jpg" />
+    <Content Include="Images\gallery\6.jpg" />
+    <Content Include="Images\gallery\6s.jpg" />
+    <Content Include="Images\gallery\7.jpg" />
+    <Content Include="Images\gallery\7s.jpg" />
+    <Content Include="Images\gallery\8.jpg" />
+    <Content Include="Images\gallery\8s.jpg" />
+    <Content Include="Images\gallery\9.jpg" />
+    <Content Include="Images\gallery\9s.jpg" />
+    <Content Include="Images\html_logo.png" />
+    <Content Include="Images\mvc_logo.png" />
+    <Content Include="Images\off_canvas.jpg" />
+    <Content Include="Images\p1.jpg" />
+    <Content Include="Images\p2.jpg" />
+    <Content Include="Images\p3.jpg" />
+    <Content Include="Images\p4.jpg" />
+    <Content Include="Images\p5.jpg" />
+    <Content Include="Images\p6.jpg" />
+    <Content Include="Images\p7.jpg" />
+    <Content Include="Images\p8.jpg" />
+    <Content Include="Images\profile.jpg" />
+    <Content Include="Images\profile_big.jpg" />
+    <Content Include="Images\profile_small.jpg" />
+    <Content Include="Images\p_big1.jpg" />
+    <Content Include="Images\p_big2.jpg" />
+    <Content Include="Images\p_big3.jpg" />
+    <Content Include="Images\rails_logo.png" />
+    <Content Include="Images\zender_logo.png" />
     <Content Include="Scripts\app\inspinia.js" />
     <Content Include="Scripts\app\inspinia.min.js" />
     <Content Include="Scripts\app\skin.config.min.js" />
@@ -684,6 +744,7 @@
     <Content Include="Content\kendo\2014.3.1411\fonts\DejaVu\LICENSE" />
     <Content Include="Content\kendo\2014.3.1411\images\kendoui.ttf" />
     <Content Include="Content\kendo\2014.3.1411\images\kendoui.woff" />
+    <None Include="Properties\PublishProfiles\test.blwcampusministry.net - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrapPopup.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
@@ -1590,7 +1651,9 @@
     <Content Include="Scripts\plugins\velocity\velocity.ui.min.js" />
     <Content Include="Scripts\plugins\video\responsible-video.js" />
     <Content Include="Scripts\Site.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1771,9 +1834,25 @@
     <Content Include="Views\Shared\EditorPartials\_currencyEditorPartial.cshtml" />
     <Content Include="Views\Shared\_emptyResultPartial.cshtml" />
     <Content Include="Views\Setup\ZoneCreate.cshtml" />
+    <Content Include="Views\Setup\ZoneEdit.cshtml" />
+    <Content Include="Views\Setup\ZoneDetails.cshtml" />
+    <Content Include="Views\Setup\GroupCreate.cshtml" />
+    <Content Include="Views\Setup\GroupEdit.cshtml" />
+    <Content Include="Views\Shared\Delete.cshtml" />
+    <Content Include="Views\Setup\GroupDetails.cshtml" />
+    <Content Include="Views\Setup\ChapterCreate.cshtml" />
+    <Content Include="Views\Setup\ChapterDetails.cshtml" />
+    <Content Include="Views\Setup\ChapterEdit.cshtml" />
+    <Content Include="Views\Setup\ArmDetails.cshtml" />
+    <Content Include="Views\Setup\ArmEdit.cshtml" />
+    <Content Include="Views\Setup\ArmCreate.cshtml" />
+    <Content Include="Views\Setup\CurrencyDetails.cshtml" />
+    <Content Include="Views\Setup\CurrencyEdit.cshtml" />
+    <Content Include="Views\Setup\CurrencyCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AjaxList\" />
     <Folder Include="Views\ZoneLookup\" />
   </ItemGroup>
   <ItemGroup>

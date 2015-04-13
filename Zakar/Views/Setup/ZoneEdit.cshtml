@@ -1,0 +1,8 @@
+﻿@model Zakar.ViewModels.ZoneViewModel
+           
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.Partial("EditorPartials/_zoneEditorPartial")
+}

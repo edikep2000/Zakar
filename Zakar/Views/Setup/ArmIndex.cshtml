@@ -1,8 +1,55 @@
-﻿
+﻿@using Zakar.Common
+
 @{
-    ViewBag.Title = "ArmIndex";
+    ViewBag.Title = "Partnership Arms";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var modelExists = ViewBag.ModelExists is bool &&(bool)ViewBag.ModelExists;
 }
 
-<h2>ArmIndex</h2>
+@Html.Awe().InitPopupForm().Name("createArm").Url(Url.Action("ArmCreate", "Setup")).Group("Arm").Modal(true).Title("Create Partnership Arm").RefreshOnSuccess(true)
+@Html.Awe().InitPopupForm().Name("editArm").Url(Url.Action("ArmEdit","Setup")).Group("Arm").Modal(true).Title("Edit Partnership Arm").Success("itemUpdated('grdPartnershipArms')")
+@Html.Awe().InitPopupForm().Name("deleteArm").Url(Url.Action("ArmDelete","Setup")).Group("Arm").Modal(true).Title("Delete Partnership Arm").Success("itemDeleted('grdPartnershipArms')")
+@Html.Awe().InitPopup().Name("detailsArm").Url(Url.Action("ArmDetails","Setup")).Group("Arm").Modal(true).Title("Partnership Arm Details")
 
+@Html.Partial("_headerPartial")
+
+<br/>
+<br/>
+
+<div class="wrapper wrapper-content">
+    <div class="ibox  float-e-margins white-bg">
+        @if (modelExists)
+        {
+            @Html.Awe().Grid("grdPartnershipArms").ClientKey("Id").Url(Url.Action("ArmRead", "Setup")).Columns(
+            new Column(){Name = "Id", Hidden = true},
+            new Column(){Name = "Name"},
+            new Column(){Name = "Symbol"},
+            new Column(){ ClientFormat = "<input type='checkbox' class='i-checks' name='id' value='.IsDefaultCurrency'/>", Header = "Default Currency"},
+            new Column(){ClientFormat = @Utils.EditFormat("editArm"), Width = 60},
+            new Column(){ClientFormat = @Utils.DeleteFormat("deleteArm"), Width = 60},
+            new Column(){ClientFormat = @Utils.DetailsFormat("detailsArm"), Width = 60})
+        }
+        else
+        {
+            <div class="well">
+                <h3>Sorry</h3>
+                There is nothing to display
+                <br/>
+                <br/>
+                <button type="button" class="btn btn-primary" onclick="awe.open('createArm')" >
+                    New Partnership Arm
+                    <i class="fa fa-plus-circle"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+@section styles
+{
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+}
+@section scripts
+{
+    @Scripts.Render("~/plugins/iCheck")
+}

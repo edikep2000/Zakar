@@ -112,48 +112,6 @@ namespace Zakar.Models
 			}
 		}
 		
-		private bool _deleted;
-		[Column("Deleted", OpenAccessType = OpenAccessType.Bit, Length = 0, Scale = 0, SqlType = "bit")]
-		[Storage("_deleted")]
-		[System.ComponentModel.DataAnnotations.Required()]
-		public virtual bool Deleted
-		{
-			get
-			{
-				return this._deleted;
-			}
-			set
-			{
-				if(this._deleted != value)
-				{
-					this.OnPropertyChanging("Deleted");
-					this._deleted = value;
-					this.OnPropertyChanged("Deleted");
-				}
-			}
-		}
-		
-		private DateTime? _dateDeleted;
-		[Column("DateDeleted", OpenAccessType = OpenAccessType.DateTime, IsNullable = true, Length = 0, Scale = 0, SqlType = "datetime")]
-		[Storage("_dateDeleted")]
-		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.DateTime)]
-		public virtual DateTime? DateDeleted
-		{
-			get
-			{
-				return this._dateDeleted;
-			}
-			set
-			{
-				if(this._dateDeleted != value)
-				{
-					this.OnPropertyChanging("DateDeleted");
-					this._dateDeleted = value;
-					this.OnPropertyChanged("DateDeleted");
-				}
-			}
-		}
-		
 		private IList<Partnership> _partnerships = new List<Partnership>();
 		[Collection(InverseProperty = "PartnershipArm")]
 		[Storage("_partnerships")]

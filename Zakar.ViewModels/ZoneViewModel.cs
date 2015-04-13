@@ -10,6 +10,7 @@ namespace Zakar.ViewModels
         [Required]
         public String Name { get; set; }
 
+
         public String UniqueId { get; set; }
     }
 
@@ -19,6 +20,23 @@ namespace Zakar.ViewModels
 
         public String Name { get; set; }
 
+        public int GCount { get; set; }
+    }
+
+    public class ZoneDetailsModel
+    {
+        public int Id { get; set; }
+
+        public String Name { get; set; }
+
         public int GroupCount { get; set; }
+
+        public int ChapterCount { get; set; }
+
+        public int PCFCount { get; set; }
+
+        public int PartnershipTotal { get; set; }
+
+        public int PartnerCount { get; set; }
     }
 }

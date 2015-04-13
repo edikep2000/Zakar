@@ -28,24 +28,24 @@ namespace Zakar.Models
 	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class Church : INotifyPropertyChanging, INotifyPropertyChanged
 	{
-		private int _churchId;
+		private int _id;
 		[Column("churchId", OpenAccessType = OpenAccessType.Int32, IsBackendCalculated = true, IsPrimaryKey = true, Length = 0, Scale = 0, SqlType = "int")]
-		[Storage("_churchId")]
+		[Storage("_id")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		[System.ComponentModel.DataAnnotations.Key()]
-		public virtual int ChurchId
+		public virtual int Id
 		{
 			get
 			{
-				return this._churchId;
+				return this._id;
 			}
 			set
 			{
-				if(this._churchId != value)
+				if(this._id != value)
 				{
-					this.OnPropertyChanging("ChurchId");
-					this._churchId = value;
-					this.OnPropertyChanged("ChurchId");
+					this.OnPropertyChanging("Id");
+					this._id = value;
+					this.OnPropertyChanged("Id");
 				}
 			}
 		}
@@ -151,6 +151,17 @@ namespace Zakar.Models
 					this._group = value;
 					this.OnPropertyChanged("Group");
 				}
+			}
+		}
+		
+		private IList<PCF> _pCFs = new List<PCF>();
+		[Collection(InverseProperty = "Church")]
+		[Storage("_pCFs")]
+		public virtual IList<PCF> PCFs
+		{
+			get
+			{
+				return this._pCFs;
 			}
 		}
 		

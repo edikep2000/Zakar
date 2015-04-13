@@ -41,7 +41,7 @@ namespace Zakar.DataAccess.Service
         public Currency GetDefault()
         {
             return
-                _repository.Find(i => i.IsDefaultCurrency.Value)
+                _repository.Find(i => i.IsDefaultCurrency)
                     .FirstOrDefault();
         }
 

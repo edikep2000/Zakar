@@ -23,7 +23,7 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table()]
+	[Table(UpdateSchema = true)]
 	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class Zone : INotifyPropertyChanging, INotifyPropertyChanged
 	{

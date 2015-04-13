@@ -23,7 +23,7 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table("Groups", SchemaName = "dbo")]
+	[Table("Groups", SchemaName = "dbo", UpdateSchema = true)]
 	[ConcurrencyControl(OptimisticConcurrencyControlStrategy.Changed)]
 	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class Group : INotifyPropertyChanging, INotifyPropertyChanged

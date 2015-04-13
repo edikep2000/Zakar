@@ -13,7 +13,6 @@ namespace Zakar.DataAccess.Service
             _repository = repository;
         }
 
-
         public void Create(Group group)
         {
             if (group != null)
@@ -34,5 +33,14 @@ namespace Zakar.DataAccess.Service
             return _repository.Find(i => i.Id == id).FirstOrDefault();
         }
 
+        public IQueryable<Group> GetForZone(int zoneId)
+        {
+            return _repository.Find(i => i.Zone.Id == zoneId);
+        }
+
+        public void Delete(int id)
+        {
+           _repository.Delete(id);
+        }
     }
 }

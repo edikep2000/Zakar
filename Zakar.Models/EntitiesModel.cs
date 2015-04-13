@@ -187,15 +187,28 @@ namespace Zakar.Models
 			}
 		}
 		
+		public IQueryable<PCF> PCFs 
+		{
+			get
+			{
+				return this.GetAll<PCF>();
+			}
+		}
+		
+		public IQueryable<Cell> Cells 
+		{
+			get
+			{
+				return this.GetAll<Cell>();
+			}
+		}
+		
 		public static BackendConfiguration GetBackendConfiguration()
 		{
 			BackendConfiguration backend = new BackendConfiguration();
 			backend.Backend = "MsSql";
 			backend.ProviderName = "System.Data.SqlClient";
 			backend.Logging.MetricStoreSnapshotInterval = 0;
-			backend.SecondLevelCache.Enabled = true;
-			backend.SecondLevelCache.CacheQueryResults = true;
-			backend.ConnectionPool.Pool = ConnectionPoolType.ADOManaged;
 		
 			CustomizeBackendConfiguration(ref backend);
 		
@@ -277,6 +290,14 @@ namespace Zakar.Models
 			get;
 		}
 		IQueryable<Zone> Zones
+		{
+			get;
+		}
+		IQueryable<PCF> PCFs
+		{
+			get;
+		}
+		IQueryable<Cell> Cells
 		{
 			get;
 		}

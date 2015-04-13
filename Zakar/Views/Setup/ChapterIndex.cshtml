@@ -1,8 +1,8 @@
 ﻿
 @{
-    ViewBag.Title = "ChapterIndex";
+    ViewBag.Title = "Manage Churches";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var modelExists = ViewBag.ModelExists is bool && (bool) ViewBag.ModelExists;
 }
 
-<h2>ChapterIndex</h2>
-
+@Html.Partial("_headerPartial")

@@ -18,7 +18,7 @@ namespace Zakar.DataAccess.Service
         {
             if (entity != null)
             {
-                entity.Deleted = false;
+               
                 _repository.Insert(entity);
             }
         }
@@ -28,8 +28,7 @@ namespace Zakar.DataAccess.Service
             PartnershipArm single = GetSingle(id);
             if (single != null)
             {
-                single.DateDeleted = DateTime.Now;
-                single.Deleted = true;
+               
                 return true;
             }
             return false;
@@ -37,12 +36,7 @@ namespace Zakar.DataAccess.Service
 
         public IQueryable<PartnershipArm> GetAll()
         {
-            return (from I in
-                (from i in _repository.GetAll()
-                    where !i.Deleted
-                    select i).AsQueryable<PartnershipArm>()
-                orderby I.Id
-                select I);
+            return _repository.GetAll();
         }
 
         public PartnershipArm GetSingle(int id = 0)
@@ -57,7 +51,7 @@ namespace Zakar.DataAccess.Service
                 return
                     _repository.Find(
                         i =>
-                            i.ShortFormName.Equals(shortName, StringComparison.InvariantCultureIgnoreCase) && !i.Deleted).FirstOrDefault();
+                            i.ShortFormName.Equals(shortName, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
             }
             return null;
         }

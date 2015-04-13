@@ -25,17 +25,17 @@ namespace Zakar.Common
 
         public static string EditFormat(string popupName)
         {
-            return "<button type='button' class='btn btn-success' rel='tooltip' title = 'Edit Record'   onclick=\"awe.open('" + popupName + "', { params:{ id: .Id } })\"><i class='icon-edit'></i></button>";
+            return "<button type='button' class='btn btn-success' rel='tooltip' title = 'Edit Record'   onclick=\"awe.open('" + popupName + "', { params:{ id: .Id } })\"><i class='fa fa-edit'></i></button>";
         }
 
         public static string DeleteFormat(string popupName)
         {
-            return "<button type='button' rel='tooltip' title = 'Delete Record'  class='btn btn-primary' onclick=\"awe.open('" + popupName + "', { params:{ id: .Id } })\"><i class=' icon-trash'></i></button>";
+            return "<button type='button' rel='tooltip' title = 'Delete Record'  class='btn btn-primary' onclick=\"awe.open('" + popupName + "', { params:{ id: .Id } })\"><i class='fa fa-trash'></i></button>";
         }
 
-        public static string DetailsFormat()
+        public static string DetailsFormat(string popupName)
         {
-            return "<a href='/Patient/Details/.Id' rel='tooltip' title = 'View Details' class='btn btn-warning'><i class=' icon-double-angle-right'></i></a>";
+            return "<button type='button' rel='tooltip' title = 'View Details'  class='btn btn-primary' onclick=\"awe.open('" + popupName + "', { params:{ id: .Id } })\"><i class='fa fa-folder-open'></i></button>";
         }
     }
 }

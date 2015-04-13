@@ -1,8 +1,51 @@
-﻿
+﻿@using Zakar.Common
+
 @{
-    ViewBag.Title = "GroupIndex";
+    ViewBag.Title = "Manage Groups";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var isModelExisting = ViewBag.ModelExists is bool && (bool)ViewBag.ModelExists;
 }
 
-<h2>GroupIndex</h2>
 
+@Html.Partial("_headerPartial")
+
+@Html.Awe().InitPopupForm().Name("createGroup").Url(Url.Action("GroupCreate","Setup")).Modal(true).OkText("Save").Title("New Group").Group("Group")
+@Html.Awe().InitPopupForm().Name("editGroup").Url(Url.Action("GroupEdit", "Setup")).Modal(true).OkText("Save Changes").Title("Edit Group").Group("Group")
+@Html.Awe().InitPopupForm().Url(Url.Action("GroupDelete", "Setup")).Name("deleteGroup").Group("Group").Modal(true).Title("Confirm Delete").OkText("OK").CancelText("NO").Parameter("gridId", "grdGroups")
+@Html.Awe().InitPopup().Name("detailsGroup").Url(Url.Action("GroupDetails", "Setup")).Modal(true).Title("Group Details")
+
+<br/>
+<br/>
+<div class="wrapper wrapper-content white-bg">
+    <div class="row">
+        <div class="col-lg-12">
+          
+            @if (isModelExisting)
+            {
+                <div class="ibox-content float-e-margins">
+                    @Html.Awe().Grid("grdGroups").Groupable(true).Url(Url.Action("GroupRead", "Setup")).PageSize(20).Columns(new Column()
+                        {Name = "Id",Hidden = true}, 
+                        new Column(){Name = "UniqueId",Width = 30,Hidden = true},
+                        new Column(){Name = "ZoneName",Groupable = true, Header = "Zone"},
+                        new Column(){Name = "Name",Groupable = false},
+                        new Column(){Width = 60,ClientFormat = @Utils.EditFormat("editGroup")},
+                        new Column(){Width = 60,ClientFormat = @Utils.DeleteFormat("deleteGroup")},
+                        new Column(){Width = 60,ClientFormat = @Utils.DetailsFormat("detailsGroup")})
+                </div>
+            }
+            else
+            {
+                <div class="ibox-content float-e-margins">
+                    <div class="well">
+                        <h3>Sorry</h3>
+                        But there is nothing to display. 
+                        <br/>
+                        <br/>
+                        <button type="button" class="btn btn-primary" onclick="awe.open('createGroup')">Create Group</button>
+                    </div>
+                </div>
+            
+            }
+        </div>
+    </div>
+</div>

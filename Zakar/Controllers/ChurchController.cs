@@ -18,7 +18,7 @@ namespace Zakar.Controllers
         public List<ChurchViewModel> Get()
         {
             return (from i in _churchService.GetAll()
-                select new ChurchViewModel { GroupId = i.GroupId, Id = i.ChurchId, Name = i.Name } into i
+                select new ChurchViewModel { GroupId = i.GroupId, Id = i.Id, Name = i.Name } into i
                 orderby i.Name
                 select i).ToList<ChurchViewModel>();
         }
@@ -27,7 +27,7 @@ namespace Zakar.Controllers
         {
             return (from i in _churchService.GetAll()
                 where i.GroupId == id
-                select new ChurchViewModel { GroupId = i.GroupId, Id = i.ChurchId, Name = i.Name } into i
+                select new ChurchViewModel { GroupId = i.GroupId, Id = i.Id, Name = i.Name } into i
                 orderby i.Name
                 select i).ToList<ChurchViewModel>();
         }

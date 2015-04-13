@@ -92,10 +92,10 @@ namespace Zakar.Models
 			}
 		}
 		
-		private bool? _isDefaultCurrency;
+		private bool _isDefaultCurrency;
 		[Column("IsDefaultCurrency", OpenAccessType = OpenAccessType.Bit, IsNullable = true, Length = 0, Scale = 0, SqlType = "bit")]
 		[Storage("_isDefaultCurrency")]
-		public virtual bool? IsDefaultCurrency
+		public virtual bool IsDefaultCurrency
 		{
 			get
 			{

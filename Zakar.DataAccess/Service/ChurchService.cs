@@ -24,14 +24,24 @@ namespace Zakar.DataAccess.Service
 
         public IQueryable<Church> GetAll()
         {
-            return (from i in _repository.GetAll()
-                    orderby i.ChurchId
-                    select i);
+            return _repository.GetAll();
+        }
+
+        public IQueryable<Church> GetChurchInGroup(int groupId)
+        {
+            var m = _repository.Find(i => i.GroupId == groupId);
+            return m;
+        }
+
+        public IQueryable<Church> GetChurchInZone(int zoneId)
+        {
+            var model = _repository.Find(i => i.Group.ZoneId == zoneId);
+            return model;
         }
 
         public Church GetSingle(int id)
         {
-            return _repository.Find(i => i.ChurchId == id).FirstOrDefault();
+            return _repository.Find(i => i.Id == id).FirstOrDefault();
         }
 
         public Church GetSingle(string name)
@@ -43,7 +53,7 @@ namespace Zakar.DataAccess.Service
         public IQueryable<Church> Search(ChurchSearchModel model)
         {
             return (from i in _repository.Find(i => i.Name.Contains(model.Name))
-                    orderby i.ChurchId
+                    orderby i.Id
                     select i).AsQueryable<Church>();
         }
     }

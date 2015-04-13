@@ -56,6 +56,7 @@
     <Compile Include="ChurchSearchModel.cs" />
     <Compile Include="ChurchViewModel.cs" />
     <Compile Include="ClientAccessModel.cs" />
+    <Compile Include="CurrencyListModel.cs" />
     <Compile Include="CurrencyViewModel.cs" />
     <Compile Include="DashboardModel.cs" />
     <Compile Include="DeleteConfirmInput.cs" />
@@ -63,12 +64,14 @@
     <Compile Include="EmailModels\PartnershipLogFileCreatedMailModel.cs" />
     <Compile Include="EmailModels\PartnershipArmFileCreatedMailModel.cs" />
     <Compile Include="EmailModels\PartnershipFileCreatedMailModel.cs" />
+    <Compile Include="GroupListModel.cs" />
     <Compile Include="GroupViewModel.cs" />
     <Compile Include="MonthEnums.cs" />
     <Compile Include="NonValidatedPartnershipRecordViewModel.cs" />
     <Compile Include="NotificationSearchModel.cs" />
     <Compile Include="NotificationsPartialsModel.cs" />
     <Compile Include="NotificationViewModel.cs" />
+    <Compile Include="PartnerhipArmListModel.cs" />
     <Compile Include="PartnerRankingViewModel.cs" />
     <Compile Include="PartnerSearchModel.cs" />
     <Compile Include="PartnershipArmRankingViewModel.cs" />
