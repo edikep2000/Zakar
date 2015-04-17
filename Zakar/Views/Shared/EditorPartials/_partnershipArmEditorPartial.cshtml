@@ -1,1 +1,29 @@
-﻿
+﻿@model Zakar.ViewModels.PartnershipArmViewModel
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Name, new{@class="control-label"})
+    @Html.TextBoxFor(M => M.Name, new {@class="form-control"})
+    <small class="text-danger">
+        @Html.ValidationMessageFor(m => m.Name)
+    </small>
+
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(m => m.ShortFormName, new{@class="control-label"})
+    <br/>
+    @Html.TextBoxFor(m => m.ShortFormName, new{@class="form-control"})
+    <small class="text-danger">
+        @Html.ValidationMessageFor(m => m.ShortFormName)
+    </small>
+</div>
+
+<br/>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Description, new{@class="control-label"})
+    <br/>
+    @Html.TextAreaFor(m => m.Description, new{@class="form-control"})
+    <small class="text-danger">@Html.ValidationMessageFor(m => m.Description)</small>
+</div>

@@ -9,9 +9,9 @@
 
 @Html.Partial("_headerPartial")
 
-@Html.Awe().InitPopupForm().Name("createGroup").Url(Url.Action("GroupCreate","Setup")).Modal(true).OkText("Save").Title("New Group").Group("Group")
-@Html.Awe().InitPopupForm().Name("editGroup").Url(Url.Action("GroupEdit", "Setup")).Modal(true).OkText("Save Changes").Title("Edit Group").Group("Group")
-@Html.Awe().InitPopupForm().Url(Url.Action("GroupDelete", "Setup")).Name("deleteGroup").Group("Group").Modal(true).Title("Confirm Delete").OkText("OK").CancelText("NO").Parameter("gridId", "grdGroups")
+
+@Html.Awe().InitPopupForm().Name("editGroup").Url(Url.Action("GroupEdit", "Setup")).Modal(true).OkText("Save Changes").Title("Edit Group").Group("Group").Success("refreshGrid('grdGroups')")
+@Html.Awe().InitPopupForm().Url(Url.Action("GroupDelete", "Setup")).Name("deleteGroup").Group("Group").Modal(true).Title("Confirm Delete").OkText("OK").CancelText("NO").Parameter("gridId", "grdGroups").Success("refreshGrid('grdGroups')")
 @Html.Awe().InitPopup().Name("detailsGroup").Url(Url.Action("GroupDetails", "Setup")).Modal(true).Title("Group Details")
 
 <br/>
@@ -23,18 +23,28 @@
             @if (isModelExisting)
             {
                 <div class="ibox-content float-e-margins">
-                    @Html.Awe().Grid("grdGroups").Groupable(true).Url(Url.Action("GroupRead", "Setup")).PageSize(20).Columns(new Column()
-                        {Name = "Id",Hidden = true}, 
-                        new Column(){Name = "UniqueId",Width = 30,Hidden = true},
-                        new Column(){Name = "ZoneName",Groupable = true, Header = "Zone"},
-                        new Column(){Name = "Name",Groupable = false},
-                        new Column(){Width = 60,ClientFormat = @Utils.EditFormat("editGroup")},
-                        new Column(){Width = 60,ClientFormat = @Utils.DeleteFormat("deleteGroup")},
-                        new Column(){Width = 60,ClientFormat = @Utils.DetailsFormat("detailsGroup")})
+                    
+                    <button type="button" class="btn btn-primary" onclick="awe.open('createGroup')"><i class="fa fa-plus-o"></i> Group</button>
+                    <br/>
+                    @Html.Awe().InitPopupForm().Name("createGroup").Url(Url.Action("GroupCreate","Setup")).Modal(true).OkText("Save").Title("New Group").Group("Group").Success("refreshGrid('grdGroups')")
+                     
+                
+                  
+                    @Html.Awe().Grid("grdGroups").Groupable(true).Url(Url.Action("GroupRead", "Setup")).PageSize(20).Columns(
+                    new Column(){Name = "Id",Hidden = true}, 
+                    new Column(){Name = "UniqueId",Width = 180,Hidden = false, Header = "Id"},
+                    new Column(){Name = "ZoneName",Groupable = true, Header = "Zone"},
+                    new Column(){Name = "Name",Groupable = false},
+                    new Column(){Width = 60,ClientFormat = @Utils.EditFormat("editGroup")},
+                    new Column(){Width = 60,ClientFormat = @Utils.DeleteFormat("deleteGroup")},
+                    new Column(){Width = 60,ClientFormat = @Utils.DetailsFormat("detailsGroup")})
                 </div>
+               
             }
             else
             {
+                @Html.Awe().InitPopupForm().Name("createGroup").Url(Url.Action("GroupCreate","Setup")).Modal(true).OkText("Save").Title("New Group").Group("Group").RefreshOnSuccess(true)
+
                 <div class="ibox-content float-e-margins">
                     <div class="well">
                         <h3>Sorry</h3>

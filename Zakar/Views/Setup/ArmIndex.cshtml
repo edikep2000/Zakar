@@ -6,9 +6,9 @@
     var modelExists = ViewBag.ModelExists is bool &&(bool)ViewBag.ModelExists;
 }
 
-@Html.Awe().InitPopupForm().Name("createArm").Url(Url.Action("ArmCreate", "Setup")).Group("Arm").Modal(true).Title("Create Partnership Arm").RefreshOnSuccess(true)
-@Html.Awe().InitPopupForm().Name("editArm").Url(Url.Action("ArmEdit","Setup")).Group("Arm").Modal(true).Title("Edit Partnership Arm").Success("itemUpdated('grdPartnershipArms')")
-@Html.Awe().InitPopupForm().Name("deleteArm").Url(Url.Action("ArmDelete","Setup")).Group("Arm").Modal(true).Title("Delete Partnership Arm").Success("itemDeleted('grdPartnershipArms')")
+
+@Html.Awe().InitPopupForm().Name("editArm").Url(Url.Action("ArmEdit","Setup")).Group("Arm").Modal(true).Title("Edit Partnership Arm").Success("refreshGrid('grdPartnershipArms')")
+@Html.Awe().InitPopupForm().Name("deleteArm").Url(Url.Action("ArmDelete","Setup")).Group("Arm").Modal(true).Title("Delete Partnership Arm").Success("refreshGrid('grdPartnershipArms')")
 @Html.Awe().InitPopup().Name("detailsArm").Url(Url.Action("ArmDetails","Setup")).Group("Arm").Modal(true).Title("Partnership Arm Details")
 
 @Html.Partial("_headerPartial")
@@ -20,11 +20,17 @@
     <div class="ibox  float-e-margins white-bg">
         @if (modelExists)
         {
-            @Html.Awe().Grid("grdPartnershipArms").ClientKey("Id").Url(Url.Action("ArmRead", "Setup")).Columns(
+            <button type="button" class="btn btn-primary" onclick="awe.open('createArm')" >
+                New Partnership Arm
+                <i class="fa fa-plus-circle"></i>
+            </button>
+            
+            @Html.Awe().InitPopupForm().Name("createArm").Url(Url.Action("ArmCreate", "Setup")).Group("Arm").Modal(true).Title("Create Partnership Arm").Success("refreshGrid('grdPartnershipArms')")
+            @Html.Awe().Grid("grdPartnershipArms").ClientKey("Id").Url(Url.Action("PartnershipArmRead", "Setup")).Columns(
             new Column(){Name = "Id", Hidden = true},
             new Column(){Name = "Name"},
-            new Column(){Name = "Symbol"},
-            new Column(){ ClientFormat = "<input type='checkbox' class='i-checks' name='id' value='.IsDefaultCurrency'/>", Header = "Default Currency"},
+            new Column(){Name = "ShortFormName"},
+            new Column(){Name = "Partners", Header = "No. Of Partners"},
             new Column(){ClientFormat = @Utils.EditFormat("editArm"), Width = 60},
             new Column(){ClientFormat = @Utils.DeleteFormat("deleteArm"), Width = 60},
             new Column(){ClientFormat = @Utils.DetailsFormat("detailsArm"), Width = 60})
@@ -36,6 +42,7 @@
                 There is nothing to display
                 <br/>
                 <br/>
+                @Html.Awe().InitPopupForm().Name("createArm").Url(Url.Action("ArmCreate", "Setup")).Group("Arm").Modal(true).Title("Create Partnership Arm").RefreshOnSuccess(true)
                 <button type="button" class="btn btn-primary" onclick="awe.open('createArm')" >
                     New Partnership Arm
                     <i class="fa fa-plus-circle"></i>

@@ -52,6 +52,7 @@ namespace Zakar.Controllers
             {
                 Id = i.Id,
                 GCount = i.Groups.Count(),
+                UniqueId = i.UniqueId,
                 Name = i.Name
             });
             return Json(new GridModelBuilder<ZoneListModel>(model, g)
@@ -60,8 +61,9 @@ namespace Zakar.Controllers
                 Map = o => new
                 {
                     o.Id,
-                    ZoneName = o.Name,
-                    o.GCount
+                    o.Name,
+                    o.GCount,
+                    o.UniqueId
                 }
             }.Build());
         }
@@ -123,9 +125,10 @@ namespace Zakar.Controllers
         {
             if (ModelState.IsValid)
             {
-                var uniqueId = Zakar.Common.IDGenerators.UniqueIdGenerator.GenerateUniqueIdForZone();
+                var uniqueId = Zakar.Common.IDGenerators.UniqueIdGenerator.GenerateUniqueIdForZone(model.Name);
                 var m = Mapper.Map<Zone>(model);
                 m.UniqueId = uniqueId;
+                _zoneService.Create(m);
                 return Json(new {});
             }
             return PartialView(model);
@@ -161,7 +164,7 @@ namespace Zakar.Controllers
             return View();
         } 
 
-        public ActionResult GroupRead(GridParams g, int zoneId = 0)
+        public ActionResult GroupRead(GridParams g, string search, int zoneId = 0)
         {
             if (zoneId == 0)
             {
@@ -234,7 +237,7 @@ namespace Zakar.Controllers
             if (ModelState.IsValid)
             {
                 var group = Mapper.Map<Group>(model);
-                group.UniqueId = Common.IDGenerators.UniqueIdGenerator.GenerateUniqueIdForGroup();
+                group.UniqueId = Common.IDGenerators.UniqueIdGenerator.GenerateUniqueIdForGroup(model.Name);
                 _groupService.Create(group);
                 return Json(new {});
             }
@@ -257,6 +260,18 @@ namespace Zakar.Controllers
         [HttpPost]
         public ActionResult GroupEdit(GroupViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                var m = _groupService.GetSingle(model.Id);
+                if (m != null)
+                {
+                    m.Name = model.Name;
+                    m.ZoneId = model.ZoneId;
+                    return Json(new {});
+
+                }
+                ModelState.AddModelError("", "Cannot Edit a non existent Group");
+            }
             return PartialView(model);
         }
 
@@ -271,7 +286,7 @@ namespace Zakar.Controllers
                         Id = id,
                         Message =
                             string.Format(
-                                "Are you sure you want to delete group {0} along with all PCFs and Cells it contains",
+                                "Are you sure you want to delete group {0} along with all Churches, PCFs and Cells it contains",
                                 group.Name)
                     };
                 return PartialView("Delete",m);
@@ -303,13 +318,48 @@ namespace Zakar.Controllers
             return View();
         } 
 
-        public ActionResult ChapterRead(GridParams g)
+        public ActionResult ChapterRead(GridParams g, int zoneId = 0, int groupId = 0)
         {
-            return View();
+
+            var i = _churchService.GetAll();
+            if (zoneId > 0)
+                i = i.Where(j => j.Group.ZoneId == zoneId);
+            if (groupId > 0)
+                i = i.Where(j => j.GroupId == groupId);
+                var m = i.Select(j => new ChapterListModel
+                    {
+                        Id = j.Id,
+                        UniqueId = j.UniqueId,
+                        Name = j.Name,
+                        GroupId = j.GroupId,
+                        ZoneName = j.Group.Zone.Name,
+                        GroupName = j.Group.Name
+                    });
+                return Json(new GridModelBuilder<ChapterListModel>(m, g)
+                {
+                    Key = "Id",
+                    Map = o => new
+                    {
+                        o.Id,
+                        o.Name,
+                        o.UniqueId,
+                        o.GroupId,
+                        o.GroupName,
+                        o.ZoneName
+                    }
+                }.Build());
         }
 
         public PartialViewResult ChapterCreate(int groupId = 0)
         {
+            if (groupId > 0)
+            {
+                var m = new ChurchViewModel()
+                    {
+                        GroupId = groupId
+                    };
+                return PartialView(m);
+            }
             return PartialView();
         }
 
@@ -318,9 +368,12 @@ namespace Zakar.Controllers
         {
             if (ModelState.IsValid)
             {
+                var m = Mapper.Map<Church>(model);
+                m.UniqueId = Zakar.Common.IDGenerators.UniqueIdGenerator.GenerateUniqueIdForChapter(model.Name);
+                _churchService.Create(m);
                 return Json(new {});
             }
-            return PartialView();
+            return PartialView(model);
         }
 
         public PartialViewResult ChapterDetails(int id)
@@ -330,7 +383,9 @@ namespace Zakar.Controllers
 
         public PartialViewResult ChapterEdit(int id)
         {
-            return PartialView();
+            var m = _churchService.GetSingle(id);
+            var model = Mapper.Map<ChurchViewModel>(m);
+            return PartialView(model);
         }
 
         [HttpPost]
@@ -338,13 +393,37 @@ namespace Zakar.Controllers
         {
             if (ModelState.IsValid)
             {
-                return Json(new {});
+                var m = _churchService.GetSingle(model.Id);
+                if (m != null)
+                {
+                    m.DefaultCurrencyId = model.DefaultCurrencyId;
+                    m.GroupId = model.GroupId;
+                    m.Name = model.Name;
+                    return Json(new {});
+                }
+                ModelState.AddModelError("", "Cannot update a non-existent record");
             }
             return PartialView();
         }
 
-        public PartialViewResult ChapterDelete(int id)
+        public PartialViewResult ChapterDelete(int id, string gridId)
         {
+            var model = _churchService.GetSingle(id);
+            if (model != null)
+            {
+                var m = new DeleteConfirmInput()
+                    {
+                        GridId = gridId,
+                        Id = id,
+                        Message =
+                            String.Format(
+                                "Are you sure you want to delete {0} Along with Cells, PCFs and The Partner Information Contained",
+                                model.Name)
+
+                    };
+                return PartialView("Delete", m);
+            }
+           
             return PartialView("Delete");
         }
 
@@ -353,6 +432,7 @@ namespace Zakar.Controllers
         {
             if (ModelState.IsValid)
             {
+                _churchService.Delete(input.Id);
                 return Json(new {});
             }
             return PartialView("Delete");
@@ -371,8 +451,6 @@ namespace Zakar.Controllers
             return View();
         }
         #endregion
-       
-        
         #region ArmMethods
 
         public ActionResult ArmIndex()
@@ -395,7 +473,14 @@ namespace Zakar.Controllers
             return Json(new GridModelBuilder<PartnerhipArmListModel>(model, g)
                 {
                     Key = "Id",
-                    GetItem = () => Mapper.Map<PartnerhipArmListModel>(_armService.GetSingle(Convert.ToInt32(g.Key)))
+                    Map = o => new
+                        {
+                            o.Id,
+                            o.Description,
+                            o.Name,
+                            o.Partners,
+                            o.ShortFormName
+                        }
                 }.Build());
         }
 
@@ -442,6 +527,7 @@ namespace Zakar.Controllers
             return PartialView(model);
         }
 
+
         public PartialViewResult ArmDelete(int id, String gridId)
         {
             var model = _armService.GetSingle(id);
@@ -451,7 +537,7 @@ namespace Zakar.Controllers
                     {
                         Id = id,
                         GridId = gridId,
-                        Message = String.Format("Are you sure you want to delete {}", model.Name)
+                        Message = String.Format("Are you sure you want to delete {0}", model.Name)
                     };
                 return PartialView("Delete", m);
             }
@@ -464,7 +550,7 @@ namespace Zakar.Controllers
             if (ModelState.IsValid)
             {
                 _armService.Delete(model.Id);
-                return Json(new { });
+                return Json(new {});
             }
             return PartialView("Delete",model);
         }
@@ -474,6 +560,8 @@ namespace Zakar.Controllers
             return PartialView();
         }
         #endregion
+
+
         #region CurrencyMethods
 
         public ActionResult CurrencyIndex()
@@ -498,7 +586,15 @@ namespace Zakar.Controllers
              return Json(new GridModelBuilder<CurrencyListModel>(model.OrderByDescending(i => i.Id).AsQueryable(), g)
             {
                 Key = "Id",
-               GetItem = () => Mapper.Map<CurrencyListModel>(_currencyService.GetSingle(Convert.ToInt32(g.Key)))
+                Map = o => new
+                  {
+                      o.ConversionRateToDefault,
+                      o.Id,
+                      o.IsDefaultCurrency,
+                      o.Symbol,
+                      o.Name,
+                      o.PartnershipCount
+                  }
             }.Build());
         }
 
@@ -532,12 +628,16 @@ namespace Zakar.Controllers
             if (ModelState.IsValid)
             {
                 var persistentEntity = _currencyService.GetSingle(model.Id);
-                persistentEntity.ConversionRateToDefault = model.ConversionRateToDefault;
-                persistentEntity.IsDefaultCurrency = model.IsDefaultCurrency;
-                persistentEntity.Name = model.Name;
-                persistentEntity.Symbol = model.Symbol;
-                //last action method will save the changes to the datastore
-                return Json(new {});
+                if (persistentEntity != null)
+                {
+                    persistentEntity.ConversionRateToDefault = model.ConversionRateToDefault;
+                    persistentEntity.IsDefaultCurrency = model.IsDefaultCurrency;
+                    persistentEntity.Name = model.Name;
+                    persistentEntity.Symbol = model.Symbol;
+                    return Json(new { });
+                }
+
+                ModelState.AddModelError("", "Could not edit a record that does not exist");
             }
             return PartialView(model);
         }
@@ -568,7 +668,7 @@ namespace Zakar.Controllers
                 _currencyService.Delete(model.Id);
                 return Json(new {});
             }
-            return PartialView(model);
+            return PartialView("Delete",model);
         }
 
         public ActionResult CurrencyDetails(int id)

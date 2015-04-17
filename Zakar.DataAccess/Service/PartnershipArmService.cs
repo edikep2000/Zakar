@@ -23,15 +23,13 @@ namespace Zakar.DataAccess.Service
             }
         }
 
-        public bool Delete(int id)
+        public void Delete(int id)
         {
             PartnershipArm single = GetSingle(id);
             if (single != null)
             {
-               
-                return true;
+                _repository.Delete(single);
             }
-            return false;
         }
 
         public IQueryable<PartnershipArm> GetAll()

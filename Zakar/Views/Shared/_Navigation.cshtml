@@ -27,14 +27,14 @@
                     LW+
                 </div>
             </li>
-            <li class="@Html.IsSelected(controller: "Dashboards")">
+            <li class="@Html.IsSelected(controller: "Setup")">
                 <a href="@Url.Action("Index", "Home")"><i class="fa fa-wrench"></i> <span class="nav-label">Portal Setup</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li class="@Html.IsSelected(action: "ZoneIndex")"><a href="@Url.Action("ZoneIndex", "Setup")">Zones</a></li>
                     <li class="@Html.IsSelected(action: "GroupIndex")"><a href="@Url.Action("GroupIndex", "Setup")">Groups</a></li>
                     <li class="@Html.IsSelected(action: "ChapterIndex")"><a href="@Url.Action("ChapterIndex", "Setup")">Chapters</a></li>
-                    <li class="@Html.IsSelected(action: "PCFIndex")"><a href="@Url.Action("PCFIndex", "Setup")">PCFs</a></li>
-                    <li class="@Html.IsSelected(action: "CellIndex")"><a href="@Url.Action("CellIndex", "Setup")">Cells</a></li>
+                   @* <li class="@Html.IsSelected(action: "PCFIndex")"><a href="@Url.Action("PCFIndex", "Setup")">PCFs</a></li>
+                    <li class="@Html.IsSelected(action: "CellIndex")"><a href="@Url.Action("CellIndex", "Setup")">Cells</a></li>*@
                     <li class="@Html.IsSelected(action: "ArmIndex")"><a href="@Url.Action("ArmIndex", "Setup")">Partnership Arms</a></li>
                     <li class="@Html.IsSelected(action: "CurrencyIndex")"><a href="@Url.Action("CurrencyIndex", "Setup")">Currencies</a></li>
                 </ul>

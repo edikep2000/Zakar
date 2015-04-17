@@ -7,39 +7,41 @@
 }
 
 @Html.Partial("_headerPartial")
-@Html.Awe().InitPopupForm().Url(Url.Action("CurrencyCreate", "Setup")).Name("createCurrency").Group("Currency").Modal(true).Title("New Currency").OkText("Save Changes").CancelText("Cancel")
-@Html.Awe().InitPopupForm().Name("editCurrency").Group("Currency").Url(Url.Action("CurrencyEdit","Setup")).Success("itemUpdated('grdCurrency')").Title("Edit Currency").Modal(true)
-@Html.Awe().InitPopupForm().Name("deleteCurrency").Group("Currency").Url(Url.Action("CurrencyDelete", "Setup")).Success("itemDeleted('grdCurrency')").Parameter("gridId", "grdCurrency").Title("Confirm Currency Delete")
+
+@Html.Awe().InitPopupForm().Name("editCurrency").Group("Currency").Url(Url.Action("CurrencyEdit","Setup")).Success("refreshGrid('grdCurrency')").Title("Edit Currency").Modal(true)
+@Html.Awe().InitPopupForm().Name("deleteCurrency").Group("Currency").Url(Url.Action("CurrencyDelete", "Setup")).Success("refreshGrid('grdCurrency')").Parameter("gridId", "grdCurrency").Title("Confirm Currency Delete")
 @Html.Awe().InitPopup().Name("detailsCurrency").Url(Url.Action("CurrencyDetails","Setup")).Modal(true).Group("Currency")
   <br/>  <br/>  <br/>
 <div class="wrapper wrapper-content white-bg">
     @if (modelExists)
     {
+        @Html.Awe().InitPopupForm().Url(Url.Action("CurrencyCreate", "Setup")).Success("refreshGrid('grdCurrency')").Name("createCurrency").Group("Currency").Modal(true).Title("New Currency").OkText("Save Changes").CancelText("Cancel")
+
         <div class="ibox float-e-margins">
-            <div class="ibox-heading">
+            <div class="ibox-content">
                 <button type="button" class="btn btn-primary" onclick="awe.open('createCurrency')">
               
                     Create Currency <i class="fa fa-plus-circle"></i>
                 </button>
-            </div>
-            <div class="ibox-content">
+
                 @Html.Awe().Grid("grdCurrency").Url(Url.Action("CurrencyRead", "Setup")).Groupable(false).ClientKey("Id").Columns(
-                    new Column(){Name = "Id", Hidden = true},
-                    new Column(){Name = "Name", Sortable = true, Groupable = false},
-                    new Column(){Name = "Symbol", Width = 80, Sortable = true, Groupable = false},
-                    new Column(){Name = "PartnershipCount", Header = "Partnership Records", Width = 130, Sortable = true, Groupable = false},
-                    new Column(){ClientFormat = @Utils.EditFormat("editCurrency"), Width = 60},
-                    new Column(){ClientFormat = @Utils.DeleteFormat("editCurrency"), Width = 60},
-                    new Column(){ClientFormat = @Utils.DetailsFormat("detailsCurrency"), Width = 60})
+                     new Column(){Name = "Id", Hidden = true},
+            new Column(){Name = "Name"},
+            new Column(){Name = "Symbol"},
+            new Column(){ ClientFormat = "<input type='checkbox' class='i-checks' name='id' value='.IsDefaultCurrency'/>", Header = "Default Currency"},
+            new Column(){ClientFormat = @Utils.EditFormat("editCurrency"), Width = 60},
+            new Column(){ClientFormat = @Utils.DeleteFormat("deleteCurrency"), Width = 60},
+            new Column(){ClientFormat = @Utils.DetailsFormat("detailsCurrency"), Width = 60})
             </div>
         </div>
     }
     else
     {
+        @Html.Awe().InitPopupForm().Url(Url.Action("CurrencyCreate", "Setup")).Name("createCurrency").Group("Currency").Modal(true).Title("New Currency").OkText("Save Changes").CancelText("Cancel").RefreshOnSuccess(true)
         <div class="well">
             <h3>Sorry</h3>
             But it seems there is nothing to display. You may create one by clicking the button below
-            <br/>  <br/>  <br/>
+            <br/>  <br/>
             <button type="button" class="btn btn-primary" onclick="awe.open('createCurrency')">
               
                 Create Currency <i class="fa fa-plus-circle"></i>

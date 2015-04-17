@@ -8,53 +8,41 @@ namespace Zakar.Common.IDGenerators
 {
   public   static class UniqueIdGenerator
     {
-      public static String GenerateUniqueIdForZone()
+      public static String GenerateUniqueIdForZone(String name)
       {
-          const string prefix = "Z";
-          var rnd = new Random(DateTime.Now.Millisecond);
-          var ticks = rnd.Next(0, 3000);
-          return prefix + ticks.ToString();
+          var characters = name.Trim().ToCharArray();
+          return characters.Aggregate("Z", (current, character) => current + ((int) character));
       }
 
-      public static String GenerateUniqueIdForGroup()
+      public static String GenerateUniqueIdForGroup(string name)
       {
-          const string prefix = "G";
-          var rnd = new Random(DateTime.Now.Millisecond);
-          var ticks = rnd.Next(0, 4000);
-          return prefix + ticks.ToString();
+          var characters = name.Trim().ToCharArray();
+          return characters.Aggregate("G", (current, character) => current + ((int) character));
       }
 
-      public static String GenerateUniqueIdForChapter()
+      public static String GenerateUniqueIdForChapter(string name)
       {
-          const string prefix = "C";
-          var rnd = new Random(DateTime.Now.Millisecond);
-          var ticks = rnd.Next(0, 3000);
-          return prefix + ticks.ToString();
+          var characters = name.Trim().ToCharArray();
+          return characters.Aggregate("C", (current, character) => current + ((int)character));
       }
 
 
-      public static String GenerateUniqueIdForPCF()
+      public static String GenerateUniqueIdForPCF(String name)
       {
-          const string prefix = "Z";
-          var rnd = new Random(DateTime.Now.Millisecond);
-          var ticks = rnd.Next(0, 5000);
-          return prefix + ticks.ToString();
+          var characters = name.Trim().ToCharArray();
+          return characters.Aggregate("P", (current, character) => current + ((int)character));
       }
 
-      public static String GenerateUniqueIdForCell()
+      public static String GenerateUniqueIdForCell(String name)
       {
-          const string prefix = "Z";
-          var rnd = new Random(DateTime.Now.Millisecond);
-          var ticks = rnd.Next(0, 6000);
-          return prefix + ticks.ToString();
+          var characters = name.Trim().ToCharArray();
+          return characters.Aggregate("C", (current, character) => current + ((int)character));
       }
 
-      public static String GenerateUniqueIdForPartner()
+      public static String GenerateUniqueIdForPartner(String fullName)
       {
-          const string prefix = "P";
-          var rnd = new Random(DateTime.Now.Millisecond);
-          var ticks = rnd.Next(0, 10000);
-          return prefix + ticks.ToString();
+          var characters = fullName.Trim().ToCharArray();
+          return characters.Aggregate("P", (current, character) => current + ((int)character));
       }
     }
 }

@@ -1,1 +1,8 @@
-﻿
+﻿@model Zakar.ViewModels.GroupViewModel
+
+@using (Html.BeginForm("GroupEdit", "Setup", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.UniqueId)
+    @Html.HiddenFor(m => m.Id)
+    @Html.Partial("EditorPartials/_groupEditorPartial", Model)
+}

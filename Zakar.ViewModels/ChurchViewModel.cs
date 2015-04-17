@@ -7,7 +7,7 @@ namespace Zakar.ViewModels
         [Display(Name = "Default Currency")]
         public int? DefaultCurrencyId { get; set; }
 
-        [Display(Name = "Zone")]
+        [Display(Name = "Group")]
         public int GroupId { get; set; }
 
         public int Id { get; set; }

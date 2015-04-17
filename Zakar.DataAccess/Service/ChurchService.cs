@@ -49,12 +49,16 @@ namespace Zakar.DataAccess.Service
             return _repository.Find(i => i.Name == name).FirstOrDefault();
         }
 
-
         public IQueryable<Church> Search(ChurchSearchModel model)
         {
             return (from i in _repository.Find(i => i.Name.Contains(model.Name))
                     orderby i.Id
                     select i).AsQueryable<Church>();
+        }
+
+        public void Delete(int id)
+        {
+            _repository.Delete(id);
         }
     }
 }

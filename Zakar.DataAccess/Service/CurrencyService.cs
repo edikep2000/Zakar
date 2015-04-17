@@ -21,9 +21,9 @@ namespace Zakar.DataAccess.Service
             }
         }
 
-        public bool Delete(int id)
+        public void Delete(int id)
         {
-            return false;
+            _repository.Delete(id);
         }
 
         public IQueryable<Currency> GetAll()

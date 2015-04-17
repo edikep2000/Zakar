@@ -6,30 +6,34 @@
 }
 @Html.Partial("_headerPartial")
 
-@Html.Awe().InitPopupForm().Url(Url.Action("ZoneCreate", "Setup")).Name("createZone").Group("Zone").Modal(true).Title("New Zone").OkText("Save Changes").CancelText("Cancel")
-@Html.Awe().InitPopupForm().Url(Url.Action("ZoneDelete", "Setup")).Name("deleteZone").Group("Zone").Modal(true).Title("Confirm Delete").OkText("OK").CancelText("NO").Parameter("gridId", "grdZone")
-@Html.Awe().InitPopupForm().Url(Url.Action("ZoneEdit", "Setup")).Name("editZone").Group("Zone").Modal(true).Title("Edit Zone").OkText("Save Changes").CancelText("Discard Changes")
+
+@Html.Awe().InitPopupForm().Url(Url.Action("ZoneDelete", "Setup")).Name("deleteZone").Group("Zone").Modal(true).Title("Confirm Delete").OkText("Yes").CancelText("NO").Parameter("gridId", "grdZone").Success("refreshGrid('grdZone')")
+@Html.Awe().InitPopupForm().Url(Url.Action("ZoneEdit", "Setup")).Name("editZone").Group("Zone").Modal(true).Title("Edit Zone").OkText("Save Changes").CancelText("Discard Changes").Success("refreshGrid('grdZone')")
 @Html.Awe().InitPopup().Name("detailsZone").Url(Url.Action("ZoneDetails", "Setup")).Group("Zone").Modal(true).Title("Zone Details")
 
 
 <br/>
 <br/>
 @if (recordExists)
-{
+{@Html.Awe().InitPopupForm().Url(Url.Action("ZoneCreate", "Setup")).Name("createZone").Group("Zone").Modal(true).Title("New Zone").OkText("Save Changes").CancelText("Cancel").Success("refreshGrid('grdZone')")
+    <button type="button" onclick="awe.open('createZone')" class="btn  btn-primary">New Zone</button>
+    <br /><br/>
     @Html.Awe().Grid("grdZone").Groupable(false).Url(Url.Action("ZoneRead", "Setup")).PageSize(20).Parent("txtSearch","Search").Columns(new Column()
         {Name = "Id",Width = 70, Hidden=true},
-        new Column(){Name = "ZoneName", Header="Zone Name"},
-        new Column(){Name = "GCount",Header = "Group Count",Width = 100},
+        new Column(){Name = "UniqueId", Header = "Id", Width = 180},
+        new Column(){Name = "Name", Header="Zone Name"},
+        new Column(){Name = "GCount",Header = "Groups",Width = 100, Resizable = true},
         new Column(){ClientFormat = @Utils.EditFormat("editZone"), Width = 60},
         new Column(){ClientFormat = @Utils.DeleteFormat("deleteZone"), Width = 60},
         new Column(){ClientFormat = @Utils.DetailsFormat("detailsZone"), Width = 60})
 }
 else
 {
+    @Html.Awe().InitPopupForm().Url(Url.Action("ZoneCreate", "Setup")).Name("createZone").Group("Zone").Modal(true).Title("New Zone").OkText("Save Changes").CancelText("Cancel").RefreshOnSuccess(true);
     <div class="well">
         <h3>Sorry</h3>
         Sorry but there is nothing to display
-        <br/>
+     <br/>  <br/>
         <button type="button" onclick="awe.open('createZone')" class="btn  btn-primary">New Zone</button>
     </div>
 }

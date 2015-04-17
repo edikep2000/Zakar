@@ -137,6 +137,7 @@
     <Compile Include="ListItemBuilders\PartnershipArmListBuilder.cs" />
     <Compile Include="ListItemBuilders\PartnerTitleListBuilder.cs" />
     <Compile Include="ListItemBuilders\YearListBuilder.cs" />
+    <Compile Include="Mappers\DefaultMappingProfile.cs" />
     <Compile Include="Messaging\BipscoreSMSMessageSender.cs" />
     <Compile Include="Messaging\SilverStreetSMSMessageSender.cs" />
     <Compile Include="Messaging\IMessageSender.cs" />

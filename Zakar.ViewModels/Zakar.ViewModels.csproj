@@ -53,6 +53,7 @@
     <Compile Include="AnalyticsModels\PieChartModel.cs" />
     <Compile Include="CellGroupSearchModel.cs" />
     <Compile Include="CellGroupViewModel.cs" />
+    <Compile Include="ChapterListModel.cs" />
     <Compile Include="ChurchSearchModel.cs" />
     <Compile Include="ChurchViewModel.cs" />
     <Compile Include="ClientAccessModel.cs" />

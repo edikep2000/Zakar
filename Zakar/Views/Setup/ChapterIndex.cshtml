@@ -1,8 +1,58 @@
-﻿
+﻿@using Zakar.Common
+
 @{
     ViewBag.Title = "Manage Churches";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var modelExists = ViewBag.ModelExists is bool && (bool) ViewBag.ModelExists;
 }
 
+
 @Html.Partial("_headerPartial")
+
+@Html.Awe().InitPopupForm().Name("editChapter").Url(Url.Action("ChapterEdit", "Setup")).Modal(true).OkText("Save Changes").Title("Edit Chapter").Group("Chapter").Success("refreshGrid('grdChapters')")
+@Html.Awe().InitPopupForm().Url(Url.Action("ChapterDelete", "Setup")).Name("deleteChapter").Group("Group").Modal(true).Title("Confirm Delete").OkText("OK").CancelText("NO").Parameter("gridId", "grdChapters").Success("refreshGrid('grdChapters')")
+@Html.Awe().InitPopup().Name("detailsChapter").Url(Url.Action("ChapterDetails", "Setup")).Modal(true).Title("Chapter Details")
+<br/>
+<br/>
+
+<div class="wrapper wrapper-content white-bg">
+    <div class="row">
+        <div class="col-lg-12">
+          
+            @if (modelExists)
+            {
+                <div class="ibox-content float-e-margins">
+                    
+                    <button type="button" class="btn btn-primary" onclick="awe.open('createChapter')"><i class="fa fa-plus-o"></i> New Chapter</button>
+                    <br/>
+                    @Html.Awe().InitPopupForm().Name("createChapter").Url(Url.Action("ChapterCreate","Setup")).Modal(true).OkText("Save").Title("New Chapter").Group("Chapter").Success("refreshGrid('grdChapters')")
+              
+                    @Html.Awe().Grid("grdChapters").Groupable(true).Url(Url.Action("ChapterRead", "Setup")).PageSize(20).Columns(
+                    new Column(){Name = "Id",Hidden = true}, 
+                    new Column(){Name = "UniqueId",Width = 180,Hidden = false, Header = "Id", Groupable = false},
+                    new Column(){Name = "ZoneName",Groupable = true, Header = "Zone"},
+                    new Column(){Name="GroupName", Groupable = true, Header = "Group"},
+                    new Column(){Name = "Name",Groupable = false},
+                    new Column(){Width = 60,ClientFormat = @Utils.EditFormat("editChapter")},
+                    new Column(){Width = 60,ClientFormat = @Utils.DeleteFormat("deleteChapter")},
+                    new Column(){Width = 60,ClientFormat = @Utils.DetailsFormat("detailsChapter")})
+                </div>
+               
+            }
+            else
+            {
+                @Html.Awe().InitPopupForm().Name("createChapter").Url(Url.Action("ChapterCreate","Setup")).Modal(true).OkText("Save").Title("New Chapter").Group("Chapter").RefreshOnSuccess(true)
+                <div class="ibox-content float-e-margins">
+                    <div class="well">
+                        <h3>Sorry</h3>
+                        But there is nothing to display. 
+                        <br/>
+                        <br/>
+                        <button type="button" class="btn btn-primary" onclick="awe.open('createChapter')">Create Chapter</button>
+                    </div>
+                </div>
+            
+            }
+        </div>
+    </div>
+</div>

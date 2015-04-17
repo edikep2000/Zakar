@@ -8,10 +8,11 @@
     </small>
 
 </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ZoneId, new{@class="control-label"})
-        <br/>
-        @Html.Awe().AjaxDropdownFor(m => m.ZoneId).Url(Url.Action("GetZones", "AjaxList")).HtmlAttributes(new{@class="form-control"})
-        <small class="text-danger">@Html.ValidationMessageFor(m => m.ZoneId)</small>
-    </div>
 
+
+<div class="form-group">
+    @Html.LabelFor(m => m.ZoneId, new{@class="control-label"})
+    <br/>
+    @Html.Awe().AjaxDropdownFor(m => m.ZoneId).Url(Url.Action("GetZones", "AjaxList")).HtmlAttributes(new{@class="form-control"})
+    <small class="text-danger">@Html.ValidationMessageFor(m => m.ZoneId)</small>
+</div>

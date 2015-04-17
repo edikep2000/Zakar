@@ -1,1 +1,7 @@
-﻿
+﻿@model Zakar.ViewModels.ChurchViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.Partial("EditorPartials/_chapterEditorPartial", Model)
+}
