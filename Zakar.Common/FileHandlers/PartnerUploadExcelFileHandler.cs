@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using ClosedXML.Excel;
+using Microsoft.AspNet.Identity;
 using WebMatrix.WebData;
 using Zakar.Common.Events.EventArgs;
 using Zakar.Common.Events.EventConsumers;
@@ -24,7 +25,7 @@ namespace Zakar.Common.FileHandlers
         private readonly EventConsumers _consumer;
 
   
-        public PartnerUploadExcelFileHandler(EventConsumers consumer, ChurchService churchService, PartnerService partnerService, GroupService groupService, UserService userService)
+        public PartnerUploadExcelFileHandler(EventConsumers consumer, ChurchService churchService, PartnerService partnerService, GroupService groupService, IUserStore<IdentityUser> userService)
         {
             _consumer = consumer;
             _churchService = churchService;
@@ -39,7 +40,7 @@ namespace Zakar.Common.FileHandlers
         private ChurchService _churchService;
         private GroupService _groupService;
         private readonly PartnerService _partnerService;
-        private readonly UserService _userService;
+        private readonly IUserStore<IdentityUser> _userService;
         public string HandleFile(string fileName, Stream fileStream)
         {
             IList<PartnerUploadObject> uploadedObject = new List<PartnerUploadObject>();
@@ -107,11 +108,11 @@ namespace Zakar.Common.FileHandlers
             int num = 0;
             int num2 = 0;
             //we are not interested in the group and all that. This code can only be executed by someone in the church admin role
-            int userId = WebSecurity.CurrentUserId;
-            UserProfile user = _userService.GetById(userId);
-            if (user != null && user.ChurchId.HasValue)
+            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+           var user = _userService.FindByIdAsync(userId).Result;
+            if (user != null && user.ChurchId != 0)
             {
-                int churchId = user.ChurchId.Value;
+                int churchId = user.ChurchId;
                 if (uploadedObject != null && uploadedObject.Any())
                 {
                     List<Partner> partners = _partnerService.GetAll().Where(i => i.ChurchId == churchId).ToList();

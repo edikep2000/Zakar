@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ClosedXML.Excel;
+using Microsoft.AspNet.Identity;
 using WebMatrix.WebData;
 using Zakar.Common.Events.EventConsumers;
 using Zakar.DataAccess.Service;
@@ -129,7 +130,8 @@ namespace Zakar.Common.FileHandlers
             {
                 return String.Format(format, 0, 0, 0);
             }
-            UserProfile user = _userService.GetById(WebSecurity.CurrentUserId);
+            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+           var user = _userService.FindByIdAsync(userId).Result;
             if (user != null && user.ChurchId != 0)
             {
                 List<PartnershipArm> all = _service.GetAll().ToList();
@@ -138,10 +140,10 @@ namespace Zakar.Common.FileHandlers
                 int num = 0;
                 int num3 = 0;
                 int num2 = 0;
-                if (user.ChurchId.HasValue)
+                if (user.ChurchId != 0)
                 {
-                    var source = _partnerService.GetForChurch(user.ChurchId.Value);
-                    var queryable4 = _partnershipService.GetForChurch(user.ChurchId.Value);
+                    var source = _partnerService.GetForChurch(user.ChurchId);
+                    var queryable4 = _partnershipService.GetForChurch(user.ChurchId);
 
                     num = 0;
                     num2 = 0;

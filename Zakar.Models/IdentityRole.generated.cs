@@ -19,77 +19,66 @@ using Telerik.OpenAccess.Data.Common;
 using Telerik.OpenAccess.Metadata.Fluent;
 using Telerik.OpenAccess.Metadata.Fluent.Advanced;
 using System.ComponentModel;
+using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table("webpages_OAuthMembership", SchemaName = "dbo")]
-	[ConcurrencyControl(OptimisticConcurrencyControlStrategy.Changed)]
-	public partial class Webpages_OAuthMembership : INotifyPropertyChanging, INotifyPropertyChanged
+	[Table("IdentityRole", UpdateSchema = true)]
+	public partial class IdentityRole : INotifyPropertyChanging, INotifyPropertyChanged
 	{
-		private string _provider;
-		[Column("Provider", OpenAccessType = OpenAccessType.UnicodeStringVariableLength, IsPrimaryKey = true, Length = 30, Scale = 0, SqlType = "nvarchar")]
-		[Storage("_provider")]
-		[System.ComponentModel.DataAnnotations.StringLength(30)]
+		private string _id;
+		[Column("Id", OpenAccessType = OpenAccessType.StringVariableLength, IsPrimaryKey = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		[Storage("_id")]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
 		[System.ComponentModel.DataAnnotations.Key()]
-		public virtual string Provider
+		public virtual string Id
 		{
 			get
 			{
-				return this._provider;
+				return this._id;
 			}
 			set
 			{
-				if(this._provider != value)
+				if(this._id != value)
 				{
-					this.OnPropertyChanging("Provider");
-					this._provider = value;
-					this.OnPropertyChanged("Provider");
+					this.OnPropertyChanging("Id");
+					this._id = value;
+					this.OnPropertyChanged("Id");
 				}
 			}
 		}
 		
-		private string _providerUserId;
-		[Column("ProviderUserId", OpenAccessType = OpenAccessType.UnicodeStringVariableLength, IsPrimaryKey = true, Length = 100, Scale = 0, SqlType = "nvarchar")]
-		[Storage("_providerUserId")]
-		[System.ComponentModel.DataAnnotations.StringLength(100)]
+		private string _name;
+		[Column("nme", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		[Storage("_name")]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
-		[System.ComponentModel.DataAnnotations.Key()]
-		public virtual string ProviderUserId
+		public virtual string Name
 		{
 			get
 			{
-				return this._providerUserId;
+				return this._name;
 			}
 			set
 			{
-				if(this._providerUserId != value)
+				if(this._name != value)
 				{
-					this.OnPropertyChanging("ProviderUserId");
-					this._providerUserId = value;
-					this.OnPropertyChanged("ProviderUserId");
+					this.OnPropertyChanging("Name");
+					this._name = value;
+					this.OnPropertyChanged("Name");
 				}
 			}
 		}
 		
-		private int _userId;
-		[Column("UserId", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int")]
-		[Storage("_userId")]
-		[System.ComponentModel.DataAnnotations.Required()]
-		public virtual int UserId
+		private IList<IdentityUserInRole> _identityUserInRoles = new List<IdentityUserInRole>();
+		[Collection(InverseProperty = "IdentityRole")]
+		[Storage("_identityUserInRoles")]
+		public virtual IList<IdentityUserInRole> IdentityUserInRoles
 		{
 			get
 			{
-				return this._userId;
-			}
-			set
-			{
-				if(this._userId != value)
-				{
-					this.OnPropertyChanging("UserId");
-					this._userId = value;
-					this.OnPropertyChanged("UserId");
-				}
+				return this._identityUserInRoles;
 			}
 		}
 		

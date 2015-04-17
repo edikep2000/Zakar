@@ -1,13 +1,12 @@
-﻿using System;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Messaging;
+﻿using System.Reflection;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Owin;
 using Telerik.OpenAccess;
+using Zakar.App_Start;
 using Zakar.Common.Builders;
 using Zakar.Common.Formatters;
 using Zakar.Common.ListItemBuilders;
@@ -16,8 +15,8 @@ using Zakar.DataAccess;
 using Zakar.DataAccess.Service;
 using Zakar.Models;
 
-[assembly: OwinStartupAttribute(typeof(Zakar.Startup))]
-namespace Zakar
+[assembly: OwinStartup(typeof(Startup))]
+namespace Zakar.App_Start
 {
     public partial class Startup
     {
@@ -35,9 +34,16 @@ namespace Zakar
             //register persistence services
             var persistenceAssembly = typeof(ChurchService).Assembly;
             builder.RegisterAssemblyTypes(persistenceAssembly)
-                .Where(i => i.Name.EndsWith("Service"))
+                .Where(i => i.Name.EndsWith("Service") && !i.Name.Equals("UserService") && !i.Name.Equals("RoleService"))
                 .InstancePerRequest();
             //register Report builderss
+
+            builder.RegisterType<UserService>().As<IUserStore<IdentityUser>>();
+            builder.RegisterType<UserService>().As<IUserClaimStore<IdentityUser>>();
+            builder.RegisterType<UserService>().As<IUserRoleStore<IdentityUser>>();
+            builder.RegisterType<UserService>().As<IUserLoginStore<IdentityUser>>();
+            builder.RegisterType<UserService>().As<IUserPasswordStore<IdentityUser>>();
+
             builder.RegisterAssemblyTypes(persistenceAssembly)
                 .Where(i => i.Name.EndsWith("Builder"))
                 .InstancePerRequest();
@@ -60,9 +66,9 @@ namespace Zakar
             //register owin integration
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-            ConfigureAuth(app);
             app.UseAutofacMiddleware(container);
             app.UseAutofacMvc();
+            ConfigureAuth(app);
         }
     }
 }

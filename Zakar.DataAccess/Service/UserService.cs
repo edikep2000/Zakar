@@ -1,92 +1,241 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using AutoMapper.QueryableExtensions;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using Zakar.Models;
-using Zakar.ViewModels;
 
 namespace Zakar.DataAccess.Service
 {
-    public class UserService
+    public class UserService : IUserStore<IdentityUser>, IUserClaimStore<IdentityUser>, IUserRoleStore<IdentityUser>, IUserLoginStore<IdentityUser>, IUserPasswordStore<IdentityUser>
     {
-      
-        private readonly IRepository<UserProfile> _userRepo;
-        private readonly IRepository<Webpages_Membership> _wRepository;
-
-        public UserService(IRepository<UserProfile> userrepo,
-            IRepository<Webpages_Membership> wRepository)
+        private readonly IRepository<IdentityUser> _userRepo;
+        private readonly IRepository<IdentityRole> _roleRepo;
+        private readonly IRepository<IdentityUserClaim> _claimsRepo;
+        private readonly IRepository<IdentityUserInRole> _userInRoleRepo;
+        private readonly IRepository<IdentityUserLogin> _userLoginRepo; 
+ 
+        public UserService(IRepository<IdentityUser> userRepo, IRepository<IdentityRole> roleRepo, IRepository<IdentityUserClaim> claimsRepo, IRepository<IdentityUserInRole> userInRoleRepo, IRepository<IdentityUserLogin> userLoginRepo)
         {
-            _userRepo = userrepo;
-            _wRepository = wRepository;
+            _userRepo = userRepo;
+            _roleRepo = roleRepo;
+            _claimsRepo = claimsRepo;
+            _userInRoleRepo = userInRoleRepo;
+            _userLoginRepo = userLoginRepo;
         }
 
-        public void AddUser(UserProfile profile)
+        public void Dispose()
         {
-            _userRepo.Insert(profile);
         }
 
-
-        public void DisableUser(int id)
+        public Task CreateAsync(IdentityUser user)
         {
-            var entity =
-                _wRepository.Find(i => i.UserId == id)
-                    .FirstOrDefault();
-            if (entity != null)
+            if(user == null)
+                throw new ArgumentNullException("user");
+            _userRepo.Insert(user);
+            return Task.FromResult<object>(null);
+        }
+
+        public Task UpdateAsync(IdentityUser user)
+        {
+           if(user == null)
+               throw new ArgumentNullException("user");
+            //TODO Update the data store
+            return Task.FromResult<Object>(null);
+        }
+
+        public Task DeleteAsync(IdentityUser user)
+        {
+           if(user == null)
+               throw new ArgumentNullException("user");
+            _userRepo.Delete(user);
+            return Task.FromResult<object>(null);
+        }
+
+        public Task<IdentityUser> FindByIdAsync(string userId)
+        {
+           if(String.IsNullOrEmpty(userId))
+               throw new ArgumentNullException("userId");
+            var result = _userRepo.Find(i => i.Id == userId).FirstOrDefault();
+            return result != null ? Task.FromResult(result) : Task.FromResult<IdentityUser>(null);
+        }
+
+        public Task<IdentityUser> FindByNameAsync(string userName)
+        {
+            if(string.IsNullOrEmpty(userName))
+                throw new ArgumentNullException("userName");
+            var result = _userRepo.Find(i => i.UserName.Equals(userName.ToLower())).FirstOrDefault();
+            return result != null ? Task.FromResult(result) : Task.FromResult<IdentityUser>(null);
+        }
+
+        public Task<IList<Claim>> GetClaimsAsync(IdentityUser user)
+        {
+            var claims = _claimsRepo.Find(i => i.UserId == user.Id).Select(b => new Claim(b.ClaimType, b.ClaimValue)).ToList();
+            return Task.FromResult<IList<Claim>>(claims);
+        }
+
+        public Task AddClaimAsync(IdentityUser user, Claim claim)
+        {
+           if(user == null)
+               throw new ArgumentNullException("user");
+            if(claim == null)
+                throw new ArgumentNullException("claim");
+            _claimsRepo.Insert(new IdentityUserClaim()
+                {
+                    ClaimType = claim.Type,
+                    ClaimValue = claim.Value,
+                    UserId = user.Id
+                });
+            return Task.FromResult<object>(null);
+        }
+
+        public Task RemoveClaimAsync(IdentityUser user, Claim claim)
+        {
+            if(user == null)
+                throw new ArgumentNullException("user");
+            if(claim == null)
+                throw new ArgumentNullException("claim");
+            var m =
+                _claimsRepo.Find(i => i.UserId == user.Id && i.ClaimType == claim.Type && i.ClaimValue == claim.Value)
+                           .FirstOrDefault();
+            _claimsRepo.Delete(m);
+            return Task.FromResult<Object>(null);
+        }
+
+        public Task AddToRoleAsync(IdentityUser user, string roleName)
+        {
+            if (user == null)
+                throw new ArgumentNullException("user");
+            if (String.IsNullOrEmpty(roleName))
+                throw new ArgumentNullException("roleName");
+            var role = _roleRepo.Find(i => i.Name.Equals(roleName)).FirstOrDefault();
+            if(role == null)
+                throw new Exception(String.Format("Role {0} does not exist", roleName));
+            _userInRoleRepo.Insert(new IdentityUserInRole()
+                {
+                    RoleId = role.Id,
+                    UserId = user.Id
+                });
+            return Task.FromResult<Object>(null);
+        }
+
+        public Task RemoveFromRoleAsync(IdentityUser user, string roleName)
+        {
+            if(user == null)
+                throw new ArgumentNullException("user");
+            if(String.IsNullOrEmpty(roleName))
+                throw new ArgumentNullException("roleName");
+            var role = _roleRepo.Find(i => i.Name.Equals(roleName)).FirstOrDefault();
+            if(role == null)
+                throw new Exception(String.Format("Role {0} does not exist", roleName));
+            var m = _userInRoleRepo.Find(i => i.UserId == user.Id && i.RoleId == role.Id).FirstOrDefault();
+            _userInRoleRepo.Delete(m);
+            return Task.FromResult<Object>(null);
+
+
+        }
+
+        public Task<IList<string>> GetRolesAsync(IdentityUser user)
+        {
+            if (user == null)
             {
-                entity.IsConfirmed = false;
+                throw new ArgumentNullException("user");
             }
+            var roleNames = _roleRepo.Find(i => i.IdentityUserInRoles.Any(j => j.UserId == user.Id)).Select(i => i.Name);
+            return Task.FromResult<IList<String>>(roleNames.ToList());
         }
 
-        public void EnableUser(int id)
+        public Task<bool> IsInRoleAsync(IdentityUser user, string roleName)
         {
-            Webpages_Membership entity =
-                _wRepository.Find(i => i.UserId == id)
-                    .FirstOrDefault();
-            if (entity != null) 
-                entity.IsConfirmed = true;
+           if(user == null)
+               throw new ArgumentNullException("user");
+            if(string.IsNullOrEmpty(roleName))
+                throw new ArgumentNullException("roleName");
+            var role =
+                _userInRoleRepo.Find(i => i.UserId == user.Id && i.IdentityRole.Name.Equals(roleName)).FirstOrDefault();
+            return Task.FromResult(role != null);
         }
 
-        public UserProfile Find(int id)
+        public Task AddLoginAsync(IdentityUser user, UserLoginInfo login)
         {
-            return _userRepo.Find(i => i.UserId == id).FirstOrDefault();
+            if(user == null)
+                throw new ArgumentNullException("user");
+            if(login == null)
+                throw new ArgumentNullException("login");
+            _userLoginRepo.Insert(new IdentityUserLogin()
+                {
+                    Id = user.Id,
+                    LoginProvider = login.LoginProvider,
+                    ProviderKey = login.ProviderKey
+                });
+            return Task.FromResult<Object>(null);
         }
 
-        public UserProfile Find(string username)
+        public Task RemoveLoginAsync(IdentityUser user, UserLoginInfo login)
         {
-            return
-                _userRepo.Find(i => i.UserName.Equals(username, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            if(login == null)
+                throw new ArgumentNullException("login");
+            if(user == null)
+                throw new ArgumentNullException("user");
+            var m =
+                _userLoginRepo.Find(
+                    i => i.Id == user.Id && i.ProviderKey == login.ProviderKey && i.LoginProvider == login.LoginProvider)
+                              .FirstOrDefault();
+            if(m != null)
+                _userLoginRepo.Delete(m);
+            return Task.FromResult<Object>(null);
+
         }
 
-        public IQueryable<UserProfile> GetAll()
+        public Task<IList<UserLoginInfo>> GetLoginsAsync(IdentityUser user)
         {
-            return _userRepo.GetAll();
+           if(user == null)
+               throw new ArgumentNullException("user");
+            var m =
+                _userLoginRepo.Find(i => i.Id == user.Id).Select(t => new UserLoginInfo(t.LoginProvider, t.ProviderKey));
+            return Task.FromResult<IList<UserLoginInfo>>(m.ToList());
         }
 
-        public UserProfile GetById(int id)
+        public Task<IdentityUser> FindAsync(UserLoginInfo login)
         {
-            return _userRepo.Find(u => u.UserId == id).FirstOrDefault();
+           if(login == null)
+               throw new ArgumentNullException("login");
+            var m =
+                _userLoginRepo.Find(i => i.ProviderKey == login.ProviderKey && i.LoginProvider == login.LoginProvider)
+                              .FirstOrDefault();
+            if (m == null)
+                return Task.FromResult<IdentityUser>(null);
+            return Task.FromResult<IdentityUser>(m.IdentityUser);
         }
 
-        public void Save(UserViewModel model)
+        public Task SetPasswordHashAsync(IdentityUser user, string passwordHash)
         {
-            UserProfile entity = Find(model.UserId);
-            if (entity == null)
+            user.PasswordHash = passwordHash;
+            return Task.FromResult<Object>(null);
+        }
+
+        public Task<string> GetPasswordHashAsync(IdentityUser user)
+        {
+           if (user == null)
+           {
+               throw new ArgumentNullException("user");
+           }
+
+            var u = _userRepo.Find(i => i.Id == user.Id).FirstOrDefault();
+            return u == null ? Task.FromResult<String>(null) : Task.FromResult(u.PasswordHash);
+        }
+
+        public Task<bool> HasPasswordAsync(IdentityUser user)
+        {
+            if (user == null)
             {
-                throw new ArgumentNullException();
-            }
-            entity.UserName = model.UserName;
-            entity.PhoneNumber = model.PhoneNumber;
-            entity.LastName = model.LastName;
-            entity.FirstName = model.FirstName;
-        }
+                throw new ArgumentNullException("user");
 
-        public IQueryable<UserViewModel> Search(UserSearchModel model)
-        {
-            return
-                (from i in
-                    _userRepo.Find(i => (i.UserName == model.UserName) || (i.PhoneNumber == model.PhoneNumber))
-                    orderby i.UserId
-                    select i).AsQueryable<UserProfile>().Project<UserProfile>().To<UserViewModel>();
+            }
+            var m = _userRepo.Find(i => i.Id == user.Id).FirstOrDefault();
+            var hasPassword = (m != null) && !String.IsNullOrEmpty(m.PasswordHash);
+            return Task.FromResult(hasPassword);
         }
     }
 }

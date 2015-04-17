@@ -51,38 +51,6 @@ namespace Zakar.Models
 			:base(connection, backendConfiguration, metadataSource)
 		{ }
 			
-		public IQueryable<Webpages_Role> Webpages_Roles 
-		{
-			get
-			{
-				return this.GetAll<Webpages_Role>();
-			}
-		}
-		
-		public IQueryable<Webpages_OAuthMembership> Webpages_OAuthMemberships 
-		{
-			get
-			{
-				return this.GetAll<Webpages_OAuthMembership>();
-			}
-		}
-		
-		public IQueryable<Webpages_Membership> Webpages_Memberships 
-		{
-			get
-			{
-				return this.GetAll<Webpages_Membership>();
-			}
-		}
-		
-		public IQueryable<UserProfile> UserProfiles 
-		{
-			get
-			{
-				return this.GetAll<UserProfile>();
-			}
-		}
-		
 		public IQueryable<SystemSetting> SystemSettings 
 		{
 			get
@@ -203,6 +171,46 @@ namespace Zakar.Models
 			}
 		}
 		
+		public IQueryable<IdentityUser> IdentityUsers 
+		{
+			get
+			{
+				return this.GetAll<IdentityUser>();
+			}
+		}
+		
+		public IQueryable<IdentityUserClaim> IdentityUserClaims 
+		{
+			get
+			{
+				return this.GetAll<IdentityUserClaim>();
+			}
+		}
+		
+		public IQueryable<IdentityUserInRole> IdentityUserInRoles 
+		{
+			get
+			{
+				return this.GetAll<IdentityUserInRole>();
+			}
+		}
+		
+		public IQueryable<IdentityRole> IdentityRoles 
+		{
+			get
+			{
+				return this.GetAll<IdentityRole>();
+			}
+		}
+		
+		public IQueryable<IdentityUserLogin> IdentityUserLogins 
+		{
+			get
+			{
+				return this.GetAll<IdentityUserLogin>();
+			}
+		}
+		
 		public static BackendConfiguration GetBackendConfiguration()
 		{
 			BackendConfiguration backend = new BackendConfiguration();
@@ -225,22 +233,6 @@ namespace Zakar.Models
 	
 	public interface IEntitiesModelUnitOfWork : IUnitOfWork
 	{
-		IQueryable<Webpages_Role> Webpages_Roles
-		{
-			get;
-		}
-		IQueryable<Webpages_OAuthMembership> Webpages_OAuthMemberships
-		{
-			get;
-		}
-		IQueryable<Webpages_Membership> Webpages_Memberships
-		{
-			get;
-		}
-		IQueryable<UserProfile> UserProfiles
-		{
-			get;
-		}
 		IQueryable<SystemSetting> SystemSettings
 		{
 			get;
@@ -298,6 +290,26 @@ namespace Zakar.Models
 			get;
 		}
 		IQueryable<Cell> Cells
+		{
+			get;
+		}
+		IQueryable<IdentityUser> IdentityUsers
+		{
+			get;
+		}
+		IQueryable<IdentityUserClaim> IdentityUserClaims
+		{
+			get;
+		}
+		IQueryable<IdentityUserInRole> IdentityUserInRoles
+		{
+			get;
+		}
+		IQueryable<IdentityRole> IdentityRoles
+		{
+			get;
+		}
+		IQueryable<IdentityUserLogin> IdentityUserLogins
 		{
 			get;
 		}

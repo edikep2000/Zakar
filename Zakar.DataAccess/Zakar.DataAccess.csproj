@@ -36,6 +36,9 @@
     <Reference Include="AutoMapper.Net4">
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\Zakar\bin\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -70,6 +73,7 @@
     <Compile Include="Service\ReportBuilder\PartnersPartnershipReportBuilder.cs" />
     <Compile Include="Service\ReportBuilder\PartnersRankingBuilder.cs" />
     <Compile Include="Service\ReportBuilder\YearReportBuilder.cs" />
+    <Compile Include="Service\RoleService.cs" />
     <Compile Include="Service\SystemSettingsService.cs" />
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Service\ZoneService.cs" />
