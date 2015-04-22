@@ -32,7 +32,7 @@ namespace Zakar.Controllers.LookupControllers
                 _zoneService.GetAll()
                     .Where(i => i.Name.Contains(search))
                     .OrderByDescending(i => i.Id)
-                    .ToPagedList(10, 20);
+                    .ToPagedList(page, 10);
             return Json(new AjaxListResult
             {
                 More = list.HasNextPage,

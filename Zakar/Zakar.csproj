@@ -165,20 +165,11 @@
     <Reference Include="System.Web.Http.WebHost">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -236,11 +227,13 @@
     <Compile Include="Controllers\LookupControllers\GroupLookupController.cs" />
     <Compile Include="Controllers\LookupControllers\PartnershipArmLookupController.cs" />
     <Compile Include="Controllers\LookupControllers\PCFLookupController.cs" />
+    <Compile Include="Controllers\LookupControllers\RolesLookupController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobileClientController.cs" />
     <Compile Include="Controllers\MobilePartnerController.cs" />
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Controllers\LookupControllers\ZoneLookupController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1851,11 +1844,22 @@
     <Content Include="Views\Setup\CurrencyDetails.cshtml" />
     <Content Include="Views\Setup\CurrencyEdit.cshtml" />
     <Content Include="Views\Setup\CurrencyCreate.cshtml" />
+    <Content Include="Views\Users\GroupAdmins.cshtml" />
+    <Content Include="Views\Users\PortalAdmins.cshtml" />
+    <Content Include="Views\Users\ZoneAdmins.cshtml" />
+    <Content Include="Views\Users\ChapterAdmins.cshtml" />
+    <Content Include="Views\Shared\EditorPartials\_portalAdminEditorPartial.cshtml" />
+    <Content Include="Views\Shared\EditorPartials\_zoneAdminEditorPartial.cshtml" />
+    <Content Include="Views\Shared\EditorPartials\_groupAdminEditorPartial.cshtml" />
+    <Content Include="Views\Shared\EditorPartials\_chapterAdminEditorPartial.cshtml" />
+    <Content Include="Views\Users\GroupAdminCreate.cshtml" />
+    <Content Include="Views\Users\PortalAdminCreate.cshtml" />
+    <Content Include="Views\Users\ZoneAdminCreate.cshtml" />
+    <Content Include="Views\Users\ChapterAdminCreate.cshtml" />
+    <Content Include="Views\Shared\_validationSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\AjaxList\" />
-    <Folder Include="Views\ZoneLookup\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

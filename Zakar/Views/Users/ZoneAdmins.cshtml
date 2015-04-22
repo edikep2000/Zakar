@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Manage Zonal Admins";
+    var userExists = ViewBag.UserExists is bool && (bool)ViewBag.UserExists;
+    
+}
+
+@Html.Partial("_headerPartial")
+@Html.Awe().InitPopupForm().Name("deleteAdmin").Url(Url.Action("ChapterAdminDelete","Setup")).Group("Arm").Modal(true).Title("Delete Chapter Admin").Success("refreshGrid('grdUser')")
+@Html.Awe().InitPopup().Name("detailsAdmin").Url(Url.Action("ChapterAdminDetails","Setup")).Group("Arm").Modal(true).Title("Chapter Admin Details")
+
+<br/>
+<br/>
+
+@if (userExists)
+{
+      @Html.Awe().InitPopupForm().Name("createUser").Url(Url.Action("ZoneAdminCreate", "Users")).Group("Arm").Modal(true).Title("New Zonal Admin").Success("refreshGrid('grdUser')")
+}
+else
+{
+        @Html.Awe().InitPopupForm().Name("createUser").Url(Url.Action("ZoneAdminCreate", "Users")).Group("Arm").Modal(true).Title("New Zonal Admin").RefreshOnSuccess(true)
+     <div class="well">
+                <h3>Sorry</h3>
+                There is nothing to display
+                <br/>
+                <br/>
+                <button type="button" class="btn btn-primary" onclick="awe.open('createUser')" >
+                    New Zonal Admin
+                    <i class="fa fa-user-plus"></i>
+                </button>
+            </div>
+}

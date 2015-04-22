@@ -7,42 +7,38 @@ using System.Threading.Tasks;
 namespace Zakar.Common.IDGenerators
 {
   public   static class UniqueIdGenerator
-    {
+  {
+
       public static String GenerateUniqueIdForZone(String name)
       {
-          var characters = name.Trim().ToCharArray();
-          return characters.Aggregate("Z", (current, character) => current + ((int) character));
+         int hashCode = name.GetHashCode();
+          return "Z" + hashCode.ToString();
       }
 
       public static String GenerateUniqueIdForGroup(string name)
       {
-          var characters = name.Trim().ToCharArray();
-          return characters.Aggregate("G", (current, character) => current + ((int) character));
+          return "G" + name.GetHashCode();
       }
 
       public static String GenerateUniqueIdForChapter(string name)
       {
-          var characters = name.Trim().ToCharArray();
-          return characters.Aggregate("C", (current, character) => current + ((int)character));
-      }
 
+          return "C" + name.GetHashCode();
+      }
 
       public static String GenerateUniqueIdForPCF(String name)
       {
-          var characters = name.Trim().ToCharArray();
-          return characters.Aggregate("P", (current, character) => current + ((int)character));
+          return "P" + name.GetHashCode();
       }
 
       public static String GenerateUniqueIdForCell(String name)
       {
-          var characters = name.Trim().ToCharArray();
-          return characters.Aggregate("C", (current, character) => current + ((int)character));
+          return "C" + name.GetHashCode();
       }
 
       public static String GenerateUniqueIdForPartner(String fullName)
       {
-          var characters = fullName.Trim().ToCharArray();
-          return characters.Aggregate("P", (current, character) => current + ((int)character));
+          return "P" + fullName.GetHashCode();
       }
     }
 }

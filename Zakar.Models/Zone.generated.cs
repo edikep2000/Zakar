@@ -88,6 +88,26 @@ namespace Zakar.Models
 			}
 		}
 		
+		private string _adminId;
+		[Storage("_adminId")]
+		[System.ComponentModel.DataAnnotations.Required()]
+		public virtual string AdminId
+		{
+			get
+			{
+				return this._adminId;
+			}
+			set
+			{
+				if(this._adminId != value)
+				{
+					this.OnPropertyChanging("AdminId");
+					this._adminId = value;
+					this.OnPropertyChanged("AdminId");
+				}
+			}
+		}
+		
 		private IList<Group> _groups = new List<Group>();
 		[Collection(InverseProperty = "Zone")]
 		[Storage("_groups")]

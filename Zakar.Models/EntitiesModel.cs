@@ -13,6 +13,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Data.Common;
 using System.Collections.Generic;
+using System.Web;
+using System.Web.Mvc;
 using Telerik.OpenAccess;
 using Telerik.OpenAccess.Metadata;
 using Telerik.OpenAccess.Data.Common;
@@ -30,7 +32,8 @@ namespace Zakar.Models
 		private static BackendConfiguration backend = GetBackendConfiguration();
 				
 		private static MetadataSource metadataSource = AttributesMetadataSource.FromContext(typeof(EntitiesModel));
-		
+
+      
 		public EntitiesModel()
 			:base(connectionStringName, backend, metadataSource)
 		{ }
@@ -314,5 +317,7 @@ namespace Zakar.Models
 			get;
 		}
 	}
+
+   
 }
 #pragma warning restore 1591

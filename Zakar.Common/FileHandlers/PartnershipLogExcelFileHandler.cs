@@ -19,7 +19,7 @@ namespace Zakar.Common.FileHandlers
         public delegate void PartnerFileProcessedEventHandler(object s, PartnershipLogFileUploadedEventArgs e);
         public delegate void PartnershipListProcessedEventHandler(object sender, PartnershipLogProcessedEventArgs e);
         public delegate void PartnershipRecordAddedEventHandler(object sender, PartnershipLogCreatedEventArgs e);
-        public PartnershipLogExcelFileHandler(EventConsumers consumer, CurrencyService currencyService, PartnerService partnerService, PartnershipService partnershipService, PartnershipArmService service, UserService userService)
+        public PartnershipLogExcelFileHandler(EventConsumers consumer, CurrencyService currencyService, PartnerService partnerService, PartnershipService partnershipService, PartnershipArmService service, UserService userService, ChurchService churchService)
         {
             var consumer1 = consumer;
             _currencyService = currencyService;
@@ -27,6 +27,7 @@ namespace Zakar.Common.FileHandlers
             _partnershipService = partnershipService;
             _service = service;
             _userService = userService;
+            _churchService = churchService;
             consumer1.RegisterHandlerWhenPartnershipLogFileUploaded(this);
             consumer1.RegisterHandlerWhenPartnershipLogRecordedIsCreated(this);
             consumer1.RegisterHandlerWhenPartnershipLogListIsProcessed(this);
@@ -46,6 +47,7 @@ namespace Zakar.Common.FileHandlers
 
 
         private readonly UserService _userService;
+        private readonly ChurchService _churchService;
 
         public string HandleFile(string fileName, Stream fileStream)
         {
@@ -132,18 +134,18 @@ namespace Zakar.Common.FileHandlers
             }
             var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
            var user = _userService.FindByIdAsync(userId).Result;
-            if (user != null && user.ChurchId != 0)
+            if (user != null)
             {
                 List<PartnershipArm> all = _service.GetAll().ToList();
                 IQueryable<Currency> queryable3 = _currencyService.GetAll();
-
+                var church = _churchService.GetChurchForAdmin(userId);
                 int num = 0;
                 int num3 = 0;
                 int num2 = 0;
-                if (user.ChurchId != 0)
+                if (church != null)
                 {
-                    var source = _partnerService.GetForChurch(user.ChurchId);
-                    var queryable4 = _partnershipService.GetForChurch(user.ChurchId);
+                    var source = _partnerService.GetForChurch(church.Id);
+                    var queryable4 = _partnershipService.GetForChurch(church.Id);
 
                     num = 0;
                     num2 = 0;

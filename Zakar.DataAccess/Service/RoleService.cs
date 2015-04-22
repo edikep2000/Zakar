@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -56,6 +57,12 @@ namespace Zakar.DataAccess.Service
         {
             var item = _roleStore.Find(i => i.Name == roleName).FirstOrDefault();
             return Task.FromResult<IdentityRole>(item);
+        }
+
+        public Task<IEnumerable<IdentityRole>> FindAll()
+        {
+            var t = _roleStore.GetAll().AsEnumerable();
+            return Task.FromResult(t);
         }
     }
 }

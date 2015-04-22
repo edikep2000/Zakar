@@ -1,9 +1,11 @@
 ﻿using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Autofac;
 using Autofac.Integration.Mvc;
-using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using Owin;
 using Telerik.OpenAccess;
 using Zakar.App_Start;
@@ -43,7 +45,8 @@ namespace Zakar.App_Start
             builder.RegisterType<UserService>().As<IUserRoleStore<IdentityUser>>();
             builder.RegisterType<UserService>().As<IUserLoginStore<IdentityUser>>();
             builder.RegisterType<UserService>().As<IUserPasswordStore<IdentityUser>>();
-
+            builder.RegisterType<RoleService>().As<IRoleStore<IdentityRole>>();
+       
             builder.RegisterAssemblyTypes(persistenceAssembly)
                 .Where(i => i.Name.EndsWith("Builder"))
                 .InstancePerRequest();
@@ -63,12 +66,17 @@ namespace Zakar.App_Start
             builder.RegisterType<PartnerTitleListBuilder>().AsSelf();
             builder.RegisterType<YearListBuilder>().AsSelf();
             builder.RegisterType<EntitiesModel>().As<IUnitOfWork>().InstancePerRequest();
+            builder.Register(t => HttpContext.Current.GetOwinContext().Authentication).As<IAuthenticationManager>();
+            builder.RegisterType<ApplicationSignInManager>().AsSelf();
+            builder.RegisterType<ApplicationUserManager>().AsSelf();
             //register owin integration
             var container = builder.Build();
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            var dependencyResolver = new AutofacDependencyResolver(container);
+            DependencyResolver.SetResolver(dependencyResolver);
+            ConfigureAuth(app);
             app.UseAutofacMiddleware(container);
             app.UseAutofacMvc();
-            ConfigureAuth(app);
+            
         }
     }
 }

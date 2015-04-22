@@ -110,23 +110,73 @@ namespace Zakar.Common.FileHandlers
             //we are not interested in the group and all that. This code can only be executed by someone in the church admin role
             var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
            var user = _userService.FindByIdAsync(userId).Result;
-            if (user != null && user.ChurchId != 0)
+            
+            if (user != null)
             {
-                int churchId = user.ChurchId;
-                if (uploadedObject != null && uploadedObject.Any())
+                var church = _churchService.GetChurchForAdmin(user.Id);
+                if (church != null)
                 {
-                    List<Partner> partners = _partnerService.GetAll().Where(i => i.ChurchId == churchId).ToList();
-                    if (partners.Any())
+                    int churchId = church.Id;
+                    if (uploadedObject != null && uploadedObject.Any())
                     {
-                        foreach (PartnerUploadObject u in uploadedObject)
+                        List<Partner> partners = _partnerService.GetAll().Where(i => i.ChurchId == churchId).ToList();
+                        if (partners.Any())
                         {
-                            Partner p =
-                                partners.FirstOrDefault(
-                                    i =>
+                            foreach (PartnerUploadObject u in uploadedObject)
+                            {
+                                Partner p =
+                                    partners.FirstOrDefault(
+                                        i =>
                                         i.Phone.Equals(u.PhoneNumber) ||
                                         i.Email.Equals(u.Email, StringComparison.InvariantCultureIgnoreCase));
-                            if (p == null)
+                                if (p == null)
+                                {
+                                    Partner partner = PartnerFactory.BuildNew();
+                                    partner.LastName = u.Surname;
+                                    partner.ChurchId = churchId;
+                                    partner.Email = u.Email;
+                                    partner.FirstName = u.FirstName;
+                                    if (u.PhoneNumber.StartsWith("234"))
+                                    {
+                                        partner.Phone = u.PhoneNumber;
+                                    }
+                                    else if (u.PhoneNumber.StartsWith("0"))
+                                    {
+                                        partner.Phone = "234" + u.PhoneNumber.Substring(1);
+                                    }
+                                    else if (u.PhoneNumber.StartsWith("8") && (u.PhoneNumber.Length == 10))
+                                    {
+                                        partner.Phone = "234" + u.PhoneNumber;
+                                    }
+                                    partner.Title = u.Title;
+                                    partner.YookosId = u.YookosId;
+                                    partner.Deleted = false;
+                                    partner.DateDeleted = null;
+                                    partner.DateCreated = DateTime.Now;
+                                    try
+                                    {
+                                        _partnerService.Create(partner);
+                                    }
+                                    catch (ConstraintException)
+                                    {
+                                        num2++;
+                                    }
+                                    _consumer.OnPartnerRecordCreated(this, new PartnerCreatedEventArgs(partner));
+                                    num++;
+                                    list.Add(u);
+                                }
+                                else
+                                {
+                                    num2++;
+                                    list2.Add(u);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (PartnerUploadObject u in uploadedObject)
                             {
+                            
                                 Partner partner = PartnerFactory.BuildNew();
                                 partner.LastName = u.Surname;
                                 partner.ChurchId = churchId;
@@ -161,51 +211,6 @@ namespace Zakar.Common.FileHandlers
                                 num++;
                                 list.Add(u);
                             }
-                            else
-                            {
-                                num2++;
-                                list2.Add(u);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (PartnerUploadObject u in uploadedObject)
-                        {
-                            
-                            Partner partner = PartnerFactory.BuildNew();
-                            partner.LastName = u.Surname;
-                            partner.ChurchId = churchId;
-                            partner.Email = u.Email;
-                            partner.FirstName = u.FirstName;
-                            if (u.PhoneNumber.StartsWith("234"))
-                            {
-                                partner.Phone = u.PhoneNumber;
-                            }
-                            else if (u.PhoneNumber.StartsWith("0"))
-                            {
-                                partner.Phone = "234" + u.PhoneNumber.Substring(1);
-                            }
-                            else if (u.PhoneNumber.StartsWith("8") && (u.PhoneNumber.Length == 10))
-                            {
-                                partner.Phone = "234" + u.PhoneNumber;
-                            }
-                            partner.Title = u.Title;
-                            partner.YookosId = u.YookosId;
-                            partner.Deleted = false;
-                            partner.DateDeleted = null;
-                            partner.DateCreated = DateTime.Now;
-                            try
-                            {
-                                _partnerService.Create(partner);
-                            }
-                            catch (ConstraintException)
-                            {
-                                num2++;
-                            }
-                            _consumer.OnPartnerRecordCreated(this, new PartnerCreatedEventArgs(partner));
-                            num++;
-                            list.Add(u);
                         }
                     }
                 }

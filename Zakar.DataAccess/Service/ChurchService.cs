@@ -60,5 +60,10 @@ namespace Zakar.DataAccess.Service
         {
             _repository.Delete(id);
         }
+
+        public Church GetChurchForAdmin(string userId)
+        {
+            return _repository.Find(i => i.AdminId.Equals(userId)).FirstOrDefault();
+        }
     }
 }

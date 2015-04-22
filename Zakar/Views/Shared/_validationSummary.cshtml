@@ -1,0 +1,30 @@
+﻿
+@if (ViewData.ModelState.Any(x => x.Value.Errors.Any())) 
+{ 
+    <div class="alert alert-danger alert-dismissable  fade in">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <i class="fa fa-bell-o"></i>@Html.ValidationSummary(false)
+    </div>
+}
+else if (!String.IsNullOrEmpty(ViewBag.Message))
+{
+      <div class="alert alert-success alert-dismissable  fade in">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <i class="fa fa-check-circle-o"></i>@ViewBag.Message
+    </div>
+}
+else if (TempData["Message"] != null)
+{
+     <div class="alert alert-info alert-dismissable  fade in">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <i class="fa fa-info-circle"></i>@TempData["Message"]
+    </div>
+}
+else if (TempData["Error"] != null)
+{
+    
+   <div class="alert alert-danger alert-dismissable  fade in">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <i class="fa fa-stop"></i>@TempData["Error"]
+    </div>
+}

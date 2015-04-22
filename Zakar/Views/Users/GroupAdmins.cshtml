@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Manage Group Admins";
+    var userExists = ViewBag.UserExists is bool && (bool)ViewBag.UserExists;
+    
+}
+
+@Html.Partial("_headerPartial")
+@Html.Awe().InitPopupForm().Name("deleteAdmin").Url(Url.Action("GroupAdminDelete","Setup")).Group("Arm").Modal(true).Title("Delete Group Admin").Success("refreshGrid('grdUser')")
+@Html.Awe().InitPopup().Name("detailsAdmin").Url(Url.Action("GroupAdminDetails","Setup")).Group("Arm").Modal(true).Title("Group Admin Details")
+
+<br/>
+<br/>
+
+@if (userExists)
+{
+      @Html.Awe().InitPopupForm().Name("createUser").Url(Url.Action("GroupAdminCreate", "Users")).Group("Arm").Modal(true).Title("New Group Admin").Success("refreshGrid('grdUser')")
+}
+else
+{
+        @Html.Awe().InitPopupForm().Name("createUser").Url(Url.Action("GroupAdminCreate", "Users")).Group("Arm").Modal(true).Title("New Group Admin").RefreshOnSuccess(true)
+     <div class="well">
+                <h3>Sorry</h3>
+                There is nothing to display
+                <br/>
+                <br/>
+                <button type="button" class="btn btn-primary" onclick="awe.open('createUser')" >
+                    New Group Admin
+                    <i class="fa fa-user-plus"></i>
+                </button>
+            </div>
+}

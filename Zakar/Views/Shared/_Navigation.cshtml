@@ -33,24 +33,18 @@
                     <li class="@Html.IsSelected(action: "ZoneIndex")"><a href="@Url.Action("ZoneIndex", "Setup")">Zones</a></li>
                     <li class="@Html.IsSelected(action: "GroupIndex")"><a href="@Url.Action("GroupIndex", "Setup")">Groups</a></li>
                     <li class="@Html.IsSelected(action: "ChapterIndex")"><a href="@Url.Action("ChapterIndex", "Setup")">Chapters</a></li>
-                   @* <li class="@Html.IsSelected(action: "PCFIndex")"><a href="@Url.Action("PCFIndex", "Setup")">PCFs</a></li>
-                    <li class="@Html.IsSelected(action: "CellIndex")"><a href="@Url.Action("CellIndex", "Setup")">Cells</a></li>*@
                     <li class="@Html.IsSelected(action: "ArmIndex")"><a href="@Url.Action("ArmIndex", "Setup")">Partnership Arms</a></li>
                     <li class="@Html.IsSelected(action: "CurrencyIndex")"><a href="@Url.Action("CurrencyIndex", "Setup")">Currencies</a></li>
                 </ul>
             </li>
-            <li class="@Html.IsSelected(controller: "Layouts")">
-                <a href="@Url.Action("Index", "Layouts")"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span> <span class="label label-primary pull-right">NEW</span></a>
-            </li>
-            <li class="@Html.IsSelected(controller: "Graphs")">
-                <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Graphs</span><span class="fa arrow"></span></a>
+          
+            <li class="@Html.IsSelected(controller: "Users")">
+                <a href="#"><i class="fa fa-user-md"></i> <span class="nav-label">Users</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(action: "Flot")"><a href="@Url.Action("Flot", "Graphs")">Flot Charts</a></li>
-                    <li class="@Html.IsSelected(action: "Morris")"><a href="@Url.Action("Morris", "Graphs")">Morris.js Charts</a></li>
-                    <li class="@Html.IsSelected(action: "Rickshaw")"><a href="@Url.Action("Rickshaw", "Graphs")">Rickshaw Charts</a></li>
-                    <li class="@Html.IsSelected(action: "Chartjs")"><a href="@Url.Action("Chartjs", "Graphs")">Chart.js</a></li>
-                    <li class="@Html.IsSelected(action: "Peity")"><a href="@Url.Action("Peity", "Graphs")">Peity Charts</a></li>
-                    <li class="@Html.IsSelected(action: "Sparkline")"><a href="@Url.Action("Sparkline", "Graphs")">Sparkline Charts</a></li>
+                    <li class="@Html.IsSelected(action: "PortalAdmins")"><a href="@Url.Action("PortalAdmins", "Users")">Portal Admins</a></li>
+                    <li class="@Html.IsSelected(action: "ZoneAdmins")"><a href="@Url.Action("ZoneAdmins", "Users")">Zone Admins</a></li>
+                    <li class="@Html.IsSelected(action: "GroupAdmins")"><a href="@Url.Action("GroupAdmins", "Users")">Group Admins</a></li>
+                     <li class="@Html.IsSelected(action: "ChapterAdmins")"><a href="@Url.Action("ChapterAdmins", "Users")">Chapter Admins</a></li>
                 </ul>
             </li>
             <li class="@Html.IsSelected(controller: "Mailbox")">

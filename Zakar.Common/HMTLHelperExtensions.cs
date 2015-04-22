@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Zakar.Common
@@ -18,8 +19,8 @@ namespace Zakar.Common
                 action = currentAction;
 
             return controller == currentController && action == currentAction
-                ? cssClass
-                : String.Empty;
+                       ? cssClass
+                       : String.Empty;
         }
 
         public static string PageClass(this HtmlHelper html)

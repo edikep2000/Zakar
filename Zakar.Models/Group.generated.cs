@@ -23,13 +23,13 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table("Groups", SchemaName = "dbo", UpdateSchema = true)]
+	[Table("grp", SchemaName = "dbo", UpdateSchema = true)]
 	[ConcurrencyControl(OptimisticConcurrencyControlStrategy.Changed)]
 	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class Group : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		private int _id;
-		[Column("Id", OpenAccessType = OpenAccessType.Int32, IsBackendCalculated = true, IsPrimaryKey = true, Length = 0, Scale = 0, SqlType = "int")]
+		[Column("Id", OpenAccessType = OpenAccessType.Int32, IsBackendCalculated = true, IsPrimaryKey = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_id")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		[System.ComponentModel.DataAnnotations.Key()]
@@ -51,10 +51,9 @@ namespace Zakar.Models
 		}
 		
 		private string _name;
-		[Column("Name", OpenAccessType = OpenAccessType.UnicodeStringVariableLength, Length = 100, Scale = 0, SqlType = "nvarchar")]
+		[Column("nme", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_name")]
-		[System.ComponentModel.DataAnnotations.StringLength(100)]
-		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		public virtual string Name
 		{
 			get
@@ -73,7 +72,7 @@ namespace Zakar.Models
 		}
 		
 		private int _zoneId;
-		[Column("zone_id", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
+		[Column("ZoneId", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_zoneId")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int ZoneId
@@ -94,7 +93,7 @@ namespace Zakar.Models
 		}
 		
 		private string _uniqueId;
-		[Column("unique_id", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		[Column("UniqueId", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_uniqueId")]
 		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		public virtual string UniqueId
@@ -110,6 +109,27 @@ namespace Zakar.Models
 					this.OnPropertyChanging("UniqueId");
 					this._uniqueId = value;
 					this.OnPropertyChanged("UniqueId");
+				}
+			}
+		}
+		
+		private string _adminId;
+		[Column("AdminId", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		[Storage("_adminId")]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
+		public virtual string AdminId
+		{
+			get
+			{
+				return this._adminId;
+			}
+			set
+			{
+				if(this._adminId != value)
+				{
+					this.OnPropertyChanging("AdminId");
+					this._adminId = value;
+					this.OnPropertyChanged("AdminId");
 				}
 			}
 		}

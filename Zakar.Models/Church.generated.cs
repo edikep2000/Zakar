@@ -23,16 +23,15 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table("Churches", SchemaName = "dbo")]
+	[Table()]
 	[ConcurrencyControl(OptimisticConcurrencyControlStrategy.Changed)]
 	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class Church : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		private int _id;
-		[Column("churchId", OpenAccessType = OpenAccessType.Int32, IsBackendCalculated = true, IsPrimaryKey = true, Length = 0, Scale = 0, SqlType = "int")]
+		[Column(IsPrimaryKey = true)]
 		[Storage("_id")]
 		[System.ComponentModel.DataAnnotations.Required()]
-		[System.ComponentModel.DataAnnotations.Key()]
 		public virtual int Id
 		{
 			get
@@ -51,9 +50,7 @@ namespace Zakar.Models
 		}
 		
 		private string _name;
-		[Column("Name", OpenAccessType = OpenAccessType.UnicodeStringVariableLength, Length = 100, Scale = 0, SqlType = "nvarchar")]
 		[Storage("_name")]
-		[System.ComponentModel.DataAnnotations.StringLength(100)]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string Name
 		{
@@ -73,7 +70,6 @@ namespace Zakar.Models
 		}
 		
 		private int _groupId;
-		[Column("GroupId", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int")]
 		[Storage("_groupId")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int GroupId
@@ -94,8 +90,8 @@ namespace Zakar.Models
 		}
 		
 		private int? _defaultCurrencyId;
-		[Column("DefaultCurrencyId", OpenAccessType = OpenAccessType.Int32, IsNullable = true, Length = 0, Scale = 0, SqlType = "int")]
 		[Storage("_defaultCurrencyId")]
+		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int? DefaultCurrencyId
 		{
 			get
@@ -114,9 +110,8 @@ namespace Zakar.Models
 		}
 		
 		private string _uniqueId;
-		[Column("unique_id", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_uniqueId")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
+		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string UniqueId
 		{
 			get
@@ -130,6 +125,26 @@ namespace Zakar.Models
 					this.OnPropertyChanging("UniqueId");
 					this._uniqueId = value;
 					this.OnPropertyChanged("UniqueId");
+				}
+			}
+		}
+		
+		private string _adminId;
+		[Storage("_adminId")]
+		[System.ComponentModel.DataAnnotations.Required()]
+		public virtual string AdminId
+		{
+			get
+			{
+				return this._adminId;
+			}
+			set
+			{
+				if(this._adminId != value)
+				{
+					this.OnPropertyChanging("AdminId");
+					this._adminId = value;
+					this.OnPropertyChanged("AdminId");
 				}
 			}
 		}

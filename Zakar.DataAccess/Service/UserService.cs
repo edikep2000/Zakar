@@ -8,7 +8,7 @@ using Zakar.Models;
 
 namespace Zakar.DataAccess.Service
 {
-    public class UserService : IUserStore<IdentityUser>, IUserClaimStore<IdentityUser>, IUserRoleStore<IdentityUser>, IUserLoginStore<IdentityUser>, IUserPasswordStore<IdentityUser>
+    public class UserService : IUserStore<IdentityUser>, IUserClaimStore<IdentityUser>, IUserRoleStore<IdentityUser>, IUserLoginStore<IdentityUser>, IUserPasswordStore<IdentityUser>, IUserEmailStore<IdentityUser>
     {
         private readonly IRepository<IdentityUser> _userRepo;
         private readonly IRepository<IdentityRole> _roleRepo;
@@ -236,6 +236,39 @@ namespace Zakar.DataAccess.Service
             var m = _userRepo.Find(i => i.Id == user.Id).FirstOrDefault();
             var hasPassword = (m != null) && !String.IsNullOrEmpty(m.PasswordHash);
             return Task.FromResult(hasPassword);
+        }
+
+        public Task<IdentityUser> FindByEmailAsync(string email)
+        {
+            var t = _userRepo.Find(i => i.UserName == email).FirstOrDefault();
+            return Task.FromResult(t);
+        }
+
+        public Task<string> GetEmailAsync(IdentityUser user)
+        {
+            return Task.FromResult(user.UserName);
+        }
+
+        public Task<bool> GetEmailConfirmedAsync(IdentityUser user)
+        {
+            if (user == null || String.IsNullOrEmpty(user.UserName))
+            {
+                return Task.FromResult(false);
+            }
+            return Task.FromResult(true);
+        }
+
+
+
+        public Task SetEmailAsync(IdentityUser user, string email)
+        {
+            user.UserName = email;
+            return Task.FromResult<object>(0);
+        }
+
+        public Task SetEmailConfirmedAsync(IdentityUser user, bool confirmed)
+        {
+            return Task.FromResult<object>(null);
         }
     }
 }

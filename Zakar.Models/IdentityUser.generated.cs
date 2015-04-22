@@ -47,26 +47,6 @@ namespace Zakar.Models
 			}
 		}
 		
-		private int _churchId;
-		[Storage("_churchId")]
-		[System.ComponentModel.DataAnnotations.Required()]
-		public virtual int ChurchId
-		{
-			get
-			{
-				return this._churchId;
-			}
-			set
-			{
-				if(this._churchId != value)
-				{
-					this.OnPropertyChanging("ChurchId");
-					this._churchId = value;
-					this.OnPropertyChanged("ChurchId");
-				}
-			}
-		}
-		
 		private string _firstName;
 		[Storage("_firstName")]
 		[System.ComponentModel.DataAnnotations.Required()]

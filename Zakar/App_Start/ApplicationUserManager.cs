@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Zakar.Models;
@@ -13,53 +12,49 @@ namespace Zakar.App_Start
         public ApplicationUserManager(IUserStore<Zakar.Models.IdentityUser> store)
             : base(store)
         {
-        }
-
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
-        {
-            var manager = new ApplicationUserManager(DependencyResolver.Current.GetService<IUserStore<Zakar.Models.IdentityUser>>());
             // Configure validation logic for usernames
-            manager.UserValidator = new UserValidator<Zakar.Models.IdentityUser>(manager)
+            this.UserValidator = new UserValidator<Zakar.Models.IdentityUser>(this)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
             };
 
             // Configure validation logic for passwords
-            manager.PasswordValidator = new PasswordValidator
+            this.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
+                RequireNonLetterOrDigit = false,
                 RequireDigit = true,
                 RequireLowercase = true,
-                RequireUppercase = true,
+                RequireUppercase = false,
             };
 
             // Configure user lockout defaults
-            manager.UserLockoutEnabledByDefault = false;
-            manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            manager.MaxFailedAccessAttemptsBeforeLockout = 5;
+            this.UserLockoutEnabledByDefault = false;
+            this.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            this.MaxFailedAccessAttemptsBeforeLockout = 5;
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug it in here.
-            manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<Zakar.Models.IdentityUser>
+            this.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<Zakar.Models.IdentityUser>
             {
                 MessageFormat = "Your security code is {0}"
             });
-            manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<Zakar.Models.IdentityUser>
+            this.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<Zakar.Models.IdentityUser>
             {
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
             });
-            manager.EmailService = new EmailService();
-            manager.SmsService = new SmsService();
-            var dataProtectionProvider = options.DataProtectionProvider;
+            this.EmailService = new EmailService();
+            this.SmsService = new SmsService();
+            var dataProtectionProvider = Startup.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider =
+                this.UserTokenProvider =
                     new DataProtectorTokenProvider<Zakar.Models.IdentityUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
-            return manager;
         }
+
+       
     }
 }
