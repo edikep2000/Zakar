@@ -19,20 +19,17 @@ using Telerik.OpenAccess.Data.Common;
 using Telerik.OpenAccess.Metadata.Fluent;
 using Telerik.OpenAccess.Metadata.Fluent.Advanced;
 using System.ComponentModel;
-using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table("IdentityRole", UpdateSchema = true)]
-	public partial class IdentityRole : INotifyPropertyChanging, INotifyPropertyChanged
+	[Table()]
+	public partial class StagedCells : INotifyPropertyChanging, INotifyPropertyChanged
 	{
-		private string _id;
-		[Column("Id", OpenAccessType = OpenAccessType.StringVariableLength, IsPrimaryKey = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		private int _id;
+		[Column(IsPrimaryKey = true)]
 		[Storage("_id")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
-		[System.ComponentModel.DataAnnotations.Key()]
-		public virtual string Id
+		public virtual int Id
 		{
 			get
 			{
@@ -46,39 +43,6 @@ namespace Zakar.Models
 					this._id = value;
 					this.OnPropertyChanged("Id");
 				}
-			}
-		}
-		
-		private string _name;
-		[Column("nme", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
-		[Storage("_name")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
-		[System.ComponentModel.DataAnnotations.Required()]
-		public virtual string Name
-		{
-			get
-			{
-				return this._name;
-			}
-			set
-			{
-				if(this._name != value)
-				{
-					this.OnPropertyChanging("Name");
-					this._name = value;
-					this.OnPropertyChanged("Name");
-				}
-			}
-		}
-		
-		private IList<IdentityUserInRole> _identityUserInRoles = new List<IdentityUserInRole>();
-		[Collection(InverseProperty = "IdentityRole", Depend = true, IsManaged = true)]
-		[Storage("_identityUserInRoles")]
-		public virtual IList<IdentityUserInRole> IdentityUserInRoles
-		{
-			get
-			{
-				return this._identityUserInRoles;
 			}
 		}
 		

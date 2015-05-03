@@ -1,4 +1,5 @@
-﻿
+﻿@using Zakar.Common
+
 @{
     ViewBag.Title = "Manage Zonal Admins";
     var userExists = ViewBag.UserExists is bool && (bool)ViewBag.UserExists;
@@ -6,8 +7,8 @@
 }
 
 @Html.Partial("_headerPartial")
-@Html.Awe().InitPopupForm().Name("deleteAdmin").Url(Url.Action("ChapterAdminDelete","Setup")).Group("Arm").Modal(true).Title("Delete Chapter Admin").Success("refreshGrid('grdUser')")
-@Html.Awe().InitPopup().Name("detailsAdmin").Url(Url.Action("ChapterAdminDetails","Setup")).Group("Arm").Modal(true).Title("Chapter Admin Details")
+@Html.Awe().InitPopupForm().Name("deleteAdmin").Url(Url.Action("Delete","Users")).Group("ZoneAdmin").Modal(true).Title("Delete Zonal Admin").Success("refreshGrid('grdUser')")
+@Html.Awe().InitPopup().Name("detailsAdmin").Url(Url.Action("Details","Users")).Group("ZoneAdmin").Modal(true).Title("Zonal Admin Details")
 
 <br/>
 <br/>
@@ -15,6 +16,16 @@
 @if (userExists)
 {
       @Html.Awe().InitPopupForm().Name("createUser").Url(Url.Action("ZoneAdminCreate", "Users")).Group("Arm").Modal(true).Title("New Zonal Admin").Success("refreshGrid('grdUser')")
+
+    <br/>
+    <br/>
+    @Html.Awe().Grid("grdUser").Groupable(false).Parent("txtUsername", "username").ClientKey("UserName").Parent("txtName","name").Parent("txtPhoneNumber","phone").Parent("txtZoneName","zoneName").Groupable(false).LoadOnParentChange(true).Url(Url.Action("ZoneAdminRead","Users")).ShowFooter(true).Columns(
+        new Column(){Name = "FirstName", Header = "First Name"},
+        new Column(){Name = "LastName", Header = "Last Name"},
+        new Column(){Name = "PhoneNumber", Header = "Phone Number"},
+        new Column(){Name = "UserName", Header = "Username"},
+        new Column(){Width = 60, ClientFormat = "<button type='button' rel='tooltip' title = 'Delete Record'  class='btn btn-primary' onclick=\"awe.open('deleteAdmin', { params:{ id: .UserName } })\"><i class='fa fa-trash'></i></button>"},
+        new Column(){Width = 60, ClientFormat = @Utils.DetailsFormat("detailsAdmin")})
 }
 else
 {

@@ -5,7 +5,7 @@ namespace Zakar.ViewModels
     public class UserViewModel
     {
         [Required, Display(Name = "Church Administered")]
-        public int ChurchId { get; set; }
+        public int EntityId { get; set; }
 
         [Display(Name = "First Name"), Required, DataType(DataType.Text)]
         public string FirstName { get; set; }
@@ -16,7 +16,7 @@ namespace Zakar.ViewModels
         [Display(Name = "Phone Number"), DataType(DataType.PhoneNumber), Required]
         public string PhoneNumber { get; set; }
 
-        public int UserId { get; set; }
+        public string Id { get; set; }
 
         [Display(Name = "Email"), DataType(DataType.EmailAddress), Required]
         public string UserName { get; set; }

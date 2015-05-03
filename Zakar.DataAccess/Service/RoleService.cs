@@ -7,7 +7,7 @@ using Zakar.Models;
 
 namespace Zakar.DataAccess.Service
 {
-    public class RoleService : IRoleStore<IdentityRole>
+    public class RoleService : IRoleStore<IdentityRole>, IQueryableRoleStore<IdentityRole>
     {
         private readonly IRepository<IdentityRole> _roleStore;
          
@@ -21,6 +21,7 @@ namespace Zakar.DataAccess.Service
         {
         }
 
+        private IQueryable<IdentityRole> internalCache; 
         public Task CreateAsync(IdentityRole role)
         {
             if(role == null)
@@ -63,6 +64,11 @@ namespace Zakar.DataAccess.Service
         {
             var t = _roleStore.GetAll().AsEnumerable();
             return Task.FromResult(t);
+        }
+
+        public IQueryable<IdentityRole> Roles { get 
+        { return _roleStore.GetAll(); } 
+            private set { internalCache = value; }
         }
     }
 }

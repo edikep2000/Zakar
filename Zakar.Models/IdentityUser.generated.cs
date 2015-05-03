@@ -187,8 +187,48 @@ namespace Zakar.Models
 			}
 		}
 		
+		private int? _failedAccessAttempts;
+		[Storage("_failedAccessAttempts")]
+		[System.ComponentModel.DataAnnotations.Required()]
+		public virtual int? FailedAccessAttempts
+		{
+			get
+			{
+				return this._failedAccessAttempts;
+			}
+			set
+			{
+				if(this._failedAccessAttempts != value)
+				{
+					this.OnPropertyChanging("FailedAccessAttempts");
+					this._failedAccessAttempts = value;
+					this.OnPropertyChanged("FailedAccessAttempts");
+				}
+			}
+		}
+		
+		private DateTime? _dateOfLastFailedAccessAttempt;
+		[Storage("_dateOfLastFailedAccessAttempt")]
+		[System.ComponentModel.DataAnnotations.Required()]
+		public virtual DateTime? DateOfLastFailedAccessAttempt
+		{
+			get
+			{
+				return this._dateOfLastFailedAccessAttempt;
+			}
+			set
+			{
+				if(this._dateOfLastFailedAccessAttempt != value)
+				{
+					this.OnPropertyChanging("DateOfLastFailedAccessAttempt");
+					this._dateOfLastFailedAccessAttempt = value;
+					this.OnPropertyChanged("DateOfLastFailedAccessAttempt");
+				}
+			}
+		}
+		
 		private IList<IdentityUserClaim> _identityUserClaims = new List<IdentityUserClaim>();
-		[Collection(InverseProperty = "IdentityUser")]
+		[Collection(InverseProperty = "IdentityUser", IsManaged = true)]
 		[Storage("_identityUserClaims")]
 		public virtual IList<IdentityUserClaim> IdentityUserClaims
 		{
@@ -199,7 +239,7 @@ namespace Zakar.Models
 		}
 		
 		private IList<IdentityUserInRole> _identityUserInRoles = new List<IdentityUserInRole>();
-		[Collection(InverseProperty = "IdentityUser")]
+		[Collection(InverseProperty = "IdentityUser", Depend = true, IsManaged = true)]
 		[Storage("_identityUserInRoles")]
 		public virtual IList<IdentityUserInRole> IdentityUserInRoles
 		{

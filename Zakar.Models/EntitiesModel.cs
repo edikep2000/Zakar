@@ -13,8 +13,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Data.Common;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.Mvc;
 using Telerik.OpenAccess;
 using Telerik.OpenAccess.Metadata;
 using Telerik.OpenAccess.Data.Common;
@@ -32,8 +30,7 @@ namespace Zakar.Models
 		private static BackendConfiguration backend = GetBackendConfiguration();
 				
 		private static MetadataSource metadataSource = AttributesMetadataSource.FromContext(typeof(EntitiesModel));
-
-      
+		
 		public EntitiesModel()
 			:base(connectionStringName, backend, metadataSource)
 		{ }
@@ -214,6 +211,62 @@ namespace Zakar.Models
 			}
 		}
 		
+		public IQueryable<StagedZone> StagedZones 
+		{
+			get
+			{
+				return this.GetAll<StagedZone>();
+			}
+		}
+		
+		public IQueryable<StagedGroup> StagedGroups 
+		{
+			get
+			{
+				return this.GetAll<StagedGroup>();
+			}
+		}
+		
+		public IQueryable<StagedChapters> StagedChapters 
+		{
+			get
+			{
+				return this.GetAll<StagedChapters>();
+			}
+		}
+		
+		public IQueryable<StagedPCFs> StagedPCFs 
+		{
+			get
+			{
+				return this.GetAll<StagedPCFs>();
+			}
+		}
+		
+		public IQueryable<StagedCells> StagedCells 
+		{
+			get
+			{
+				return this.GetAll<StagedCells>();
+			}
+		}
+		
+		public IQueryable<StagedPartners> StagedPartners 
+		{
+			get
+			{
+				return this.GetAll<StagedPartners>();
+			}
+		}
+		
+		public IQueryable<StagedProperties> StagedProperties 
+		{
+			get
+			{
+				return this.GetAll<StagedProperties>();
+			}
+		}
+		
 		public static BackendConfiguration GetBackendConfiguration()
 		{
 			BackendConfiguration backend = new BackendConfiguration();
@@ -316,8 +369,34 @@ namespace Zakar.Models
 		{
 			get;
 		}
+		IQueryable<StagedZone> StagedZones
+		{
+			get;
+		}
+		IQueryable<StagedGroup> StagedGroups
+		{
+			get;
+		}
+		IQueryable<StagedChapters> StagedChapters
+		{
+			get;
+		}
+		IQueryable<StagedPCFs> StagedPCFs
+		{
+			get;
+		}
+		IQueryable<StagedCells> StagedCells
+		{
+			get;
+		}
+		IQueryable<StagedPartners> StagedPartners
+		{
+			get;
+		}
+		IQueryable<StagedProperties> StagedProperties
+		{
+			get;
+		}
 	}
-
-   
 }
 #pragma warning restore 1591

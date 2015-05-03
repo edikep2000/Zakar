@@ -1,74 +1,96 @@
 ﻿@using Zakar.Common
+@using Zakar.Common.Enums
 
+@{
+    var isAuthenticated = User.Identity.IsAuthenticated;
+}
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav" id="side-menu">
             <li class="nav-header">
-                <div class="dropdown profile-element">
-                    <span>
-                        <img alt="image" class="img-circle" src="~/Images/profile_small.jpg" />
-                    </span>
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="clear">
-                            <span class="block m-t-xs">
-                                <strong class="font-bold">David Williams</strong>
-                            </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
-                        </span>
-                    </a>
-                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="@Url.Action("Profile", "AppViews")">Profile</a></li>
-                        <li><a href="@Url.Action("Contacts", "AppViews")">Contacts</a></li>
-                        <li><a href="@Url.Action("Inbox", "Mailbox")">Mailbox</a></li>
-                        <li class="divider"></li>
-                        <li><a href="@Url.Action("Login", "Pages")">Logout</a></li>
-                    </ul>
-                </div>
+                @if (isAuthenticated)
+                {
+                    <div class="dropdown profile-element">
+                      
+
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear">
+                                <span class="block m-t-xs">
+                                    <strong class="font-bold">@User.Identity.Name</strong>
+                                    @if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
+                                    {
+                                        <span class="text-muted text-xs block">Chapter Admin<b class="caret"></b></span>
+                                    }else if (User.IsInRole(RolesEnum.GROUP_ADMIN.ToString()))
+                                    {
+                                        <span class="text-muted text-xs block">Group Admin<b class="caret"></b></span>
+                                    }
+                                    else if (User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
+                                    {
+                                        <span class="text-muted text-xs block">Zonal Admin<b class="caret"></b></span>
+                                    }
+                                    else if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
+                                    {
+                                        <span class="text-muted text-xs block">Portal Admin<b class="caret"></b></span>
+                                    }
+                                </span>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a href="@Url.Action("ChangePassword", "Manage")">Change Password</a></li>
+                       
+                        </ul>
+                    </div>
+                }
+              
                 <div class="logo-element">
                     LW+
                 </div>
             </li>
-            <li class="@Html.IsSelected(controller: "Setup")">
-                <a href="@Url.Action("Index", "Home")"><i class="fa fa-wrench"></i> <span class="nav-label">Portal Setup</span> <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(action: "ZoneIndex")"><a href="@Url.Action("ZoneIndex", "Setup")">Zones</a></li>
-                    <li class="@Html.IsSelected(action: "GroupIndex")"><a href="@Url.Action("GroupIndex", "Setup")">Groups</a></li>
-                    <li class="@Html.IsSelected(action: "ChapterIndex")"><a href="@Url.Action("ChapterIndex", "Setup")">Chapters</a></li>
-                    <li class="@Html.IsSelected(action: "ArmIndex")"><a href="@Url.Action("ArmIndex", "Setup")">Partnership Arms</a></li>
-                    <li class="@Html.IsSelected(action: "CurrencyIndex")"><a href="@Url.Action("CurrencyIndex", "Setup")">Currencies</a></li>
-                </ul>
-            </li>
+            @if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
+            {
+                <li class="@Html.IsSelected(controller: "Setup")">
+                    <a href="@Url.Action("Index", "Home")"><i class="fa fa-wrench"></i> <span class="nav-label">Portal Setup</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li class="@Html.IsSelected(action: "ZoneIndex")"><a href="@Url.Action("ZoneIndex", "Setup")">Zones</a></li>
+                        <li class="@Html.IsSelected(action: "GroupIndex")"><a href="@Url.Action("GroupIndex", "Setup")">Groups</a></li>
+                        <li class="@Html.IsSelected(action: "ChapterIndex")"><a href="@Url.Action("ChapterIndex", "Setup")">Chapters</a></li>
+                        <li class="@Html.IsSelected(action: "ArmIndex")"><a href="@Url.Action("ArmIndex", "Setup")">Partnership Arms</a></li>
+                        <li class="@Html.IsSelected(action: "CurrencyIndex")"><a href="@Url.Action("CurrencyIndex", "Setup")">Currencies</a></li>
+                    </ul>
+                </li>
+                <li class="@Html.IsSelected(controller: "Users")">
+                    <a href="#"><i class="fa fa-user-md"></i> <span class="nav-label">Users</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li class="@Html.IsSelected(action: "PortalAdmins")"><a href="@Url.Action("PortalAdmins", "Users")">Portal Admins</a></li>
+                        <li class="@Html.IsSelected(action: "ZoneAdmins")"><a href="@Url.Action("ZoneAdmins", "Users")">Zone Admins</a></li>
+                        <li class="@Html.IsSelected(action: "GroupAdmins")"><a href="@Url.Action("GroupAdmins", "Users")">Group Admins</a></li>
+                        <li class="@Html.IsSelected(action: "ChapterAdmins")"><a href="@Url.Action("ChapterAdmins", "Users")">Chapter Admins</a></li>
+                    </ul>
+                </li>
+            }
+            
+            @if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
+            {
+                <li class="@Html.IsSelected(controller: "ChapterSetup")">
+                    <a href="#"><i class="fa fa fa-wrench"></i><span class="nav-label">Chapter Setup</span></a>
+                    <ul class="nav nav-second-level">
+                        <li class="@Html.IsSelected(action: "PCFIndex")"><a href="@Url.Action("PCFIndex", "ChapterSetup")">PCFs</a></li>
+                        <li class="@Html.IsSelected(action: "CellIndex")"><a href="@Url.Action("CellIndex", "ChapterSetup")">Cells</a></li>
+                        <li class="@Html.IsSelected(action: "UploadCell")"><a href="@Url.Action("UploadCell", "ChapterSetup")">Bulk Upload Cells</a></li>
+                        <li class="@Html.IsSelected(action: "UploadPCF")"><a href="@Url.Action("UploadPcf", "ChapterSetup")">Bulk Upload PCFs</a></li>
+                    </ul>
+                </li>
           
-            <li class="@Html.IsSelected(controller: "Users")">
-                <a href="#"><i class="fa fa-user-md"></i> <span class="nav-label">Users</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(action: "PortalAdmins")"><a href="@Url.Action("PortalAdmins", "Users")">Portal Admins</a></li>
-                    <li class="@Html.IsSelected(action: "ZoneAdmins")"><a href="@Url.Action("ZoneAdmins", "Users")">Zone Admins</a></li>
-                    <li class="@Html.IsSelected(action: "GroupAdmins")"><a href="@Url.Action("GroupAdmins", "Users")">Group Admins</a></li>
-                     <li class="@Html.IsSelected(action: "ChapterAdmins")"><a href="@Url.Action("ChapterAdmins", "Users")">Chapter Admins</a></li>
-                </ul>
-            </li>
-            <li class="@Html.IsSelected(controller: "Mailbox")">
-                <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Mailbox </span><span class="label label-warning pull-right">16/24</span></a>
-                <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(action: "Inbox")"><a href="@Url.Action("Inbox", "Mailbox")">Inbox</a></li>
-                    <li class="@Html.IsSelected(action: "EmailView")"><a href="@Url.Action("EmailView", "Mailbox")">Email view</a></li>
-                    <li class="@Html.IsSelected(action: "ComposeEmail")"><a href="@Url.Action("ComposeEmail", "Mailbox")">Compose email</a></li>
-                    <li class="@Html.IsSelected(action: "EmailTemplates")"><a href="@Url.Action("EmailTemplates", "Mailbox")">Email templates</a></li>
-                </ul>
-            </li>
-            <li class="@Html.IsSelected(controller: "Widgets")">
-                <a href="@Url.Action("Index", "Widgets")"><i class="fa fa-flask"></i> <span class="nav-label">Widgets</span> </a>
-            </li>
-            <li class="@Html.IsSelected(controller: "Forms")">
-                <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Forms</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(action: "BasicFroms")"><a href="@Url.Action("BasicFroms", "Forms")">Basic form</a></li>
-                    <li class="@Html.IsSelected(action: "Advanced")"><a href="@Url.Action("Advanced", "Forms")">Advanced Plugins</a></li>
-                    <li class="@Html.IsSelected(action: "Wizard")"><a href="@Url.Action("Wizard", "Forms")">Wizard</a></li>
-                    <li class="@Html.IsSelected(action: "FileUpload")"><a href="@Url.Action("FileUpload", "Forms")">File Upload</a></li>
-                    <li class="@Html.IsSelected(action: "TextEditor")"><a href="@Url.Action("TextEditor", "Forms")">Text Editor</a></li>
-                </ul>
-            </li>
+                <li class="@Html.IsSelected(controller: "Partners")">
+                    <a href="#"><i class="fa fa-users"></i><span class="nav-label">Partners</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li class="@Html.IsSelected(action: "New")"><a href="@Url.Action("New", "Partner")">New Partner</a></li>
+                        <li class="@Html.IsSelected(action: "Upload")"><a href="@Url.Action("Upload", "Partner")">Upload Partners</a></li>
+                        <li class="@Html.IsSelected(action: "Manage")"><a href="@Url.Action("Manage", "Partner")">Manage Partners</a></li>
+                    </ul>
+                </li>
+            }
+
             <li class="@Html.IsSelected(controller: "AppViews")">
                 <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">App Views</span>  <span class="pull-right label label-primary">SPECIAL</span></a>
                 <ul class="nav nav-second-level">

@@ -8,13 +8,14 @@ using Zakar.Models;
 
 namespace Zakar.DataAccess.Service
 {
-    public class UserService : IUserStore<IdentityUser>, IUserClaimStore<IdentityUser>, IUserRoleStore<IdentityUser>, IUserLoginStore<IdentityUser>, IUserPasswordStore<IdentityUser>, IUserEmailStore<IdentityUser>
+    public class UserService : IUserStore<IdentityUser>, IQueryableUserStore<IdentityUser>, IUserClaimStore<IdentityUser>, IUserRoleStore<IdentityUser>, IUserLoginStore<IdentityUser>, IUserPasswordStore<IdentityUser>, IUserEmailStore<IdentityUser>, IUserLockoutStore<IdentityUser, String>, IUserTwoFactorStore<IdentityUser, string>
     {
         private readonly IRepository<IdentityUser> _userRepo;
         private readonly IRepository<IdentityRole> _roleRepo;
         private readonly IRepository<IdentityUserClaim> _claimsRepo;
         private readonly IRepository<IdentityUserInRole> _userInRoleRepo;
-        private readonly IRepository<IdentityUserLogin> _userLoginRepo; 
+        private readonly IRepository<IdentityUserLogin> _userLoginRepo;
+        private IQueryable<IdentityUser> _internalCache; 
  
         public UserService(IRepository<IdentityUser> userRepo, IRepository<IdentityRole> roleRepo, IRepository<IdentityUserClaim> claimsRepo, IRepository<IdentityUserInRole> userInRoleRepo, IRepository<IdentityUserLogin> userLoginRepo)
         {
@@ -258,8 +259,6 @@ namespace Zakar.DataAccess.Service
             return Task.FromResult(true);
         }
 
-
-
         public Task SetEmailAsync(IdentityUser user, string email)
         {
             user.UserName = email;
@@ -269,6 +268,77 @@ namespace Zakar.DataAccess.Service
         public Task SetEmailConfirmedAsync(IdentityUser user, bool confirmed)
         {
             return Task.FromResult<object>(null);
+        }
+
+        public IQueryable<IdentityUser> Users
+        { get { return _userRepo.GetAll(); }
+            private set { _internalCache = value; } }
+
+        #region AccessLockOuts
+
+        public Task<DateTimeOffset> GetLockoutEndDateAsync(IdentityUser user)
+        {
+            return
+                 Task.FromResult(user.DateOfLastFailedAccessAttempt.HasValue
+                     ? new DateTimeOffset(DateTime.SpecifyKind(user.DateOfLastFailedAccessAttempt.Value, DateTimeKind.Utc))
+                     : new DateTimeOffset());
+        }
+
+        public Task SetLockoutEndDateAsync(IdentityUser user, DateTimeOffset lockoutEnd)
+        {
+            if (user == null)
+                throw new ArgumentNullException("user");
+            user.DateOfLastFailedAccessAttempt = lockoutEnd.ToUniversalTime().DateTime;
+            return Task.FromResult<Object>(null);
+        }
+
+        public Task<int> IncrementAccessFailedCountAsync(IdentityUser user)
+        {
+            if (user == null)
+                throw new ArgumentNullException("user");
+            user.FailedAccessAttempts++;
+            return Task.FromResult(user.FailedAccessAttempts.HasValue ? user.FailedAccessAttempts.Value : 0);
+        }
+
+        public Task ResetAccessFailedCountAsync(IdentityUser user)
+        {
+            if (user == null)
+                throw new ArgumentNullException("user");
+            user.FailedAccessAttempts = 0;
+            return Task.FromResult<Object>(null);
+
+        }
+
+        public Task<int> GetAccessFailedCountAsync(IdentityUser user)
+        {
+            if (user == null)
+                throw new ArgumentNullException("user");
+            return Task.FromResult(user.FailedAccessAttempts.HasValue ? user.FailedAccessAttempts.Value : 0);
+        }
+
+        public Task<bool> GetLockoutEnabledAsync(IdentityUser user)
+        {
+            return Task.FromResult(true);
+        }
+
+        public Task SetLockoutEnabledAsync(IdentityUser user, bool enabled)
+        {
+            if (user == null)
+                throw new ArgumentNullException("user");
+            return Task.FromResult<Object>(null);
+
+        }
+
+        #endregion
+
+        public Task SetTwoFactorEnabledAsync(IdentityUser user, bool enabled)
+        {
+            return Task.FromResult<Object>(null);
+        }
+
+        public Task<bool> GetTwoFactorEnabledAsync(IdentityUser user)
+        {
+            return Task.FromResult(false);
         }
     }
 }

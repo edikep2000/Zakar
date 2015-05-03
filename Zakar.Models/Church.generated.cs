@@ -150,7 +150,7 @@ namespace Zakar.Models
 		}
 		
 		private Group _group;
-		[ForeignKeyAssociation(ConstraintName = "FK_GroupChurch", SharedFields = "GroupId", TargetFields = "Id")]
+		[ForeignKeyAssociation(SharedFields = "GroupId", TargetFields = "Id")]
 		[Storage("_group")]
 		public virtual Group Group
 		{

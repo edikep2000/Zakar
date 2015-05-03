@@ -127,7 +127,7 @@
         <orm:field name="_partner" property="Partner" behavior="readwrite" uniqueId="059c6f58-84c2-45bb-bd88-88e23b0e0efb" type="Zakar.Models.Partner">
           <orm:reference uniqueId="2c78b20c-08ff-4399-a94b-2ec78a3369bd" association-name="PartnershipHasPartner">
             <orm:sharedfield name="_partnerId" target-class="Zakar.Models.Partner" target-field="_id" />
-            <orm:constraint name="FK_PartnerPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="Partners" />
+            <orm:constraint name="FK_PartnerPartnership" schema="dbo" delete-action="dbdefaultrule" />
           </orm:reference>
         </orm:field>
         <orm:field name="_currency" property="Currency" behavior="readwrite" uniqueId="0d1cb284-e773-46d4-a80e-589e2d8cd049" type="Zakar.Models.Currency">
@@ -351,7 +351,7 @@
         <orm:field name="_partner1" property="Partner1" behavior="readwrite" uniqueId="efe77ebd-2c0e-4817-86ad-92d60c98c8e9" type="Zakar.Models.Partner">
           <orm:reference uniqueId="20c3a43a-13d5-4394-ad1c-8ae592dcb737" association-name="NonValidatedPartnershipRecordHasPartner">
             <orm:sharedfield name="_partner" target-class="Zakar.Models.Partner" target-field="_id" />
-            <orm:constraint name="FK_NonValidatedPartnershipRecords_Partners" schema="dbo" delete-action="cascade" destination-table="Partners" />
+            <orm:constraint name="FK_NonValidatedPartnershipRecords_Partners" schema="dbo" delete-action="cascade" />
           </orm:reference>
         </orm:field>
       </orm:class>
@@ -445,7 +445,6 @@
         <orm:field name="_group" property="Group" behavior="readwrite" uniqueId="7bd692f9-460d-4dbf-af6f-4ecdb2867346" type="Zakar.Models.Group">
           <orm:reference uniqueId="8652b109-361f-4eed-bb74-0b3cd7456531" association-name="ChurchHasGroup">
             <orm:sharedfield name="_groupId" target-class="Zakar.Models.Group" target-field="_id" />
-            <orm:constraint name="FK_GroupChurch" schema="dbo" delete-action="cascade" destination-table="Groups" />
           </orm:reference>
         </orm:field>
         <orm:field name="_pCFs" property="PCFs" behavior="readwrite" uniqueId="4522a2d4-4bbe-4193-823a-a816a8ef0078" type="Zakar.Models.PCF">
@@ -454,6 +453,11 @@
         <orm:field name="_partners" property="Partners" behavior="readwrite" uniqueId="f4171d08-d1b5-4b8f-bbf1-a3e6c9c20c0f" type="Zakar.Models.Partner">
           <orm:collection element-class="Zakar.Models.Partner" inverse-field="_church" order-by="" uniqueId="d7cd6ab2-d5d2-43a0-b22f-f21fbf314412" />
         </orm:field>
+        <orm:index name="idx_Church_GroupId">
+          <orm:columnMapping>
+            <orm:column name="GroupId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
       </orm:class>
       <orm:class name="Zone" update-schema="true" use-default-mapping="true" uniqueId="b09798ee-f505-4b45-b113-8a1704c5dc61">
         <orm:identity>
@@ -505,6 +509,11 @@
         <orm:field name="_cells" property="Cells" behavior="readwrite" uniqueId="e5addd1e-0e19-40bd-98bc-0a1510700613" type="Zakar.Models.Cell">
           <orm:collection element-class="Zakar.Models.Cell" inverse-field="_pCF" order-by="" uniqueId="477e3c89-206d-4be4-aa06-b15f3546bae8" />
         </orm:field>
+        <orm:index name="idx_PCF_ChurchId">
+          <orm:columnMapping>
+            <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
       </orm:class>
       <orm:class name="Cell" update-schema="true" use-default-mapping="true" uniqueId="7d65657c-148f-4a03-97b7-26af84512c5c">
         <orm:identity>
@@ -530,42 +539,33 @@
             <orm:sharedfield name="_pCFId" target-class="Zakar.Models.PCF" target-field="_id" />
           </orm:reference>
         </orm:field>
+        <orm:index name="idx_Cell_PCFId">
+          <orm:columnMapping>
+            <orm:column name="PCFId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
       </orm:class>
-      <orm:class name="IdentityUser" update-schema="true" behavior="readwrite" use-default-mapping="true" uniqueId="2802171a-a1e9-4db6-9392-5b35a49f36d8">
+      <orm:class name="IdentityUser" update-schema="true" behavior="readwrite" use-cascade-delete="yes" uniqueId="2802171a-a1e9-4db6-9392-5b35a49f36d8">
         <orm:identity>
           <orm:single-field field-name="_id" />
         </orm:identity>
-        <orm:field name="_id" property="Id" uniqueId="e6ebdcfb-e9af-4759-8e5d-5005ae4f0e81" type="System.String">
-          <orm:column name="Id" sql-type="varchar" nullable="false" length="255" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        </orm:field>
-        <orm:field name="_firstName" property="FirstName" uniqueId="fef979e1-7342-4258-9c91-31212da813fe" type="System.String">
-          <orm:column name="FirstName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        </orm:field>
-        <orm:field name="_lastName" property="LastName" uniqueId="b851c322-b550-4c99-bbc6-8b52dbced35d" type="System.String">
-          <orm:column name="LastName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        </orm:field>
-        <orm:field name="_phoneNumber" property="PhoneNumber" uniqueId="72fc20ea-aaf8-4961-ac1c-730bf662dd8a" type="System.String">
-          <orm:column name="PhoneNumber" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        </orm:field>
-        <orm:field name="_userName" property="UserName" uniqueId="5bc061a7-6347-443c-853b-2e7509c5e111" type="System.String">
-          <orm:column name="UserName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        </orm:field>
-        <orm:field name="_passwordHash" property="PasswordHash" uniqueId="263345ce-c18b-4e25-bd8e-2b920613999b" type="System.String">
-          <orm:column name="PasswordHash" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        </orm:field>
-        <orm:field name="_securityStamp" property="SecurityStamp" uniqueId="f76633da-14ce-47b9-8de7-71d1a877c369" type="System.String">
-          <orm:column name="SecurityStamp" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        </orm:field>
-        <orm:field name="_dateCreated" property="DateCreated" uniqueId="e72bb140-82ce-4f7a-a987-dd25192ffde3" type="System.DateTime">
-          <orm:column name="DateCreated" sql-type="datetime" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
-        </orm:field>
+        <orm:field name="_id" property="Id" uniqueId="e6ebdcfb-e9af-4759-8e5d-5005ae4f0e81" type="System.String" />
+        <orm:field name="_firstName" property="FirstName" uniqueId="fef979e1-7342-4258-9c91-31212da813fe" type="System.String" />
+        <orm:field name="_lastName" property="LastName" uniqueId="b851c322-b550-4c99-bbc6-8b52dbced35d" type="System.String" />
+        <orm:field name="_phoneNumber" property="PhoneNumber" uniqueId="72fc20ea-aaf8-4961-ac1c-730bf662dd8a" type="System.String" />
+        <orm:field name="_userName" property="UserName" uniqueId="5bc061a7-6347-443c-853b-2e7509c5e111" type="System.String" />
+        <orm:field name="_passwordHash" property="PasswordHash" uniqueId="263345ce-c18b-4e25-bd8e-2b920613999b" type="System.String" />
+        <orm:field name="_securityStamp" property="SecurityStamp" uniqueId="f76633da-14ce-47b9-8de7-71d1a877c369" type="System.String" />
+        <orm:field name="_dateCreated" property="DateCreated" uniqueId="e72bb140-82ce-4f7a-a987-dd25192ffde3" type="System.DateTime" />
+        <orm:field name="_failedAccessAttempts" property="FailedAccessAttempts" uniqueId="e7055301-1830-4be9-81e0-558fe43fc991" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+        <orm:field name="_dateOfLastFailedAccessAttempt" property="DateOfLastFailedAccessAttempt" uniqueId="cb8cc1ac-e1e5-44a8-b16f-10c820beb503" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
         <orm:field name="_identityUserClaims" property="IdentityUserClaims" behavior="readwrite" uniqueId="36c237b9-8c97-4f38-b399-9ed17926d0f4" type="Zakar.Models.IdentityUserClaim">
-          <orm:collection element-class="Zakar.Models.IdentityUserClaim" inverse-field="_identityUser" order-by="" uniqueId="58ce0353-f161-4630-95e5-2fd307ca6795" />
+          <orm:collection element-class="Zakar.Models.IdentityUserClaim" inverse-field="_identityUser" managed="true" order-by="" uniqueId="58ce0353-f161-4630-95e5-2fd307ca6795" />
         </orm:field>
-        <orm:field name="_identityUserInRoles" property="IdentityUserInRoles" behavior="readwrite" uniqueId="ed666889-b407-46b5-9489-58d5227f556c" type="Zakar.Models.IdentityUserInRole">
-          <orm:collection element-class="Zakar.Models.IdentityUserInRole" inverse-field="_identityUser" order-by="" uniqueId="93e43048-f7af-4345-b828-12eceea0e6e7" />
+        <orm:field name="_identityUserInRoles" property="IdentityUserInRoles" behavior="readwrite" uniqueId="ed666889-b407-46b5-9489-58d5227f556c" type="Zakar.Models.IdentityUserInRole" dependent="true">
+          <orm:collection element-class="Zakar.Models.IdentityUserInRole" inverse-field="_identityUser" managed="true" order-by="" uniqueId="93e43048-f7af-4345-b828-12eceea0e6e7" />
         </orm:field>
-        <orm:field name="_identityUserLogin" property="IdentityUserLogin" behavior="readwrite" uniqueId="5fc1640c-c819-4cd3-8e3b-96eec6434991" type="Zakar.Models.IdentityUserLogin">
+        <orm:field name="_identityUserLogin" property="IdentityUserLogin" behavior="readwrite" uniqueId="5fc1640c-c819-4cd3-8e3b-96eec6434991" type="Zakar.Models.IdentityUserLogin" dependent="true">
           <orm:inversereference inverse-field="_identityUser" uniqueId="b342a2c4-06c9-44ec-9320-876f327c782a" />
         </orm:field>
       </orm:class>
@@ -649,8 +649,8 @@
         <orm:field name="_name" property="Name" uniqueId="9e679122-fdbf-4179-afce-5fa7857afb38" type="System.String">
           <orm:column name="nme" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
-        <orm:field name="_identityUserInRoles" property="IdentityUserInRoles" behavior="readwrite" uniqueId="60bc3863-447d-4f86-afae-858fd8e54337" type="Zakar.Models.IdentityUserInRole">
-          <orm:collection element-class="Zakar.Models.IdentityUserInRole" inverse-field="_identityRole" order-by="" uniqueId="78eec2e1-c655-4fcb-b2d9-8c6dcf8f7f83" />
+        <orm:field name="_identityUserInRoles" property="IdentityUserInRoles" behavior="readwrite" uniqueId="60bc3863-447d-4f86-afae-858fd8e54337" type="Zakar.Models.IdentityUserInRole" dependent="true">
+          <orm:collection element-class="Zakar.Models.IdentityUserInRole" inverse-field="_identityRole" managed="true" order-by="" uniqueId="78eec2e1-c655-4fcb-b2d9-8c6dcf8f7f83" />
         </orm:field>
       </orm:class>
       <orm:class name="IdentityUserLogin" update-schema="true" uniqueId="2850314b-7fc4-45a3-95d1-9588b856c9b1">
@@ -672,6 +672,48 @@
             <orm:sharedfield name="_id" target-class="Zakar.Models.IdentityUser" target-field="_id" />
           </orm:reference>
         </orm:field>
+      </orm:class>
+      <orm:class name="StagedZone" uniqueId="0c2997d7-0499-4904-9183-84dbb6f38c7b">
+        <orm:identity>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:field name="_id" property="Id" uniqueId="44638231-fdfb-4a37-ab5a-70e422921181" type="System.Int32" />
+      </orm:class>
+      <orm:class name="StagedGroup" uniqueId="2c394a76-075d-4e25-8728-c76d07ccd794">
+        <orm:identity>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:field name="_id" property="Id" uniqueId="224a9111-0b90-40d2-abdb-e23b57601499" type="System.Int32" />
+      </orm:class>
+      <orm:class name="StagedChapters" uniqueId="99bb61a8-9b6c-423c-b918-1838b1b7280b">
+        <orm:identity>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:field name="_id" property="Id" uniqueId="5c5b02d0-d9aa-4239-b586-5461a3ee77ef" type="System.Int32" />
+      </orm:class>
+      <orm:class name="StagedPCFs" uniqueId="f7b1e045-d6d8-46a5-a598-bc263b94d3ff">
+        <orm:identity>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:field name="_id" property="Id" uniqueId="3ba92e03-ce22-4e8b-b18e-d56dc9ece26e" type="System.Int32" />
+      </orm:class>
+      <orm:class name="StagedCells" uniqueId="644cd570-f499-4859-9467-4311f42a27a1">
+        <orm:identity>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:field name="_id" property="Id" uniqueId="390fcfd2-6f1f-4d90-b731-ebd97441f5d0" type="System.Int32" />
+      </orm:class>
+      <orm:class name="StagedPartners" uniqueId="7505a184-5efc-4d32-940f-f00705a0d1c6">
+        <orm:identity>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:field name="_id" property="Id" uniqueId="38c18ceb-9694-4d9d-bbec-145ad3f93946" type="System.Int32" />
+      </orm:class>
+      <orm:class name="StagedProperties" uniqueId="a8b9d4ae-4f29-4719-9002-f837e8ad2a75">
+        <orm:identity>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:field name="_id" property="Id" uniqueId="820c0a29-e62c-4f2c-8298-9c28fd8cc5b8" type="System.Int32" />
       </orm:class>
     </orm:namespace>
     <orm:schema schema="dbo">
@@ -730,7 +772,7 @@
         <orm:constraint name="FK_PartnershipArmPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="PartnershipArms">
           <orm:column name="PartnershipArmId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         </orm:constraint>
-        <orm:constraint name="FK_PartnerPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="Partners">
+        <orm:constraint name="FK_PartnerPartnership" schema="dbo" delete-action="dbdefaultrule">
           <orm:column name="PartnerId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         </orm:constraint>
         <orm:constraint name="FK_CurrencyPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="Currencies">
@@ -742,22 +784,6 @@
         <orm:column name="Name" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
         <orm:column name="Description" sql-type="nvarchar(max)" nullable="true" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
         <orm:column name="ShortFormName" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
-      </orm:table>
-      <orm:table name="Partners" schema="dbo">
-        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
-        <orm:column name="Title" sql-type="nvarchar" nullable="false" length="25" scale="0" ado-type="UnicodeStringVariableLength" />
-        <orm:column name="FirstName" sql-type="nvarchar" nullable="false" length="50" scale="0" ado-type="UnicodeStringVariableLength" />
-        <orm:column name="LastName" sql-type="nvarchar" nullable="false" length="50" scale="0" ado-type="UnicodeStringVariableLength" />
-        <orm:column name="Email" sql-type="nvarchar" nullable="false" length="100" scale="0" ado-type="UnicodeStringVariableLength" />
-        <orm:column name="YookosId" sql-type="nvarchar" nullable="true" length="30" scale="0" ado-type="UnicodeStringVariableLength" />
-        <orm:column name="Phone" sql-type="nvarchar" nullable="false" length="50" scale="0" ado-type="UnicodeStringVariableLength" />
-        <orm:column name="DateCreated" sql-type="datetime" nullable="false" length="0" scale="0" ado-type="DateTime" />
-        <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-        <orm:column name="Deleted" sql-type="bit" nullable="false" length="0" scale="0" ado-type="Bit" />
-        <orm:column name="DateDeleted" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
-        <orm:constraint name="FK_Partners_Churches" schema="dbo" delete-action="cascade" destination-table="Churches">
-          <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-        </orm:constraint>
       </orm:table>
       <orm:table name="Notifications" schema="dbo">
         <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
@@ -792,15 +818,9 @@
         <orm:constraint name="FK_NonValidatedPartnershipRecords_PartnershipArms" schema="dbo" delete-action="cascade" destination-table="PartnershipArms">
           <orm:column name="PartnershipArm" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         </orm:constraint>
-        <orm:constraint name="FK_NonValidatedPartnershipRecords_Partners" schema="dbo" delete-action="cascade" destination-table="Partners">
+        <orm:constraint name="FK_NonValidatedPartnershipRecords_Partners" schema="dbo" delete-action="cascade">
           <orm:column name="Partner" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         </orm:constraint>
-      </orm:table>
-      <orm:table name="Groups" schema="dbo">
-        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
-        <orm:column name="Name" sql-type="nvarchar" nullable="false" length="100" scale="0" ado-type="UnicodeStringVariableLength" />
-        <orm:column name="unique_id" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="zone_id" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
       </orm:table>
       <orm:table name="Currencies" schema="dbo">
         <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
@@ -808,21 +828,6 @@
         <orm:column name="Symbol" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
         <orm:column name="IsDefaultCurrency" sql-type="bit" nullable="true" length="0" scale="0" ado-type="Bit" />
         <orm:column name="ConversionRateToDefault" sql-type="decimal" nullable="false" length="18" scale="2" ado-type="Decimal" />
-      </orm:table>
-      <orm:table name="Churches" schema="dbo">
-        <orm:column name="churchId" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
-        <orm:column name="Name" sql-type="nvarchar" nullable="false" length="100" scale="0" ado-type="UnicodeStringVariableLength" />
-        <orm:column name="GroupId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-        <orm:column name="DefaultCurrencyId" sql-type="int" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int32" />
-        <orm:column name="unique_id" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:index name="IX_FK_GroupChurch">
-          <orm:columnMapping>
-            <orm:column name="GroupId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-          </orm:columnMapping>
-        </orm:index>
-        <orm:constraint name="FK_GroupChurch" schema="dbo" delete-action="cascade" destination-table="Groups">
-          <orm:column name="GroupId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-        </orm:constraint>
       </orm:table>
       <orm:table name="grp" schema="dbo">
         <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
@@ -872,16 +877,6 @@
             <orm:column name="UserId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
           </orm:columnMapping>
         </orm:index>
-      </orm:table>
-      <orm:table name="IdentityUser">
-        <orm:column name="Id" sql-type="varchar" nullable="false" length="255" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="ChurchId" sql-type="int" nullable="true" length="255" scale="0" ado-type="StringVariableLength" />
-        <orm:column name="FirstName" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="LastName" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="PhoneNumber" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="UserName" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="PasswordHash" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="SecurityStamp" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
       </orm:table>
       <orm:table name="IdentityUserInRole">
         <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
@@ -1333,7 +1328,7 @@
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
-    <DomainClass Id="2802171a-a1e9-4db6-9392-5b35a49f36d8" name="IdentityUser" namespace="Zakar.Models" showPropertiesCompartment="true" Kind="ReadWrite" updateSchema="true" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+    <DomainClass Id="2802171a-a1e9-4db6-9392-5b35a49f36d8" name="IdentityUser" namespace="Zakar.Models" showPropertiesCompartment="true" Kind="ReadWrite" updateSchema="true" showNavigationCompartment="true" showImplementationCompartment="true" useCascadeDelete="Yes" identityMechanismMember="Id">
       <Property Id="e6ebdcfb-e9af-4759-8e5d-5005ae4f0e81" name="Id" label="Id : String" identity="true" fieldName="_id" />
       <Property Id="fef979e1-7342-4258-9c91-31212da813fe" name="FirstName" label="FirstName : String" fieldName="_firstName" />
       <Property Id="b851c322-b550-4c99-bbc6-8b52dbced35d" name="LastName" label="LastName : String" fieldName="_lastName" />
@@ -1342,15 +1337,17 @@
       <Property Id="263345ce-c18b-4e25-bd8e-2b920613999b" name="PasswordHash" label="PasswordHash : String" fieldName="_passwordHash" />
       <Property Id="f76633da-14ce-47b9-8de7-71d1a877c369" name="SecurityStamp" label="SecurityStamp : String" fieldName="_securityStamp" />
       <Property Id="e72bb140-82ce-4f7a-a987-dd25192ffde3" name="DateCreated" type="DateTime" label="DateCreated : DateTime" fieldName="_dateCreated" />
+      <Property Id="e7055301-1830-4be9-81e0-558fe43fc991" name="FailedAccessAttempts" type="Int32" label="FailedAccessAttempts : Int32" nullable="true" fieldName="_failedAccessAttempts" />
+      <Property Id="cb8cc1ac-e1e5-44a8-b16f-10c820beb503" name="DateOfLastFailedAccessAttempt" type="DateTime" label="DateOfLastFailedAccessAttempt : DateTime" nullable="true" fieldName="_dateOfLastFailedAccessAttempt" />
       <navigationalProperties>
         <classHasNavigationalProperties Id="aea0fb51-1fca-4dc2-b5a6-ffa3bf485162">
-          <NavigationalProperty Id="36c237b9-8c97-4f38-b399-9ed17926d0f4" name="IdentityUserClaims" type="IList&lt;IdentityUserClaim&gt;" label="IdentityUserClaims : IList&lt;IdentityUserClaim&gt;" nullable="true" kind="Persistent" fieldName="_identityUserClaims" isDependent="false" isManaged="false" />
+          <NavigationalProperty Id="36c237b9-8c97-4f38-b399-9ed17926d0f4" name="IdentityUserClaims" type="IList&lt;IdentityUserClaim&gt;" label="IdentityUserClaims : IList&lt;IdentityUserClaim&gt;" nullable="true" kind="Persistent" fieldName="_identityUserClaims" isDependent="false" isManaged="true" />
         </classHasNavigationalProperties>
         <classHasNavigationalProperties Id="49deda67-753d-48cf-99bf-b8cd4b25c86f">
-          <NavigationalProperty Id="ed666889-b407-46b5-9489-58d5227f556c" name="IdentityUserInRoles" type="IList&lt;IdentityUserInRole&gt;" label="IdentityUserInRoles : IList&lt;IdentityUserInRole&gt;" nullable="true" kind="Persistent" fieldName="_identityUserInRoles" isDependent="false" isManaged="false" />
+          <NavigationalProperty Id="ed666889-b407-46b5-9489-58d5227f556c" name="IdentityUserInRoles" type="IList&lt;IdentityUserInRole&gt;" label="IdentityUserInRoles : IList&lt;IdentityUserInRole&gt;" nullable="true" kind="Persistent" fieldName="_identityUserInRoles" isDependent="true" isManaged="true" />
         </classHasNavigationalProperties>
         <classHasNavigationalProperties Id="dd4a38cc-774f-4baa-b227-6f712741460c">
-          <NavigationalProperty Id="5fc1640c-c819-4cd3-8e3b-96eec6434991" name="IdentityUserLogin" type="IdentityUserLogin" label="IdentityUserLogin : IdentityUserLogin" nullable="true" kind="Persistent" fieldName="_identityUserLogin" isDependent="false" isManaged="true" />
+          <NavigationalProperty Id="5fc1640c-c819-4cd3-8e3b-96eec6434991" name="IdentityUserLogin" type="IdentityUserLogin" label="IdentityUserLogin : IdentityUserLogin" nullable="true" kind="Persistent" fieldName="_identityUserLogin" isDependent="true" isManaged="true" />
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
@@ -1376,7 +1373,7 @@
       </AssociationTargets>
       <navigationalProperties>
         <classHasNavigationalProperties Id="83ce91c7-1bcd-4b2f-a52e-2e9aad3d7ab4">
-          <NavigationalProperty Id="d31e4604-46ae-47f8-b79b-f3283e37b5ec" name="IdentityUser" type="IdentityUser" label="IdentityUser : IdentityUser" nullable="true" kind="Persistent" fieldName="_identityUser" isDependent="false" isManaged="false" />
+          <NavigationalProperty Id="d31e4604-46ae-47f8-b79b-f3283e37b5ec" name="IdentityUser" type="IdentityUser" label="IdentityUser : IdentityUser" nullable="true" kind="Persistent" fieldName="_identityUser" isDependent="false" isManaged="true" />
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
@@ -1414,10 +1411,10 @@
       </AssociationTargets>
       <navigationalProperties>
         <classHasNavigationalProperties Id="3a45d7ea-5f32-4c72-a91e-015dbaa3e4b6">
-          <NavigationalProperty Id="d04533bd-ca90-47f6-9965-f29f38b5ea21" name="IdentityUser" type="IdentityUser" label="IdentityUser : IdentityUser" nullable="true" kind="Persistent" fieldName="_identityUser" isDependent="false" isManaged="false" />
+          <NavigationalProperty Id="d04533bd-ca90-47f6-9965-f29f38b5ea21" name="IdentityUser" type="IdentityUser" label="IdentityUser : IdentityUser" nullable="true" kind="Persistent" fieldName="_identityUser" isDependent="false" isManaged="true" />
         </classHasNavigationalProperties>
         <classHasNavigationalProperties Id="9a2a45fd-0793-446e-b407-2022583ef30e">
-          <NavigationalProperty Id="5d4cdbc0-e904-4c9d-9261-dc8ab34cf62a" name="IdentityRole" type="IdentityRole" label="IdentityRole : IdentityRole" nullable="true" kind="Persistent" fieldName="_identityRole" isDependent="false" isManaged="false" />
+          <NavigationalProperty Id="5d4cdbc0-e904-4c9d-9261-dc8ab34cf62a" name="IdentityRole" type="IdentityRole" label="IdentityRole : IdentityRole" nullable="true" kind="Persistent" fieldName="_identityRole" isDependent="false" isManaged="true" />
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
@@ -1426,7 +1423,7 @@
       <Property Id="9e679122-fdbf-4179-afce-5fa7857afb38" name="Name" label="Name : String" fieldName="_name" />
       <navigationalProperties>
         <classHasNavigationalProperties Id="111601c5-b4a6-4c49-8f49-d09112f5c4b8">
-          <NavigationalProperty Id="60bc3863-447d-4f86-afae-858fd8e54337" name="IdentityUserInRoles" type="IList&lt;IdentityUserInRole&gt;" label="IdentityUserInRoles : IList&lt;IdentityUserInRole&gt;" nullable="true" kind="Persistent" fieldName="_identityUserInRoles" isDependent="false" isManaged="false" />
+          <NavigationalProperty Id="60bc3863-447d-4f86-afae-858fd8e54337" name="IdentityUserInRoles" type="IList&lt;IdentityUserInRole&gt;" label="IdentityUserInRoles : IList&lt;IdentityUserInRole&gt;" nullable="true" kind="Persistent" fieldName="_identityUserInRoles" isDependent="true" isManaged="true" />
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
@@ -1455,6 +1452,27 @@
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
+    <DomainClass Id="0c2997d7-0499-4904-9183-84dbb6f38c7b" name="StagedZone" namespace="Zakar.Models" showPropertiesCompartment="true" showNavigationCompartment="true" showImplementationCompartment="true">
+      <Property Id="44638231-fdfb-4a37-ab5a-70e422921181" name="Id" type="System.Int32" label="Id : System.Int32" identity="true" fieldName="_id" />
+    </DomainClass>
+    <DomainClass Id="2c394a76-075d-4e25-8728-c76d07ccd794" name="StagedGroup" namespace="Zakar.Models" showPropertiesCompartment="true" showNavigationCompartment="true" showImplementationCompartment="true">
+      <Property Id="224a9111-0b90-40d2-abdb-e23b57601499" name="Id" type="System.Int32" label="Id : System.Int32" identity="true" fieldName="_id" />
+    </DomainClass>
+    <DomainClass Id="99bb61a8-9b6c-423c-b918-1838b1b7280b" name="StagedChapters" namespace="Zakar.Models" showPropertiesCompartment="true" showNavigationCompartment="true" showImplementationCompartment="true">
+      <Property Id="5c5b02d0-d9aa-4239-b586-5461a3ee77ef" name="Id" type="System.Int32" label="Id : System.Int32" identity="true" fieldName="_id" />
+    </DomainClass>
+    <DomainClass Id="f7b1e045-d6d8-46a5-a598-bc263b94d3ff" name="StagedPCFs" namespace="Zakar.Models" showPropertiesCompartment="true" showNavigationCompartment="true" showImplementationCompartment="true">
+      <Property Id="3ba92e03-ce22-4e8b-b18e-d56dc9ece26e" name="Id" type="System.Int32" label="Id : System.Int32" identity="true" fieldName="_id" />
+    </DomainClass>
+    <DomainClass Id="644cd570-f499-4859-9467-4311f42a27a1" name="StagedCells" namespace="Zakar.Models" showPropertiesCompartment="true" showNavigationCompartment="true" showImplementationCompartment="true">
+      <Property Id="390fcfd2-6f1f-4d90-b731-ebd97441f5d0" name="Id" type="System.Int32" label="Id : System.Int32" identity="true" fieldName="_id" />
+    </DomainClass>
+    <DomainClass Id="7505a184-5efc-4d32-940f-f00705a0d1c6" name="StagedPartners" namespace="Zakar.Models" showPropertiesCompartment="true" showNavigationCompartment="true" showImplementationCompartment="true">
+      <Property Id="38c18ceb-9694-4d9d-bbec-145ad3f93946" name="Id" type="System.Int32" label="Id : System.Int32" identity="true" fieldName="_id" />
+    </DomainClass>
+    <DomainClass Id="a8b9d4ae-4f29-4719-9002-f837e8ad2a75" name="StagedProperties" namespace="Zakar.Models" showPropertiesCompartment="true" showNavigationCompartment="true" showImplementationCompartment="true">
+      <Property Id="820c0a29-e62c-4f2c-8298-9c28fd8cc5b8" name="Id" type="System.Int32" label="Id : System.Int32" identity="true" fieldName="_id" />
+    </DomainClass>
   </Types>
   <domainContext>
     <domainModelHasDomainContext Id="4ac031ae-7aea-4b84-a9c1-1a2fd5f819bd">
@@ -1479,6 +1497,13 @@
         <entitySetProperty name="IdentityUserInRoles" namespace="Zakar.Models" type="IdentityUserInRole" label="IdentityUserInRoles : IQueryable&lt;Zakar.Models.IdentityUserInRole&gt;" />
         <entitySetProperty name="IdentityRoles" namespace="Zakar.Models" type="IdentityRole" label="IdentityRoles : IQueryable&lt;Zakar.Models.IdentityRole&gt;" />
         <entitySetProperty name="IdentityUserLogins" namespace="Zakar.Models" type="IdentityUserLogin" label="IdentityUserLogins : IQueryable&lt;Zakar.Models.IdentityUserLogin&gt;" />
+        <entitySetProperty name="StagedZones" namespace="Zakar.Models" type="StagedZone" label="StagedZones : IQueryable&lt;Zakar.Models.StagedZone&gt;" />
+        <entitySetProperty name="StagedGroups" namespace="Zakar.Models" type="StagedGroup" label="StagedGroups : IQueryable&lt;Zakar.Models.StagedGroup&gt;" />
+        <entitySetProperty name="StagedChapters" namespace="Zakar.Models" type="StagedChapters" label="StagedChapters : IQueryable&lt;Zakar.Models.StagedChapters&gt;" />
+        <entitySetProperty name="StagedPCFs" namespace="Zakar.Models" type="StagedPCFs" label="StagedPCFs : IQueryable&lt;Zakar.Models.StagedPCFs&gt;" />
+        <entitySetProperty name="StagedCells" namespace="Zakar.Models" type="StagedCells" label="StagedCells : IQueryable&lt;Zakar.Models.StagedCells&gt;" />
+        <entitySetProperty name="StagedPartners" namespace="Zakar.Models" type="StagedPartners" label="StagedPartners : IQueryable&lt;Zakar.Models.StagedPartners&gt;" />
+        <entitySetProperty name="StagedProperties" namespace="Zakar.Models" type="StagedProperties" label="StagedProperties : IQueryable&lt;Zakar.Models.StagedProperties&gt;" />
       </domainContainer>
     </domainModelHasDomainContext>
   </domainContext>

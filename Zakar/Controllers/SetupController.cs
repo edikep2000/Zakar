@@ -96,7 +96,7 @@ namespace Zakar.Controllers
                 var m = new DeleteConfirmInput()
                     {
                         GridId = gridId,
-                        Id = id,
+                        Id = id.ToString(),
                         Message = String.Format("Are you sure you want to delete Zone {0}, along with all the chapters, PCFs and Cells", zone.Name)
                     };
                 return PartialView("Delete",m);
@@ -109,7 +109,7 @@ namespace Zakar.Controllers
         {
             if (ModelState.IsValid)
             {
-                _zoneService.Delete(model.Id);
+                _zoneService.Delete(Convert.ToInt32(model.Id));
                 return Json(new {});
             }
             return PartialView();
@@ -283,7 +283,7 @@ namespace Zakar.Controllers
                 var m = new DeleteConfirmInput()
                     {
                         GridId = gridId,
-                        Id = id,
+                        Id = id.ToString(),
                         Message =
                             string.Format(
                                 "Are you sure you want to delete group {0} along with all Churches, PCFs and Cells it contains",
@@ -299,7 +299,7 @@ namespace Zakar.Controllers
         {
             if (ModelState.IsValid)
             {
-                _groupService.Delete(model.Id);
+                _groupService.Delete(Convert.ToInt32(model.Id));
                 return Json(new {});
             }
             return PartialView("Delete",model);
@@ -414,7 +414,7 @@ namespace Zakar.Controllers
                 var m = new DeleteConfirmInput()
                     {
                         GridId = gridId,
-                        Id = id,
+                        Id = id.ToString(),
                         Message =
                             String.Format(
                                 "Are you sure you want to delete {0} Along with Cells, PCFs and The Partner Information Contained",
@@ -432,7 +432,7 @@ namespace Zakar.Controllers
         {
             if (ModelState.IsValid)
             {
-                _churchService.Delete(input.Id);
+                _churchService.Delete(Convert.ToInt32(input.Id));
                 return Json(new {});
             }
             return PartialView("Delete");
@@ -535,7 +535,7 @@ namespace Zakar.Controllers
             {
                 var m = new DeleteConfirmInput()
                     {
-                        Id = id,
+                        Id = id.ToString(),
                         GridId = gridId,
                         Message = String.Format("Are you sure you want to delete {0}", model.Name)
                     };
@@ -549,7 +549,7 @@ namespace Zakar.Controllers
         {
             if (ModelState.IsValid)
             {
-                _armService.Delete(model.Id);
+                _armService.Delete(Convert.ToInt32(model.Id));
                 return Json(new {});
             }
             return PartialView("Delete",model);
@@ -650,7 +650,7 @@ namespace Zakar.Controllers
                 var m = new DeleteConfirmInput()
                     {
                         GridId = gridId,
-                        Id = model.Id,
+                        Id = model.Id.ToString(),
                         Message =
                             String.Format("Are you sure you want to delete the currency {0} from the datastore",
                                           model.Symbol)
@@ -665,7 +665,7 @@ namespace Zakar.Controllers
         {
             if (ModelState.IsValid)
             {
-                _currencyService.Delete(model.Id);
+                _currencyService.Delete(Convert.ToInt32(model.Id));
                 return Json(new {});
             }
             return PartialView("Delete",model);

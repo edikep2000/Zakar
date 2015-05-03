@@ -744,6 +744,9 @@
     <Content Include="Scripts\bootstrapPopup.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\jquery_ui.js" />
+    <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\kendo.modernizr.custom.js" />
     <Content Include="Scripts\kendo\2014.3.1411\angular.min.js" />
     <Content Include="Scripts\kendo\2014.3.1411\cultures\kendo.culture.af-ZA.min.js" />
@@ -1646,6 +1649,8 @@
     <Content Include="Scripts\plugins\velocity\velocity.ui.min.js" />
     <Content Include="Scripts\plugins\video\responsible-video.js" />
     <Content Include="Scripts\Site.js" />
+    <Content Include="Scripts\unobstrusive.js" />
+    <Content Include="Scripts\validate.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

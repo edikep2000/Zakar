@@ -94,7 +94,7 @@ namespace Zakar.Models
 		}
 		
 		private IdentityUser _identityUser;
-		[ForeignKeyAssociation(SharedFields = "UserId", TargetFields = "Id")]
+		[ForeignKeyAssociation(SharedFields = "UserId", TargetFields = "Id", IsManaged = true)]
 		[Storage("_identityUser")]
 		public virtual IdentityUser IdentityUser
 		{
@@ -114,7 +114,7 @@ namespace Zakar.Models
 		}
 		
 		private IdentityRole _identityRole;
-		[ForeignKeyAssociation(SharedFields = "RoleId", TargetFields = "Id")]
+		[ForeignKeyAssociation(SharedFields = "RoleId", TargetFields = "Id", IsManaged = true)]
 		[Storage("_identityRole")]
 		public virtual IdentityRole IdentityRole
 		{

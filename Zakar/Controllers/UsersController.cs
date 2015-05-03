@@ -19,13 +19,14 @@ namespace Zakar.Controllers
     public class UsersController : BaseController
     {
         private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private readonly ApplicationUserManager _userManager;
         private readonly IRoleStore<IdentityRole> _roleStore;
         private readonly GroupService _groupService;
         private readonly ZoneService _zoneService;
         private readonly ChurchService _churchService;
+        private readonly UserService _userService;
  
-        public UsersController(IUnitOfWork unitOfWork, IRoleStore<IdentityRole> roleStore, GroupService groupService, ZoneService zoneService, ChurchService churchService, ApplicationUserManager userManager, ApplicationSignInManager signInManager) : base(unitOfWork)
+        public UsersController(IUnitOfWork unitOfWork, IUserStore<IdentityUser> userstore, IRoleStore<IdentityRole> roleStore, GroupService groupService, ZoneService zoneService, ChurchService churchService, ApplicationUserManager userManager, ApplicationSignInManager signInManager) : base(unitOfWork)
         {
             _roleStore = roleStore;
             _groupService = groupService;
@@ -33,6 +34,7 @@ namespace Zakar.Controllers
             _churchService = churchService;
             _userManager = userManager;
             _signInManager = signInManager;
+            _userService = (UserService) userstore;
         }
         
         public ActionResult Index()
@@ -103,21 +105,44 @@ namespace Zakar.Controllers
         }
 
         [HttpPost]
-        public ActionResult GroupAdminRead(GridParams g)
+        public ActionResult GroupAdminRead(GridParams g, string username, string name, string phoneNumber, string groupName)
         {
-            return Json(new { });
-        }
+            var admins =
+                 _userManager.Users.Where(
+                     i => i.IdentityUserInRoles.Any(k => k.IdentityRole.Name == RolesEnum.GROUP_ADMIN.ToString()));
+            if (!string.IsNullOrEmpty(username))
+                admins = admins.Where(i => i.UserName.Contains(username));
+            if (!String.IsNullOrEmpty(name))
+                admins = admins.Where(i => i.FirstName.Contains(name) || i.LastName.Contains(name));
+            if (!String.IsNullOrEmpty(phoneNumber))
+                admins = admins.Where(i => i.PhoneNumber == phoneNumber);
+            if (!String.IsNullOrEmpty(groupName))
+            {
+                var queryable = _groupService.GetAll().Where(i => i.Name.Contains(groupName)).Select(I => I.AdminId);
+                admins = admins.Where(i => queryable.Any(k => k == i.Id));
+            }
 
-        public PartialViewResult GroupAdminDelete(string id, string gridId)
-        {
-            return PartialView("Delete");
+            var model = admins.Select(i => new UserViewModel()
+            {
+                FirstName = i.FirstName,
+                LastName = i.LastName,
+                PhoneNumber = i.PhoneNumber,
+                UserName = i.UserName,
+                Id = i.Id,
+            });
+            return Json(new GridModelBuilder<UserViewModel>(model, g)
+            {
+                Key = "UserName",
+                Map = o => new
+                {
+                    o.Id,
+                    o.FirstName,
+                    o.LastName,
+                    o.PhoneNumber,
+                    o.UserName,
+                }
+            }.Build());
         }
-
-        [HttpPost]
-        public ActionResult GroupAdminDelete(DeleteConfirmInput model)
-        {
-            return Json(new {});
-        } 
         #endregion
 
         #region PortalAdmins
@@ -131,7 +156,6 @@ namespace Zakar.Controllers
 
         public PartialViewResult PortalAdminCreate()
         {
-
             return PartialView();
         }
 
@@ -178,21 +202,40 @@ namespace Zakar.Controllers
 
       
 
-        public ActionResult PortalAdminRead(GridParams g)
+        public ActionResult PortalAdminRead(GridParams g, string username, string name, string phoneNumber)
         {
-            return Json(new { });
+            var admins =
+                _userManager.Users.Where(
+                    i => i.IdentityUserInRoles.Any(k => k.IdentityRole.Name == RolesEnum.PORTAL_ADMIN.ToString()));
+            if (!string.IsNullOrEmpty(username))
+                admins = admins.Where(i => i.UserName.Contains(username));
+            if (!String.IsNullOrEmpty(name))
+                admins = admins.Where(i => i.FirstName.Contains(name) || i.LastName.Contains(name));
+            if (!String.IsNullOrEmpty(phoneNumber))
+                admins = admins.Where(i => i.PhoneNumber == phoneNumber);
+            var model = admins.Select(i => new UserViewModel()
+            {
+                FirstName = i.FirstName,
+                LastName = i.LastName,
+                PhoneNumber = i.PhoneNumber,
+                UserName = i.UserName,
+                Id = i.Id,
+            });
+            return Json(new GridModelBuilder<UserViewModel>(model, g)
+            {
+                Key = "UserName",
+                Map = o => new
+                {
+                    o.Id,
+                    o.FirstName,
+                    o.LastName,
+                    o.PhoneNumber,
+                    o.UserName,
+                }
+            }.Build());
         }
 
-        public PartialViewResult PortalAdminDelete(string id, string gridId)
-        {
-            return PartialView("Delete");
-        }
-
-        [HttpPost]
-        public ActionResult PortalAdminDelete(DeleteConfirmInput model)
-        {
-            return Json(new { });
-        } 
+       
         
         #endregion
 
@@ -259,21 +302,47 @@ namespace Zakar.Controllers
         }
 
         [HttpPost]
-        public ActionResult ZoneAdminRead(GridParams g)
+        public ActionResult ZoneAdminRead(GridParams g, string username, string name, string phoneNumber, string zoneName)
         {
-            return Json(new { });
+
+            var admins =
+                _userManager.Users.Where(
+                    i => i.IdentityUserInRoles.Any(k => k.IdentityRole.Name == RolesEnum.ZONE_ADMIN.ToString()));
+            if (!string.IsNullOrEmpty(username))
+                admins = admins.Where(i => i.UserName.Contains(username));
+            if (!String.IsNullOrEmpty(name))
+                admins = admins.Where(i => i.FirstName.Contains(name) || i.LastName.Contains(name));
+            if (!String.IsNullOrEmpty(phoneNumber))
+                admins = admins.Where(i => i.PhoneNumber == phoneNumber);
+            if (!String.IsNullOrEmpty(zoneName))
+            {
+                var queryable = _zoneService.GetAll().Where(i => i.Name.Contains(zoneName)).Select(I => I.AdminId);
+                admins = admins.Where(i => queryable.Any(k => k == i.Id));
+            }
+
+            var model = admins.Select(i => new UserViewModel()
+            {
+                FirstName = i.FirstName,
+                LastName = i.LastName,
+                PhoneNumber = i.PhoneNumber,
+                UserName = i.UserName,
+                Id = i.Id,
+            });
+            return Json(new GridModelBuilder<UserViewModel>(model, g)
+            {
+                Key = "UserName",
+                Map = o => new
+                {
+                    o.Id,
+                    o.FirstName,
+                    o.LastName,
+                    o.PhoneNumber,
+                    o.UserName,
+                }
+            }.Build());
         }
 
-        public PartialViewResult ZoneAdminDelete(string id, string gridId)
-        {
-            return PartialView("Delete");
-        }
-
-        [HttpPost]
-        public ActionResult ZoneAdminDelete(DeleteConfirmInput model)
-        {
-            return Json(new { });
-        } 
+     
         #endregion
 
         #region ChapterAdmins
@@ -340,20 +409,78 @@ namespace Zakar.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChapterAdminRead(GridParams g)
+        public ActionResult ChapterAdminRead(GridParams g, string username, string name, string phoneNumber, string chapterName)
         {
-            return Json(new { });
+            var chapterAdmins = 
+                _userManager.Users.Where(
+                    i => i.IdentityUserInRoles.Any(k => k.IdentityRole.Name == RolesEnum.CHAPTER_ADMIN.ToString()));
+            if (!string.IsNullOrEmpty(username))
+                chapterAdmins = chapterAdmins.Where(i => i.UserName.Contains(username));
+            if (!String.IsNullOrEmpty(name))
+                chapterAdmins = chapterAdmins.Where(i => i.FirstName.Contains(name) || i.LastName.Contains(name));
+            if (!String.IsNullOrEmpty(phoneNumber))
+                chapterAdmins = chapterAdmins.Where(i => i.PhoneNumber == phoneNumber);
+            if (!String.IsNullOrEmpty(chapterName))
+            {
+                var chapter = _churchService.GetAll().Where(i => i.Name.Contains(chapterName)).Select(I => I.AdminId);
+                chapterAdmins = chapterAdmins.Where(i => chapter.Any(k => k == i.Id));
+            }
+
+            var model = chapterAdmins.Select(i => new UserViewModel()
+                {
+                    FirstName = i.FirstName,
+                    LastName = i.LastName,
+                    PhoneNumber = i.PhoneNumber,
+                    UserName = i.UserName,
+                    Id = i.Id,
+                });
+            return Json(new GridModelBuilder<UserViewModel>(model, g)
+                {
+                    Key = "UserName",
+                    Map = o => new
+                        {
+                            o.Id,
+                            o.FirstName,
+                            o.LastName,
+                            o.PhoneNumber,
+                             UserName = o.UserName.Trim(),
+                        }
+                }.Build());
         }
 
-        public PartialViewResult ChapterAdminDelete(string id, string gridId)
+        public async Task<PartialViewResult> Delete(string id, string gridId)
         {
-            return PartialView("Delete");
+            var user = await _userManager.FindByNameAsync(id);
+            if (user != null)
+            {
+                var model = new DeleteConfirmInput()
+                    {
+                        GridId = gridId,
+                        Id = id,
+                        Message = String.Format("Are you sure you want to delete {0} {1} with username {2}", user.LastName, user.FirstName, user.UserName)
+                    };
+                return PartialView("model");
+            }
+            return PartialView();
         }
 
         [HttpPost]
-        public ActionResult ChapterAdminDelete(DeleteConfirmInput model)
+        public async Task<ActionResult> Delete(DeleteConfirmInput model)
         {
-            return Json(new { });
+            if (ModelState.IsValid)
+            {
+                var m = await _userManager.FindByNameAsync(model.Id);
+                if(m != null)
+                {
+                var t =  await  _userManager.DeleteAsync(m);
+                    if (t.Succeeded)
+                    {
+                        return Json(new {});
+                    }
+                }
+            }
+            ModelState.AddModelError("","Unable to delete user");
+            return PartialView(model);
         } 
         #endregion
 	}
