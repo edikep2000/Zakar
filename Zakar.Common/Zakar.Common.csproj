@@ -104,6 +104,9 @@
     <Compile Include="Caching\AspNetRumtimeCacheManager.cs" />
     <Compile Include="Caching\ICacheManager.cs" />
     <Compile Include="Enums\RoleValues.cs" />
+    <Compile Include="FileHandlers\ChapterExcelFileHandler.cs" />
+    <Compile Include="FileHandlers\GroupExcelFileHandler.cs" />
+    <Compile Include="FileHandlers\ZoneExcelFileHandler.cs" />
     <Compile Include="HMTLHelperExtensions.cs" />
     <Compile Include="Converters\NotificationToSmsTranslator.cs" />
     <Compile Include="Converters\QueuedNotificationsConverter.cs" />

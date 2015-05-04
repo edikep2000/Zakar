@@ -150,7 +150,7 @@ namespace Zakar.Models
 		}
 		
 		private Group _group;
-		[ForeignKeyAssociation(SharedFields = "GroupId", TargetFields = "Id")]
+		[ForeignKeyAssociation(SharedFields = "GroupId", TargetFields = "Id", IsManaged = true)]
 		[Storage("_group")]
 		public virtual Group Group
 		{
@@ -170,7 +170,7 @@ namespace Zakar.Models
 		}
 		
 		private IList<PCF> _pCFs = new List<PCF>();
-		[Collection(InverseProperty = "Church")]
+		[Collection(InverseProperty = "Church", Depend = true, IsManaged = true)]
 		[Storage("_pCFs")]
 		public virtual IList<PCF> PCFs
 		{
@@ -181,7 +181,7 @@ namespace Zakar.Models
 		}
 		
 		private IList<Partner> _partners = new List<Partner>();
-		[Collection(InverseProperty = "Church")]
+		[Collection(InverseProperty = "Church", Depend = true, IsManaged = true)]
 		[Storage("_partners")]
 		public virtual IList<Partner> Partners
 		{

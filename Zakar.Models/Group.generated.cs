@@ -155,7 +155,7 @@ namespace Zakar.Models
 		}
 		
 		private IList<Church> _churches = new List<Church>();
-		[Collection(InverseProperty = "Group")]
+		[Collection(InverseProperty = "Group", Depend = true, IsManaged = true)]
 		[Storage("_churches")]
 		public virtual IList<Church> Churches
 		{

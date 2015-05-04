@@ -109,7 +109,7 @@ namespace Zakar.Models
 		}
 		
 		private Church _church;
-		[ForeignKeyAssociation(SharedFields = "ChurchId", TargetFields = "Id")]
+		[ForeignKeyAssociation(SharedFields = "ChurchId", TargetFields = "Id", IsManaged = true)]
 		[Storage("_church")]
 		public virtual Church Church
 		{
@@ -129,7 +129,7 @@ namespace Zakar.Models
 		}
 		
 		private IList<Cell> _cells = new List<Cell>();
-		[Collection(InverseProperty = "PCF")]
+		[Collection(InverseProperty = "PCF", Depend = true, IsManaged = true)]
 		[Storage("_cells")]
 		public virtual IList<Cell> Cells
 		{

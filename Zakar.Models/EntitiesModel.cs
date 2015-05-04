@@ -139,11 +139,11 @@ namespace Zakar.Models
 			}
 		}
 		
-		public IQueryable<Church> Churches 
+		public IQueryable<StagedChurch> StagedChurches 
 		{
 			get
 			{
-				return this.GetAll<Church>();
+				return this.GetAll<StagedChurch>();
 			}
 		}
 		
@@ -227,11 +227,11 @@ namespace Zakar.Models
 			}
 		}
 		
-		public IQueryable<StagedChapters> StagedChapters 
+		public IQueryable<Church> Churches1 
 		{
 			get
 			{
-				return this.GetAll<StagedChapters>();
+				return this.GetAll<Church>();
 			}
 		}
 		
@@ -248,22 +248,6 @@ namespace Zakar.Models
 			get
 			{
 				return this.GetAll<StagedCells>();
-			}
-		}
-		
-		public IQueryable<StagedPartners> StagedPartners 
-		{
-			get
-			{
-				return this.GetAll<StagedPartners>();
-			}
-		}
-		
-		public IQueryable<StagedProperties> StagedProperties 
-		{
-			get
-			{
-				return this.GetAll<StagedProperties>();
 			}
 		}
 		
@@ -333,7 +317,7 @@ namespace Zakar.Models
 		{
 			get;
 		}
-		IQueryable<Church> Churches
+		IQueryable<StagedChurch> StagedChurches
 		{
 			get;
 		}
@@ -377,7 +361,7 @@ namespace Zakar.Models
 		{
 			get;
 		}
-		IQueryable<StagedChapters> StagedChapters
+		IQueryable<Church> Churches1
 		{
 			get;
 		}
@@ -386,14 +370,6 @@ namespace Zakar.Models
 			get;
 		}
 		IQueryable<StagedCells> StagedCells
-		{
-			get;
-		}
-		IQueryable<StagedPartners> StagedPartners
-		{
-			get;
-		}
-		IQueryable<StagedProperties> StagedProperties
 		{
 			get;
 		}

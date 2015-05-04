@@ -1,0 +1,38 @@
+﻿@model Zakar.ViewModels.ChurchViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new{@class="control-label"})
+        @Html.TextBoxFor(M => M.Name, new {@class="form-control"})
+        <small class="text-danger">
+            @Html.ValidationMessageFor(m => m.Name)
+        </small>
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(m => m.UniqueId, new{@class="control-label"})
+        @Html.TextBoxFor(M => M.UniqueId, new {@class="form-control"})
+        <small class="text-danger">
+            @Html.ValidationMessageFor(m => m.UniqueId)
+        </small>
+    </div>
+
+
+<div class="form-group">
+    @Html.LabelFor(m => m.DefaultCurrencyId, new{@class="control-label"})
+    <br/>
+    @Html.Awe().AjaxDropdownFor(m => m.DefaultCurrencyId).Url(Url.Action("GetCurrencies", "AjaxList")).HtmlAttributes(new{@class="form-control"})
+    <small class="text-danger">@Html.ValidationMessageFor(m => m.DefaultCurrencyId)</small>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(m => m.GroupId, new{@class="control-label"})
+    <br/>
+    @Html.Awe().AjaxDropdownFor(m => m.GroupId).Url(Url.Action("GetGroups", "AjaxList")).HtmlAttributes(new{@class="form-control"})
+    <small class="text-danger">@Html.ValidationMessageFor(m => m.GroupId)</small>
+</div>
+}

@@ -302,7 +302,7 @@ namespace Zakar.Models
 		}
 		
 		private Church _church;
-		[ForeignKeyAssociation(SharedFields = "ChurchId", TargetFields = "Id")]
+		[ForeignKeyAssociation(SharedFields = "ChurchId", TargetFields = "Id", IsManaged = true)]
 		[Storage("_church")]
 		public virtual Church Church
 		{

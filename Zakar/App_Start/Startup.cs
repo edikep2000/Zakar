@@ -10,6 +10,7 @@ using Owin;
 using Telerik.OpenAccess;
 using Zakar.App_Start;
 using Zakar.Common.Builders;
+using Zakar.Common.FileHandlers;
 using Zakar.Common.Formatters;
 using Zakar.Common.ListItemBuilders;
 using Zakar.Common.Messaging;
@@ -38,6 +39,11 @@ namespace Zakar.App_Start
             builder.RegisterAssemblyTypes(persistenceAssembly)
                 .Where(i => i.Name.EndsWith("Service") && !i.Name.Equals("UserService") && !i.Name.Equals("RoleService"))
                 .InstancePerRequest();
+
+            //Register File Handlers
+            builder.RegisterType<GroupExcelFileHandler>().AsSelf().InstancePerRequest();
+            builder.RegisterType<ChapterExcelFileHandler>().AsSelf().InstancePerRequest();
+            builder.RegisterType<ZoneExcelFileHandler>().AsSelf().InstancePerRequest();
             //register Report builderss
 
             builder.RegisterType<UserService>().As<IUserStore<IdentityUser>>();

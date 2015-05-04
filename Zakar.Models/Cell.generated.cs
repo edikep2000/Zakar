@@ -109,7 +109,7 @@ namespace Zakar.Models
 		}
 		
 		private PCF _pCF;
-		[ForeignKeyAssociation(SharedFields = "PCFId", TargetFields = "Id")]
+		[ForeignKeyAssociation(SharedFields = "PCFId", TargetFields = "Id", IsManaged = true)]
 		[Storage("_pCF")]
 		public virtual PCF PCF
 		{

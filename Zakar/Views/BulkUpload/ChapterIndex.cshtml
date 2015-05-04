@@ -1,0 +1,39 @@
+﻿@using Zakar.Common
+
+@{
+    ViewBag.Title = "Church Staging Area";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var modelExists = ViewBag.ModelExists is bool && (bool)ViewBag.ModelExists;
+}
+
+
+@Html.Awe().InitPopupForm().Name("deleteChapter").Url(Url.Action("ChapterDelete","BulkUpload")).Title("Confirm Delete").Success("refreshGrid('grdChapter')").OkText("Delete").CancelText("Cancel").Parameter("gridId","grdChapter")
+@Html.Awe().InitPopupForm().Name("editChapter").Url(Url.Action("ChapterCreate", "BulkUpload")).Title("Move From Staging Area").Success("refreshGrid('grdChapter')").OkText("Add To Chapters").CancelText("Cancel")
+@Html.Partial("_headerPartial")
+
+<div class="wrapper wrapper-content">
+    <div class="ibox ibox-content float-e-margins">
+        <div class="panel">
+            <div class="panel-body">
+                @if (modelExists)
+                {
+                    @Html.Awe().Grid("grdChapter").Url(Url.Action("ChapterRead","BulkUpload")).ShowGroupBar(false).Columns(
+                        new Column(){Name = "UniqueId", Header = "Unique Id", Width = 100},
+                        new Column(){Name = "Name", Header = "Name"},
+                        new Column(){ClientFormat = @Utils.EditFormat("editChapter"), Width = 80},
+                        new Column(){ClientFormat = @Utils.DeleteFormat("deleteChapter"), Width = 80})
+                }
+                else
+                {
+                    <div class="well">
+                        <h3>Sorry</h3>
+                        You have nothing staged from processing.
+                        <br/>
+                        <br/>
+                        <a href="@Url.Action("Chapter","BulkUpload")" class="btn btn-primary">Upload Chapters</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

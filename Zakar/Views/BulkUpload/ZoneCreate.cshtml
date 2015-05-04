@@ -1,0 +1,22 @@
+﻿@model Zakar.ViewModels.ZoneViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Id)
+    <div class="form-group">
+        @Html.LabelFor(m => m.UniqueId, new {@class = "control-label"})
+        @Html.TextBoxFor(m => m.UniqueId, new {@class = "form-control"})
+        <small class="text-danger">
+            @Html.ValidationMessageFor(m => m.UniqueId)
+        </small>
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new {@class = "control-label"})
+        @Html.TextBoxFor(m => m.Name, new {@class = "form-control"})
+        <small class="text-danger">
+            @Html.ValidationMessageFor(m => m.Name)
+        </small>
+    </div>
+    
+}

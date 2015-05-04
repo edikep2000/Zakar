@@ -22,13 +22,15 @@ using System.ComponentModel;
 
 namespace Zakar.Models	
 {
-	[Table()]
+	[Table("StagedPCFs", UpdateSchema = true)]
+	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class StagedPCFs : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		private int _id;
-		[Column(IsPrimaryKey = true)]
+		[Column("Id", OpenAccessType = OpenAccessType.Int32, IsBackendCalculated = true, IsPrimaryKey = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_id")]
 		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.DataAnnotations.Key()]
 		public virtual int Id
 		{
 			get
@@ -42,6 +44,71 @@ namespace Zakar.Models
 					this.OnPropertyChanging("Id");
 					this._id = value;
 					this.OnPropertyChanged("Id");
+				}
+			}
+		}
+		
+		private string _name;
+		[Column("nme", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		[Storage("_name")]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
+		[System.ComponentModel.DataAnnotations.Required()]
+		public virtual string Name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if(this._name != value)
+				{
+					this.OnPropertyChanging("Name");
+					this._name = value;
+					this.OnPropertyChanged("Name");
+				}
+			}
+		}
+		
+		private string _uniqueId;
+		[Column("UniqueId", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		[Storage("_uniqueId")]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
+		[System.ComponentModel.DataAnnotations.Required()]
+		public virtual string UniqueId
+		{
+			get
+			{
+				return this._uniqueId;
+			}
+			set
+			{
+				if(this._uniqueId != value)
+				{
+					this.OnPropertyChanging("UniqueId");
+					this._uniqueId = value;
+					this.OnPropertyChanged("UniqueId");
+				}
+			}
+		}
+		
+		private int _churchId;
+		[Column("ChurchId", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
+		[Storage("_churchId")]
+		[System.ComponentModel.DataAnnotations.Required()]
+		public virtual int ChurchId
+		{
+			get
+			{
+				return this._churchId;
+			}
+			set
+			{
+				if(this._churchId != value)
+				{
+					this.OnPropertyChanging("ChurchId");
+					this._churchId = value;
+					this.OnPropertyChanged("ChurchId");
 				}
 			}
 		}

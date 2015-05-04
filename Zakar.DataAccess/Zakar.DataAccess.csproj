@@ -74,6 +74,11 @@
     <Compile Include="Service\ReportBuilder\PartnersRankingBuilder.cs" />
     <Compile Include="Service\ReportBuilder\YearReportBuilder.cs" />
     <Compile Include="Service\RoleService.cs" />
+    <Compile Include="Service\StagedCellService.cs" />
+    <Compile Include="Service\StagedChurchService.cs" />
+    <Compile Include="Service\StagedGroupService.cs" />
+    <Compile Include="Service\StagedPCFService.cs" />
+    <Compile Include="Service\StagedZoneService.cs" />
     <Compile Include="Service\SystemSettingsService.cs" />
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Service\ZoneService.cs" />

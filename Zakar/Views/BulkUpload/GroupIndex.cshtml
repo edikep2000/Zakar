@@ -1,0 +1,41 @@
+﻿@using Zakar.Common
+
+@{
+    ViewBag.Title = "Group Staging Area";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var modelExists = ViewBag.ModelExists is bool &&
+                      (bool) ViewBag.ModelExists;
+}
+
+@Html.Awe().InitPopupForm().Name("deleteGroup").Url(Url.Action("GroupDelete","BulkUpload")).Title("Confirm Delete").Success("refreshGrid('grdGroup')").OkText("Delete").CancelText("Cancel").Parameter("gridId","grdroup")
+@Html.Awe().InitPopupForm().Name("editGroup").Url(Url.Action("GroupCreate", "BulkUpload")).Title("Move From Staging Area").Success("refreshGrid('grdGroup')").OkText("Add To Group").CancelText("Cancel")
+@Html.Partial("_headerPartial")
+
+
+<div class="wrapper wrapper-content">
+    <div class="ibox ibox-content float-e-margins">
+        <div class="panel">
+            <div class="panel-body">
+                @if (modelExists)
+                {
+                    @Html.Awe().Grid("grdGroup").Url(Url.Action("GroupRead","BulkUpload")).ShowGroupBar(false).ClientKey("Id").Columns(
+                        new Column(){Name = "UniqueId", Header = "Unique Id", Width = 100},
+                        new Column(){Name = "Name", Header = "Group Name"},
+                        new Column(){ClientFormat = @Utils.EditFormat("editGroup"), Width = 80},
+                        new Column(){ClientFormat = @Utils.DeleteFormat("deleteGroup"), Width = 80})
+                }
+                else
+                {
+                    <div class="well">
+                        <h3>Sorry</h3>
+                        You have nothing staged from processing.
+                        <br/>
+                        <br/>
+                        <a href="@Url.Action("Group","BulkUpload")" class="btn btn-primary">Upload Groups</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

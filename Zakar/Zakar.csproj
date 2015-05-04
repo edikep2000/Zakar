@@ -218,6 +218,7 @@
     <Compile Include="Controllers\ArmsController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BulkUploadController.cs" />
     <Compile Include="Controllers\ChurchController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1862,6 +1863,15 @@
     <Content Include="Views\Users\ZoneAdminCreate.cshtml" />
     <Content Include="Views\Users\ChapterAdminCreate.cshtml" />
     <Content Include="Views\Shared\_validationSummary.cshtml" />
+    <Content Include="Views\BulkUpload\Zone.cshtml" />
+    <Content Include="Views\BulkUpload\ZoneIndex.cshtml" />
+    <Content Include="Views\BulkUpload\Group.cshtml" />
+    <Content Include="Views\BulkUpload\GroupIndex.cshtml" />
+    <Content Include="Views\BulkUpload\ChapterIndex.cshtml" />
+    <Content Include="Views\BulkUpload\Chapter.cshtml" />
+    <Content Include="Views\BulkUpload\ZoneCreate.cshtml" />
+    <Content Include="Views\BulkUpload\GroupCreate.cshtml" />
+    <Content Include="Views\BulkUpload\ChapterCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

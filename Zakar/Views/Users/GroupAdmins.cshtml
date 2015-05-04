@@ -15,9 +15,16 @@
 
 @if (userExists)
 {
-      @Html.Awe().InitPopupForm().Name("createUser").Url(Url.Action("GroupAdminCreate", "Users")).Group("Arm").Modal(true).Title("New Group Admin").Success("refreshGrid('grdUser')")
+    @Html.Awe().InitPopupForm().Name("createUser").Url(Url.Action("GroupAdminCreate", "Users")).Group("Arm").Modal(true).Title("New Group Admin").Success("refreshGrid('grdUser')")
 
-       @Html.Awe().Grid("grdUser").Groupable(false).Parent("txtUsername", "username").ClientKey("UserName").Parent("txtName","name").Parent("txtPhoneNumber","phone").Parent("txtGroupName","groupName").Groupable(false).LoadOnParentChange(true).Url(Url.Action("GroupAdminRead","Users")).ShowFooter(true).Columns(
+    
+    <button type="button" class="btn btn-primary" onclick="awe.open('createUser')" >
+        New Group Admin
+        <i class="fa fa-user-plus"></i>
+    </button> <br/>
+    <br/>   <br/>
+    <br/>  
+        @Html.Awe().Grid("grdUser").Groupable(false).Parent("txtUsername", "username").ClientKey("UserName").Parent("txtName","name").Parent("txtPhoneNumber","phone").Parent("txtGroupName","groupName").Groupable(false).LoadOnParentChange(true).Url(Url.Action("GroupAdminRead","Users")).ShowFooter(true).Columns(
         new Column(){Name = "FirstName", Header = "First Name"},
         new Column(){Name = "LastName", Header = "Last Name"},
         new Column(){Name = "PhoneNumber", Header = "Phone Number"},
