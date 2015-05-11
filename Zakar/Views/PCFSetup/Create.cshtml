@@ -1,0 +1,8 @@
+﻿@model Zakar.ViewModels.PCFViewModel
+
+
+@using (Html.BeginForm())
+{
+    @Html.Partial("_validationSummary")
+    @Html.Partial("EditorPartials/_pcfEditorPartial")
+}

@@ -23,16 +23,15 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table("Partner")]
+	[Table()]
 	[ConcurrencyControl(OptimisticConcurrencyControlStrategy.Changed)]
 	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class Partner : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		private int _id;
-		[Column("Id", OpenAccessType = OpenAccessType.Int32, IsBackendCalculated = true, IsPrimaryKey = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
+		[Column(IsPrimaryKey = true)]
 		[Storage("_id")]
 		[System.ComponentModel.DataAnnotations.Required()]
-		[System.ComponentModel.DataAnnotations.Key()]
 		public virtual int Id
 		{
 			get
@@ -51,9 +50,8 @@ namespace Zakar.Models
 		}
 		
 		private string _title;
-		[Column("Title", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_title")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
+		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string Title
 		{
 			get
@@ -72,9 +70,8 @@ namespace Zakar.Models
 		}
 		
 		private string _firstName;
-		[Column("FirstName", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_firstName")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
+		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string FirstName
 		{
 			get
@@ -93,9 +90,8 @@ namespace Zakar.Models
 		}
 		
 		private string _lastName;
-		[Column("LastName", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_lastName")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
+		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string LastName
 		{
 			get
@@ -114,9 +110,8 @@ namespace Zakar.Models
 		}
 		
 		private string _email;
-		[Column("Email", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_email")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
+		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string Email
 		{
 			get
@@ -134,31 +129,9 @@ namespace Zakar.Models
 			}
 		}
 		
-		private string _yookosId;
-		[Column("YookosId", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
-		[Storage("_yookosId")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
-		public virtual string YookosId
-		{
-			get
-			{
-				return this._yookosId;
-			}
-			set
-			{
-				if(this._yookosId != value)
-				{
-					this.OnPropertyChanging("YookosId");
-					this._yookosId = value;
-					this.OnPropertyChanged("YookosId");
-				}
-			}
-		}
-		
 		private string _phone;
-		[Column("Phone", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_phone")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
+		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string Phone
 		{
 			get
@@ -177,9 +150,7 @@ namespace Zakar.Models
 		}
 		
 		private DateTime _dateCreated;
-		[Column("DateCreated", OpenAccessType = OpenAccessType.DateTime, Length = 0, Scale = 0, SqlType = "datetime", Converter = "OpenAccessRuntime.Data.MssqlMinDateConverter")]
 		[Storage("_dateCreated")]
-		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.DateTime)]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual DateTime DateCreated
 		{
@@ -199,7 +170,6 @@ namespace Zakar.Models
 		}
 		
 		private int _churchId;
-		[Column("ChurchId", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_churchId")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int ChurchId
@@ -219,51 +189,9 @@ namespace Zakar.Models
 			}
 		}
 		
-		private bool _deleted;
-		[Column("Deleted", OpenAccessType = OpenAccessType.Bit, Length = 0, Scale = 0, SqlType = "tinyint", Converter = "OpenAccessRuntime.Data.OneZero2BooleanConverter")]
-		[Storage("_deleted")]
-		[System.ComponentModel.DataAnnotations.Required()]
-		public virtual bool Deleted
-		{
-			get
-			{
-				return this._deleted;
-			}
-			set
-			{
-				if(this._deleted != value)
-				{
-					this.OnPropertyChanging("Deleted");
-					this._deleted = value;
-					this.OnPropertyChanged("Deleted");
-				}
-			}
-		}
-		
-		private DateTime? _dateDeleted;
-		[Column("DateDeleted", OpenAccessType = OpenAccessType.DateTime, IsNullable = true, Length = 0, Scale = 0, SqlType = "datetime", Converter = "OpenAccessRuntime.Data.MssqlMinDateConverter")]
-		[Storage("_dateDeleted")]
-		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.DateTime)]
-		public virtual DateTime? DateDeleted
-		{
-			get
-			{
-				return this._dateDeleted;
-			}
-			set
-			{
-				if(this._dateDeleted != value)
-				{
-					this.OnPropertyChanging("DateDeleted");
-					this._dateDeleted = value;
-					this.OnPropertyChanged("DateDeleted");
-				}
-			}
-		}
-		
 		private int? _pCFId;
-		[Column("PCFId", OpenAccessType = OpenAccessType.Int32, IsNullable = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_pCFId")]
+		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int? PCFId
 		{
 			get
@@ -282,8 +210,8 @@ namespace Zakar.Models
 		}
 		
 		private int? _cellId;
-		[Column("CellId", OpenAccessType = OpenAccessType.Int32, IsNullable = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_cellId")]
+		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int? CellId
 		{
 			get
@@ -297,6 +225,26 @@ namespace Zakar.Models
 					this.OnPropertyChanging("CellId");
 					this._cellId = value;
 					this.OnPropertyChanged("CellId");
+				}
+			}
+		}
+		
+		private string _uniqueId;
+		[Storage("_uniqueId")]
+		[System.ComponentModel.DataAnnotations.Required()]
+		public virtual string UniqueId
+		{
+			get
+			{
+				return this._uniqueId;
+			}
+			set
+			{
+				if(this._uniqueId != value)
+				{
+					this.OnPropertyChanging("UniqueId");
+					this._uniqueId = value;
+					this.OnPropertyChanged("UniqueId");
 				}
 			}
 		}

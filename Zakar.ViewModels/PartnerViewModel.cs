@@ -35,8 +35,7 @@ namespace Zakar.ViewModels
         [Required, StringLength(10)]
         public string Title { get; set; }
 
-        [StringLength(50)]
-        public string YookosId { get; set; }
+        public String UniqueId { get; set; }
 
         public int CellId { get; set; }
 

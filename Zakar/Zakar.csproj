@@ -214,11 +214,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AjaxListController.cs" />
+    <Compile Include="Controllers\LookupControllers\AjaxListController.cs" />
     <Compile Include="Controllers\ArmsController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BulkUploadController.cs" />
+    <Compile Include="Controllers\CellSetupController.cs" />
     <Compile Include="Controllers\ChurchController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -232,6 +233,8 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobileClientController.cs" />
     <Compile Include="Controllers\MobilePartnerController.cs" />
+    <Compile Include="Controllers\PartnerController.cs" />
+    <Compile Include="Controllers\PCFSetupController.cs" />
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Controllers\LookupControllers\ZoneLookupController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -1872,9 +1875,20 @@
     <Content Include="Views\BulkUpload\ZoneCreate.cshtml" />
     <Content Include="Views\BulkUpload\GroupCreate.cshtml" />
     <Content Include="Views\BulkUpload\ChapterCreate.cshtml" />
+    <Content Include="Views\CellSetup\Index.cshtml" />
+    <Content Include="Views\CellSetup\Create.cshtml" />
+    <Content Include="Views\CellSetup\Edit.cshtml" />
+    <Content Include="Views\PCFSetup\Index.cshtml" />
+    <Content Include="Views\PCFSetup\Create.cshtml" />
+    <Content Include="Views\PCFSetup\Edit.cshtml" />
+    <Content Include="Views\PCFSetup\View1.cshtml" />
+    <Content Include="Views\PCFSetup\Stage.cshtml" />
+    <Content Include="Views\PCFSetup\StagePost.cshtml" />
+    <Content Include="Views\PCFSetup\Bulk.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ChapterSetup\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

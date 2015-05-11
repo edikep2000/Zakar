@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Manage PCFs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var modelExists = ViewBag.ModelExists is bool && (bool) ViewBag.ModelExists;
+}
+
+@Html.Awe().InitPopupForm().Name("edit").Url(Url.Action("ArmEdit","PCFSetup")).Group("PCF").Modal(true).Title("Edit PCF").Success("refreshGrid('grid')")
+@Html.Awe().InitPopupForm().Name("delete").Url(Url.Action("ArmDelete","PCFSetup")).Group("PCF").Modal(true).Title("Delete PCF").Success("refreshGrid('grid')")
+@Html.Awe().InitPopup().Name("details").Url(Url.Action("ArmDetails","PCFSetup")).Group("PCF").Modal(true).Title("PCF Details")
+
+
+@Html.Partial("_headerPartial")
+
+
+<div class="wrapper wrapper-content">
+    <div class="ibox  float-e-margins white-bg">
+
+        @if (modelExists)
+        {
+
+        }
+        else
+        {
+            <div class="well">
+                <h3>Sorry</h3>
+                There is nothing to display
+                <br/>
+                <br/>
+                @Html.Awe().InitPopupForm().Name("create").Url(Url.Action("Create", "PCFSetup")).Group("PCF").Modal(true).Title("New PCF").RefreshOnSuccess(true)
+                <button type="button" class="btn btn-primary" onclick="awe.open('create')" >
+                    New PCF
+                    <i class="fa fa-plus-circle"></i>
+                </button>
+            </div>
+        }
+        
+    </div>
+</div>

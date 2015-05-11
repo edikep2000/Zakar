@@ -8,6 +8,6 @@ namespace Zakar.ViewModels
 
         public string Name { get; set; }
 
-        public IPagedList<CellGroupViewModel> SearchResults { get; set; }
+        public IPagedList<CellViewModel> SearchResults { get; set; }
     }
 }

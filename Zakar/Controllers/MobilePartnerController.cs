@@ -38,8 +38,6 @@ namespace Zakar.Controllers
             var entity = new Partner
             {
                 DateCreated = DateTime.Now,
-                Deleted = false,
-                YookosId = yookosId,
                 ChurchId = churchId,
                 LastName = lastName,
                 Email = email,
@@ -49,7 +47,7 @@ namespace Zakar.Controllers
             };
             try
             {
-                this._partnerService.Create(entity);
+                this._partnerService.Insert(entity);
                 return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent("Record created successully") };
             }
             catch

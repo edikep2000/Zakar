@@ -180,8 +180,7 @@
           <orm:collection element-class="Zakar.Models.NonValidatedPartnershipRecord" inverse-field="_partnershipArm1" order-by="" uniqueId="9bbb6462-edfd-4e2d-a808-261b8f1f6a1c" />
         </orm:field>
       </orm:class>
-      <orm:class name="Partner" uniqueId="611d3049-18e7-4416-8410-132c163247bf">
-        <orm:table name="Partner" />
+      <orm:class name="Partner" use-default-mapping="true" uniqueId="611d3049-18e7-4416-8410-132c163247bf">
         <orm:identity>
           <orm:key-generator name="autoinc">
             <orm:key-generator-member property-name="Id" />
@@ -204,9 +203,6 @@
         <orm:field name="_email" property="Email" behavior="readwrite" uniqueId="950da53f-8faa-4ff1-baf0-be2a8e28ed8e" type="System.String">
           <orm:column name="Email" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
-        <orm:field name="_yookosId" property="YookosId" behavior="readwrite" uniqueId="9ae2098b-4a38-463e-b557-6406cd75a64f" type="System.String">
-          <orm:column name="YookosId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        </orm:field>
         <orm:field name="_phone" property="Phone" behavior="readwrite" uniqueId="6e46f959-1aa5-48e0-8fa5-1572e93f4144" type="System.String">
           <orm:column name="Phone" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
@@ -216,17 +212,14 @@
         <orm:field name="_churchId" property="ChurchId" behavior="readwrite" uniqueId="075bf1fe-529d-4f28-b8ee-01d9a2fd39c9" type="System.Int32">
           <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         </orm:field>
-        <orm:field name="_deleted" property="Deleted" behavior="readwrite" uniqueId="b6b0c8b6-13ca-418f-802f-338346bc95e4" type="System.Boolean">
-          <orm:column name="Deleted" sql-type="tinyint" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.OneZero2BooleanConverter" ado-type="Bit" />
-        </orm:field>
-        <orm:field name="_dateDeleted" property="DateDeleted" behavior="readwrite" uniqueId="c360026c-4421-4292-9fd3-1522da2b301a" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
-          <orm:column name="DateDeleted" sql-type="datetime" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
-        </orm:field>
         <orm:field name="_pCFId" property="PCFId" uniqueId="41057cf6-e60d-40b3-82e3-7d991de9e90b" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
           <orm:column name="PCFId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         </orm:field>
         <orm:field name="_cellId" property="CellId" uniqueId="b9273399-6c0e-48aa-8934-5bcf49bcd654" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
           <orm:column name="CellId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_uniqueId" property="UniqueId" uniqueId="f42f623f-9ad7-4a3b-a921-b0a4d949eb3c" type="System.String">
+          <orm:column name="UniqueId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
         <orm:field name="_church" property="Church" behavior="readwrite" uniqueId="c272b761-f394-443c-8b64-a2f7e008cbc9" type="Zakar.Models.Church">
           <orm:reference uniqueId="d7cd6ab2-d5d2-43a0-b22f-f21fbf314412" association-name="PartnerHasChurch">
@@ -453,11 +446,6 @@
         <orm:field name="_partners" property="Partners" behavior="readwrite" uniqueId="f4171d08-d1b5-4b8f-bbf1-a3e6c9c20c0f" type="Zakar.Models.Partner" dependent="true">
           <orm:collection element-class="Zakar.Models.Partner" inverse-field="_church" managed="true" order-by="" uniqueId="d7cd6ab2-d5d2-43a0-b22f-f21fbf314412" />
         </orm:field>
-        <orm:index name="idx_Church_GroupId">
-          <orm:columnMapping>
-            <orm:column name="GroupId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
-          </orm:columnMapping>
-        </orm:index>
       </orm:class>
       <orm:class name="Zone" update-schema="true" use-default-mapping="true" uniqueId="b09798ee-f505-4b45-b113-8a1704c5dc61">
         <orm:identity>
@@ -509,11 +497,6 @@
         <orm:field name="_cells" property="Cells" behavior="readwrite" uniqueId="e5addd1e-0e19-40bd-98bc-0a1510700613" type="Zakar.Models.Cell" dependent="true">
           <orm:collection element-class="Zakar.Models.Cell" inverse-field="_pCF" managed="true" order-by="" uniqueId="477e3c89-206d-4be4-aa06-b15f3546bae8" />
         </orm:field>
-        <orm:index name="idx_PCF_ChurchId">
-          <orm:columnMapping>
-            <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
-          </orm:columnMapping>
-        </orm:index>
       </orm:class>
       <orm:class name="Cell" update-schema="true" use-default-mapping="true" uniqueId="7d65657c-148f-4a03-97b7-26af84512c5c">
         <orm:identity>
@@ -539,11 +522,6 @@
             <orm:sharedfield name="_pCFId" target-class="Zakar.Models.PCF" target-field="_id" />
           </orm:reference>
         </orm:field>
-        <orm:index name="idx_Cell_PCFId">
-          <orm:columnMapping>
-            <orm:column name="PCFId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
-          </orm:columnMapping>
-        </orm:index>
       </orm:class>
       <orm:class name="IdentityUser" update-schema="true" behavior="readwrite" use-cascade-delete="yes" uniqueId="2802171a-a1e9-4db6-9392-5b35a49f36d8">
         <orm:identity>
@@ -754,8 +732,7 @@
           <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         </orm:field>
       </orm:class>
-      <orm:class name="StagedCells" update-schema="true" uniqueId="644cd570-f499-4859-9467-4311f42a27a1">
-        <orm:table name="StagedCells" />
+      <orm:class name="StagedCells" update-schema="true" use-default-mapping="true" uniqueId="644cd570-f499-4859-9467-4311f42a27a1">
         <orm:identity>
           <orm:key-generator name="autoinc">
             <orm:key-generator-member property-name="Id" />
@@ -766,13 +743,60 @@
           <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
         </orm:field>
         <orm:field name="_name" property="Name" uniqueId="8cad901e-248a-4bd1-8d61-8278ae27538b" type="System.String">
-          <orm:column name="nme" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+          <orm:column name="nme" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
         <orm:field name="_uniqueId" property="UniqueId" uniqueId="1574ac55-95d9-4440-a75d-eb6a2193af6d" type="System.String">
-          <orm:column name="UniqueId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+          <orm:column name="UniqueId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
         <orm:field name="_pCFId" property="PCFId" uniqueId="236e05a7-6bde-4538-a806-df132c7faa31" type="System.Int32">
           <orm:column name="PCFId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_churchId" property="ChurchId" uniqueId="fa1ed9ec-4233-41a1-b5a8-6d11415fdc1a" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="ChurchId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        </orm:field>
+      </orm:class>
+      <orm:class name="StagedPartner" update-schema="true" use-default-mapping="true" uniqueId="c7835a81-759d-4b05-bfa9-facf3c34d96b">
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="Id" />
+          </orm:key-generator>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:field name="_id" property="Id" uniqueId="3e26d612-a569-4858-8a55-032e2aa1a42a" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_churchId" property="ChurchId" uniqueId="96cf9ac6-7ace-4df3-8adc-d6275a37bae0" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="ChurchId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_dateCreated" property="DateCreated" uniqueId="1d35e503-2a54-43e5-a9f9-8a9b2d5b48cf" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="DateCreated" sql-type="datetime" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_email" property="Email" uniqueId="fa8ddd54-3fc7-41ff-87c1-8d5a6699eefa" type="System.String">
+          <orm:column name="Email" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_firstName" property="FirstName" uniqueId="28effaca-04a8-4fa0-9f8f-a2a633557a97" type="System.String">
+          <orm:column name="FirstName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_lastName" property="LastName" uniqueId="bd7c7e44-c466-4514-af67-c92f4c9dd797" type="System.String">
+          <orm:column name="LastName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_phone" property="Phone" uniqueId="187019eb-d499-4b40-aa4d-837d47b38cf7" type="System.String">
+          <orm:column name="Phone" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_title" property="Title" uniqueId="75c44d6d-1de8-4646-b5f5-73f6559b3b3b" type="System.String">
+          <orm:column name="Title" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_pCFId" property="PCFId" uniqueId="bba5e325-4077-4aed-8799-a98e1a9a640e" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="PCFId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_cellId" property="CellId" uniqueId="160a1103-92e7-4fe5-958c-04ea35078cda" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="CellId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_uniqueId" property="UniqueId" uniqueId="dd4f4108-7f74-41bd-9ad1-999bfe291eb9" type="System.String">
+          <orm:column name="UniqueId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_dateOfBirth" property="DateOfBirth" uniqueId="22247197-96fe-4549-a29e-44129f04e9c2" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="DateOfBirth" sql-type="datetime" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
         </orm:field>
       </orm:class>
     </orm:namespace>
@@ -900,15 +924,12 @@
     <orm:schema schema="">
       <orm:table name="Partner">
         <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
-        <orm:column name="Title" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="FirstName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="Title" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="FirstName" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         <orm:column name="LastName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         <orm:column name="Email" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="YookosId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="Phone" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="Phone" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         <orm:column name="DateCreated" sql-type="datetime" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
-        <orm:column name="Deleted" sql-type="tinyint" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.OneZero2BooleanConverter" ado-type="Bit" />
-        <orm:column name="DateDeleted" sql-type="datetime" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
         <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         <orm:column name="PCFId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         <orm:column name="CellId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
@@ -981,6 +1002,19 @@
         <orm:column name="nme" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         <orm:column name="UniqueId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         <orm:column name="PCFId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+      </orm:table>
+      <orm:table name="StagedPartner">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="ChurchId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="DateCreated" sql-type="datetime" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
+        <orm:column name="Email" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="FirstName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="LastName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="Phone" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="Title" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="PCFId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="CellId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="UniqueId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
       </orm:table>
     </orm:schema>
     <orm:relational-naming-settings>
@@ -1151,16 +1185,14 @@
       <Property Id="1ade9303-8290-4e59-921e-5157f5cb6404" name="Id" type="Int32" label="Id : Int32" kind="Persistent" identity="true" fieldName="_id" />
       <Property Id="075bf1fe-529d-4f28-b8ee-01d9a2fd39c9" name="ChurchId" type="Int32" label="ChurchId : Int32" kind="Persistent" fieldName="_churchId" />
       <Property Id="4040509a-2d1c-4e12-8c79-81e0cbdc622d" name="DateCreated" type="DateTime" label="DateCreated : DateTime" kind="Persistent" fieldName="_dateCreated" />
-      <Property Id="c360026c-4421-4292-9fd3-1522da2b301a" name="DateDeleted" type="DateTime" label="DateDeleted : DateTime" nullable="true" kind="Persistent" fieldName="_dateDeleted" />
-      <Property Id="b6b0c8b6-13ca-418f-802f-338346bc95e4" name="Deleted" type="Boolean" label="Deleted : Boolean" kind="Persistent" fieldName="_deleted" />
       <Property Id="950da53f-8faa-4ff1-baf0-be2a8e28ed8e" name="Email" label="Email : String" kind="Persistent" fieldName="_email" />
       <Property Id="3f07eba1-cc68-4ef2-a61d-16ea2083215d" name="FirstName" label="FirstName : String" kind="Persistent" fieldName="_firstName" />
       <Property Id="f1d621d0-ea4f-45ca-8c6f-196d1d9d5407" name="LastName" label="LastName : String" kind="Persistent" fieldName="_lastName" />
       <Property Id="6e46f959-1aa5-48e0-8fa5-1572e93f4144" name="Phone" label="Phone : String" kind="Persistent" fieldName="_phone" />
       <Property Id="7b5b7221-4d7c-4a6b-9946-7860571c9afd" name="Title" label="Title : String" kind="Persistent" fieldName="_title" />
-      <Property Id="9ae2098b-4a38-463e-b557-6406cd75a64f" name="YookosId" label="YookosId : String" kind="Persistent" fieldName="_yookosId" />
       <Property Id="41057cf6-e60d-40b3-82e3-7d991de9e90b" name="PCFId" type="Int32" label="PCFId : Int32" nullable="true" fieldName="_pCFId" />
       <Property Id="b9273399-6c0e-48aa-8934-5bcf49bcd654" name="CellId" type="Int32" label="CellId : Int32" nullable="true" fieldName="_cellId" />
+      <Property Id="f42f623f-9ad7-4a3b-a921-b0a4d949eb3c" name="UniqueId" label="UniqueId : String" fieldName="_uniqueId" />
       <AssociationTargets>
         <Association Id="d7cd6ab2-d5d2-43a0-b22f-f21fbf314412" SourceMultiplicity="ZeroOne" name="PartnerHasChurch">
           <DomainClassMoniker name="/EntitiesModel/Church" />
@@ -1569,6 +1601,21 @@
       <Property Id="8cad901e-248a-4bd1-8d61-8278ae27538b" name="Name" label="Name : String" fieldName="_name" />
       <Property Id="1574ac55-95d9-4440-a75d-eb6a2193af6d" name="UniqueId" label="UniqueId : String" fieldName="_uniqueId" />
       <Property Id="236e05a7-6bde-4538-a806-df132c7faa31" name="PCFId" type="Int32" label="PCFId : Int32" fieldName="_pCFId" />
+      <Property Id="fa1ed9ec-4233-41a1-b5a8-6d11415fdc1a" name="ChurchId" type="Int32" label="ChurchId : Int32" nullable="true" fieldName="_churchId" />
+    </DomainClass>
+    <DomainClass Id="c7835a81-759d-4b05-bfa9-facf3c34d96b" name="StagedPartner" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" updateSchema="true" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+      <Property Id="3e26d612-a569-4858-8a55-032e2aa1a42a" name="Id" type="System.Int32" label="Id : System.Int32" identity="true" fieldName="_id" />
+      <Property Id="96cf9ac6-7ace-4df3-8adc-d6275a37bae0" name="ChurchId" type="Int32" label="ChurchId : Int32" nullable="true" fieldName="_churchId" />
+      <Property Id="1d35e503-2a54-43e5-a9f9-8a9b2d5b48cf" name="DateCreated" type="DateTime" label="DateCreated : DateTime" nullable="true" fieldName="_dateCreated" />
+      <Property Id="fa8ddd54-3fc7-41ff-87c1-8d5a6699eefa" name="Email" label="Email : String" nullable="true" fieldName="_email" />
+      <Property Id="28effaca-04a8-4fa0-9f8f-a2a633557a97" name="FirstName" label="FirstName : String" nullable="true" fieldName="_firstName" />
+      <Property Id="bd7c7e44-c466-4514-af67-c92f4c9dd797" name="LastName" label="LastName : String" nullable="true" fieldName="_lastName" />
+      <Property Id="187019eb-d499-4b40-aa4d-837d47b38cf7" name="Phone" label="Phone : String" nullable="true" fieldName="_phone" />
+      <Property Id="75c44d6d-1de8-4646-b5f5-73f6559b3b3b" name="Title" label="Title : String" nullable="true" fieldName="_title" />
+      <Property Id="bba5e325-4077-4aed-8799-a98e1a9a640e" name="PCFId" type="Int32" label="PCFId : Int32" nullable="true" fieldName="_pCFId" />
+      <Property Id="160a1103-92e7-4fe5-958c-04ea35078cda" name="CellId" type="Int32" label="CellId : Int32" nullable="true" fieldName="_cellId" />
+      <Property Id="dd4f4108-7f74-41bd-9ad1-999bfe291eb9" name="UniqueId" label="UniqueId : String" nullable="true" fieldName="_uniqueId" />
+      <Property Id="22247197-96fe-4549-a29e-44129f04e9c2" name="DateOfBirth" type="DateTime" label="DateOfBirth : DateTime" nullable="true" fieldName="_dateOfBirth" />
     </DomainClass>
   </Types>
   <domainContext>
@@ -1599,6 +1646,7 @@
         <entitySetProperty name="Churches1" namespace="Zakar.Models" type="Church" label="Churches1 : IQueryable&lt;Zakar.Models.Church&gt;" />
         <entitySetProperty name="StagedPCFs" namespace="Zakar.Models" type="StagedPCFs" label="StagedPCFs : IQueryable&lt;Zakar.Models.StagedPCFs&gt;" />
         <entitySetProperty name="StagedCells" namespace="Zakar.Models" type="StagedCells" label="StagedCells : IQueryable&lt;Zakar.Models.StagedCells&gt;" />
+        <entitySetProperty name="StagedPartners" namespace="Zakar.Models" type="StagedPartner" label="StagedPartners : IQueryable&lt;Zakar.Models.StagedPartner&gt;" />
       </domainContainer>
     </domainModelHasDomainContext>
   </domainContext>

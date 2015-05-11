@@ -1,1 +1,23 @@
-﻿
+﻿@using Zakar.Common.Enums
+@model Zakar.ViewModels.PCFViewModel
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Name, new{@class="control-label"})
+    @Html.TextBoxFor(m => m.Name, new{@class="form-control"})
+</div>
+
+@Html.HiddenFor(m => m.Id)
+@if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
+{
+    @Html.HiddenFor(m => m.ChurchId)
+}
+else
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.ChurchId, new{@class="control-label"})
+         @Html.Awe().AjaxDropdownFor(m => m.ChurchId).Url(Url.Action("GetChurches","AjaxList"))
+    </div>
+   
+}
+
+@Html.HiddenFor(m => m.UniqueId)

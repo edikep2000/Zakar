@@ -126,6 +126,9 @@
     <Compile Include="StagedGroup.generated.cs">
       <DependentUpon>EntitiesModel.rlinq</DependentUpon>
     </Compile>
+    <Compile Include="StagedPartner.generated.cs">
+      <DependentUpon>EntitiesModel.rlinq</DependentUpon>
+    </Compile>
     <Compile Include="StagedPCFs.generated.cs">
       <DependentUpon>EntitiesModel.rlinq</DependentUpon>
     </Compile>
@@ -152,8 +155,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Unibencellinfo_partnershipConnection%282015-05-03 22-40-01%29.rlinq.sql" />
-    <Content Include="Unibencellinfo_partnershipConnection%282015-05-04 00-25-59%29.rlinq.sql" />
+    <Content Include="Unibencellinfo_partnershipConnection%282015-05-11 12-59-59%29.rlinq.sql" />
+    <Content Include="Unibencellinfo_partnershipConnection%282015-05-11 16-25-06%29.rlinq.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Condition="Exists('$(MSBuildExtensionsPath)\OpenAccess.targets')" Project="$(MSBuildExtensionsPath)\OpenAccess.targets" />

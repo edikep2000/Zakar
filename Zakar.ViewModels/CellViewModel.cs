@@ -2,12 +2,12 @@
 
 namespace Zakar.ViewModels
 {
-    public class CellGroupViewModel
+    public class CellViewModel
     {
         [Required]
-        public int ChurchId { get; set; }
+        public int PCFId { get; set; }
 
-        public string Description { get; set; }
+        public string UniqueId { get; set; }
 
         public int Id { get; set; }
 

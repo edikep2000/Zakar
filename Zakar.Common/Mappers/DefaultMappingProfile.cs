@@ -32,6 +32,26 @@ namespace Zakar.Common.Mappers
                  .ForSourceMember(m => m.PCFs, c => c.Ignore())
                  .ForSourceMember(m => m.Partners, c => c.Ignore());
 
+           Mapper.CreateMap<Partner, PartnerViewModel>()
+                 .ForSourceMember(m => m.Church, c => c.Ignore())
+                 .ForSourceMember(m => m.Partnerships, c => c.Ignore())
+                 .ForSourceMember(m => m.NonValidatedPartnershipRecords, c => c.Ignore());
+
+           Mapper.CreateMap<PartnerViewModel, Partner>()
+                 .ForMember(m => m.Church, c => c.Ignore())
+                 .ForMember(m => m.Partnerships, c => c.Ignore())
+                 .ForMember(m => m.NonValidatedPartnershipRecords, c => c.Ignore());
+
+           Mapper.CreateMap<CellViewModel, Cell>()
+                 .ForMember(m => m.PCF, c => c.Ignore());
+           Mapper.CreateMap<Cell, CellViewModel>()
+                 .ForSourceMember(m => m.PCF, c => c.Ignore());
+           //create map for the churches
+           Mapper.CreateMap<PCFViewModel, PCF>()
+                 .ForMember(m => m.Church, c => c.Ignore());
+           Mapper.CreateMap<PCF, PCFViewModel>()
+                 .ForSourceMember(c => c.Church, m => m.Ignore());
+
            Mapper.CreateMap<CurrencyViewModel, Currency>()
                .ForMember(m => m.Partnerships, c => c.Ignore());
            Mapper.CreateMap<Currency, CurrencyViewModel>()

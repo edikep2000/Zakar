@@ -52,7 +52,7 @@
     <Compile Include="AnalyticsModels\LineChartModel.cs" />
     <Compile Include="AnalyticsModels\PieChartModel.cs" />
     <Compile Include="CellGroupSearchModel.cs" />
-    <Compile Include="CellGroupViewModel.cs" />
+    <Compile Include="CellViewModel.cs" />
     <Compile Include="ChapterAdminRegisterModel.cs" />
     <Compile Include="ChapterListModel.cs" />
     <Compile Include="ChurchSearchModel.cs" />
@@ -95,6 +95,7 @@
     <Compile Include="PartnershipViewModel.cs" />
     <Compile Include="PartnerUploadObject.cs" />
     <Compile Include="PartnerViewModel.cs" />
+    <Compile Include="PCFViewModel.cs" />
     <Compile Include="PortalAdminRegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueuedNotificationSearchModel.cs" />

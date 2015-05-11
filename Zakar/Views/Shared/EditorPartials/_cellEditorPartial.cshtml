@@ -1,1 +1,13 @@
-﻿
+﻿@using Zakar.Common.Enums
+@model Zakar.ViewModels.CellViewModel
+
+@Html.HiddenFor(m => m.UniqueId)
+<div class="form-group">
+    @Html.LabelFor(m => m.Name, new{@class="control-label"})
+    @Html.TextBoxFor(m => m.Name, new{@class="form-control"})
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.PCFId, new{@class="control-label"})
+    @Html.Awe().AjaxDropdownFor(m => m.PCFId).Url(Url.Action("GetPCFs","AjaxList")).HtmlAttributes(new{@class="form-control"})
+</div>

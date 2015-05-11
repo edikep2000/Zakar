@@ -22,15 +22,14 @@ using System.ComponentModel;
 
 namespace Zakar.Models	
 {
-	[Table("StagedCells", UpdateSchema = true)]
+	[Table(UpdateSchema = true)]
 	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class StagedCells : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		private int _id;
-		[Column("Id", OpenAccessType = OpenAccessType.Int32, IsBackendCalculated = true, IsPrimaryKey = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
+		[Column(IsPrimaryKey = true)]
 		[Storage("_id")]
 		[System.ComponentModel.DataAnnotations.Required()]
-		[System.ComponentModel.DataAnnotations.Key()]
 		public virtual int Id
 		{
 			get
@@ -49,9 +48,7 @@ namespace Zakar.Models
 		}
 		
 		private string _name;
-		[Column("nme", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_name")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string Name
 		{
@@ -71,9 +68,7 @@ namespace Zakar.Models
 		}
 		
 		private string _uniqueId;
-		[Column("UniqueId", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_uniqueId")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string UniqueId
 		{
@@ -93,7 +88,6 @@ namespace Zakar.Models
 		}
 		
 		private int _pCFId;
-		[Column("PCFId", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_pCFId")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int PCFId
@@ -109,6 +103,26 @@ namespace Zakar.Models
 					this.OnPropertyChanging("PCFId");
 					this._pCFId = value;
 					this.OnPropertyChanged("PCFId");
+				}
+			}
+		}
+		
+		private int? _churchId;
+		[Storage("_churchId")]
+		[System.ComponentModel.DataAnnotations.Required()]
+		public virtual int? ChurchId
+		{
+			get
+			{
+				return this._churchId;
+			}
+			set
+			{
+				if(this._churchId != value)
+				{
+					this.OnPropertyChanging("ChurchId");
+					this._churchId = value;
+					this.OnPropertyChanged("ChurchId");
 				}
 			}
 		}

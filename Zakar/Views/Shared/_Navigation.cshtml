@@ -82,15 +82,22 @@
             
             @if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
             {
-                <li class="@Html.IsSelected(controller: "ChapterSetup")">
-                    <a href="#"><i class="fa fa fa-wrench"></i><span class="nav-label">Chapter Setup</span></a>
+                <li class="@Html.IsSelected(controller: "PCFSetup")">
+                    <a href="#"><i class="fa fa fa-wrench"></i><span class="nav-label">PCF Setup</span></a>
                     <ul class="nav nav-second-level">
-                        <li class="@Html.IsSelected(action: "PCFIndex")"><a href="@Url.Action("PCFIndex", "ChapterSetup")">PCFs</a></li>
-                        <li class="@Html.IsSelected(action: "CellIndex")"><a href="@Url.Action("CellIndex", "ChapterSetup")">Cells</a></li>
-                        <li class="@Html.IsSelected(action: "UploadCell")"><a href="@Url.Action("UploadCell", "ChapterSetup")">Bulk Upload Cells</a></li>
-                        <li class="@Html.IsSelected(action: "UploadPCF")"><a href="@Url.Action("UploadPcf", "ChapterSetup")">Bulk Upload PCFs</a></li>
+                        <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "PCFSetup")">Manage PCFs</a></li>
+                        <li class="@Html.IsSelected(action: "Bulk")"><a href="@Url.Action("Bulk", "PCFSetup")">Bulk Upload PCFs</a></li>
                     </ul>
                 </li>
+                
+                <li class="@Html.IsSelected(controller: "CellSetup")">
+                    <a href="#"><i class="fa fa fa-wrench"></i><span class="nav-label">Cell Setup</span></a>
+                    <ul class="nav nav-second-level">
+                         <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "CellSetup")">Manage Cells</a></li>
+                        <li class="@Html.IsSelected(action: "Bulk")"><a href="@Url.Action("Bulk", "CellSetup")">Bulk Upload Cells</a></li>
+                    </ul>
+                </li>
+                
           
                 <li class="@Html.IsSelected(controller: "Partners")">
                     <a href="#"><i class="fa fa-users"></i><span class="nav-label">Partners</span><span class="fa arrow"></span></a>
