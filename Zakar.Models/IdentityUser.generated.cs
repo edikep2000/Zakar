@@ -23,14 +23,16 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table(UpdateSchema = true)]
+	[Table("IdentityUser", UpdateSchema = true)]
+	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class IdentityUser : INotifyPropertyChanging, INotifyPropertyChanged
 	{
-		private string _id;
-		[Column(IsPrimaryKey = true)]
+		private int _id;
+		[Column("Id", OpenAccessType = OpenAccessType.Int32, IsBackendCalculated = true, IsPrimaryKey = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_id")]
 		[System.ComponentModel.DataAnnotations.Required()]
-		public virtual string Id
+		[System.ComponentModel.DataAnnotations.Key()]
+		public virtual int Id
 		{
 			get
 			{
@@ -48,7 +50,9 @@ namespace Zakar.Models
 		}
 		
 		private string _firstName;
+		[Column("FirstName", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_firstName")]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string FirstName
 		{
@@ -68,7 +72,9 @@ namespace Zakar.Models
 		}
 		
 		private string _lastName;
+		[Column("LastName", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_lastName")]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string LastName
 		{
@@ -88,7 +94,9 @@ namespace Zakar.Models
 		}
 		
 		private string _phoneNumber;
+		[Column("PhoneNumber", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_phoneNumber")]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string PhoneNumber
 		{
@@ -108,7 +116,9 @@ namespace Zakar.Models
 		}
 		
 		private string _userName;
+		[Column("UserName", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_userName")]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string UserName
 		{
@@ -128,7 +138,9 @@ namespace Zakar.Models
 		}
 		
 		private string _passwordHash;
+		[Column("PasswordHash", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_passwordHash")]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string PasswordHash
 		{
@@ -148,8 +160,9 @@ namespace Zakar.Models
 		}
 		
 		private string _securityStamp;
+		[Column("SecurityStamp", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_securityStamp")]
-		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		public virtual string SecurityStamp
 		{
 			get
@@ -168,7 +181,9 @@ namespace Zakar.Models
 		}
 		
 		private DateTime _dateCreated;
+		[Column("DateCreated", OpenAccessType = OpenAccessType.DateTime, Length = 0, Scale = 0, SqlType = "datetime", Converter = "OpenAccessRuntime.Data.MssqlMinDateConverter")]
 		[Storage("_dateCreated")]
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.DateTime)]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual DateTime DateCreated
 		{
@@ -188,6 +203,7 @@ namespace Zakar.Models
 		}
 		
 		private int? _failedAccessAttempts;
+		[Column("FailedAccessAttempts", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_failedAccessAttempts")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int? FailedAccessAttempts
@@ -208,8 +224,9 @@ namespace Zakar.Models
 		}
 		
 		private DateTime? _dateOfLastFailedAccessAttempt;
+		[Column("DateOfLastFailedAccessAttempt", OpenAccessType = OpenAccessType.DateTime, IsNullable = true, Length = 0, Scale = 0, SqlType = "datetime", Converter = "OpenAccessRuntime.Data.MssqlMinDateConverter")]
 		[Storage("_dateOfLastFailedAccessAttempt")]
-		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.DateTime)]
 		public virtual DateTime? DateOfLastFailedAccessAttempt
 		{
 			get

@@ -8,7 +8,7 @@ using Zakar.Models;
 
 namespace Zakar.DataAccess.Service
 {
-    public class UserService : IUserStore<IdentityUser>, IQueryableUserStore<IdentityUser>, IUserClaimStore<IdentityUser>, IUserRoleStore<IdentityUser>, IUserLoginStore<IdentityUser>, IUserPasswordStore<IdentityUser>, IUserEmailStore<IdentityUser>, IUserLockoutStore<IdentityUser, String>, IUserTwoFactorStore<IdentityUser, string>
+    public class UserService : IUserStore<IdentityUser, Int32>, IQueryableUserStore<IdentityUser, Int32>, IUserClaimStore<IdentityUser, Int32>, IUserRoleStore<IdentityUser, Int32>, IUserLoginStore<IdentityUser, Int32>, IUserPasswordStore<IdentityUser, Int32>, IUserEmailStore<IdentityUser, Int32>, IUserLockoutStore<IdentityUser, Int32>, IUserTwoFactorStore<IdentityUser, Int32>
     {
         private readonly IRepository<IdentityUser> _userRepo;
         private readonly IRepository<IdentityRole> _roleRepo;
@@ -54,10 +54,9 @@ namespace Zakar.DataAccess.Service
             return Task.FromResult<object>(null);
         }
 
-        public Task<IdentityUser> FindByIdAsync(string userId)
+        public Task<IdentityUser> FindByIdAsync(int userId)
         {
-           if(String.IsNullOrEmpty(userId))
-               throw new ArgumentNullException("userId");
+         
             var result = _userRepo.Find(i => i.Id == userId).FirstOrDefault();
             return result != null ? Task.FromResult(result) : Task.FromResult<IdentityUser>(null);
         }

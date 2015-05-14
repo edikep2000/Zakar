@@ -135,7 +135,7 @@ namespace Zakar.Controllers
                 var model = new DeleteConfirmInput()
                     {
                         GridId = gridId,
-                        Id = id.ToString(CultureInfo.InvariantCulture),
+                        Id = id,
                         Message =
                             String.Format("Are you sure you want to delete the staged record for zone {0}", m.Name)
                     };
@@ -246,7 +246,7 @@ namespace Zakar.Controllers
                 var model = new DeleteConfirmInput()
                 {
                     GridId = gridId,
-                    Id = id.ToString(CultureInfo.InvariantCulture),
+                    Id = id,
                     Message =
                         String.Format("Are you sure you want to delete the staged record for zone {0}", m.Name)
                 };
@@ -360,7 +360,7 @@ namespace Zakar.Controllers
                 var model = new DeleteConfirmInput()
                 {
                     GridId = gridId,
-                    Id = id.ToString(CultureInfo.InvariantCulture),
+                    Id = id,
                     Message =
                         String.Format("Are you sure you want to delete the staged record for zone {0}", m.Name)
                 };

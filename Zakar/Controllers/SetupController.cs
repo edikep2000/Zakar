@@ -96,7 +96,7 @@ namespace Zakar.Controllers
                 var m = new DeleteConfirmInput()
                     {
                         GridId = gridId,
-                        Id = id.ToString(),
+                        Id = id,
                         Message = String.Format("Are you sure you want to delete Zone {0}, along with all the chapters, PCFs and Cells", zone.Name)
                     };
                 return PartialView("Delete",m);
@@ -283,7 +283,7 @@ namespace Zakar.Controllers
                 var m = new DeleteConfirmInput()
                     {
                         GridId = gridId,
-                        Id = id.ToString(),
+                        Id = id,
                         Message =
                             string.Format(
                                 "Are you sure you want to delete group {0} along with all Churches, PCFs and Cells it contains",
@@ -414,7 +414,7 @@ namespace Zakar.Controllers
                 var m = new DeleteConfirmInput()
                     {
                         GridId = gridId,
-                        Id = id.ToString(),
+                        Id = id,
                         Message =
                             String.Format(
                                 "Are you sure you want to delete {0} Along with Cells, PCFs and The Partner Information Contained",
@@ -535,7 +535,7 @@ namespace Zakar.Controllers
             {
                 var m = new DeleteConfirmInput()
                     {
-                        Id = id.ToString(),
+                        Id = id,
                         GridId = gridId,
                         Message = String.Format("Are you sure you want to delete {0}", model.Name)
                     };
@@ -650,7 +650,7 @@ namespace Zakar.Controllers
                 var m = new DeleteConfirmInput()
                     {
                         GridId = gridId,
-                        Id = model.Id.ToString(),
+                        Id = model.Id,
                         Message =
                             String.Format("Are you sure you want to delete the currency {0} from the datastore",
                                           model.Symbol)

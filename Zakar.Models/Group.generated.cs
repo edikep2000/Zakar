@@ -113,11 +113,11 @@ namespace Zakar.Models
 			}
 		}
 		
-		private string _adminId;
-		[Column("AdminId", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		private int _adminId;
+		[Column("AdminId", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "int")]
 		[Storage("_adminId")]
 		[System.ComponentModel.DataAnnotations.StringLength(255)]
-		public virtual string AdminId
+		public virtual int AdminId
 		{
 			get
 			{

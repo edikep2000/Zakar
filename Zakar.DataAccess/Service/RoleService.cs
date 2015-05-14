@@ -7,7 +7,7 @@ using Zakar.Models;
 
 namespace Zakar.DataAccess.Service
 {
-    public class RoleService : IRoleStore<IdentityRole>, IQueryableRoleStore<IdentityRole>
+    public class RoleService : IRoleStore<IdentityRole, Int32>, IQueryableRoleStore<IdentityRole, Int32>
     {
         private readonly IRepository<IdentityRole> _roleStore;
          
@@ -47,7 +47,7 @@ namespace Zakar.DataAccess.Service
             return Task.FromResult<Object>(null);
         }
 
-        public Task<IdentityRole> FindByIdAsync(string roleId)
+        public Task<IdentityRole> FindByIdAsync(int roleId)
         {
             var item = _roleStore.Find(i => i.Id == roleId).FirstOrDefault();
             return Task.FromResult<IdentityRole>(item);

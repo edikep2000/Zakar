@@ -155,8 +155,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Unibencellinfo_partnershipConnection%282015-05-11 12-59-59%29.rlinq.sql" />
-    <Content Include="Unibencellinfo_partnershipConnection%282015-05-11 16-25-06%29.rlinq.sql" />
+    <Content Include="Unibencellinfo_partnershipConnection%282015-05-14 09-59-38%29.rlinq.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Condition="Exists('$(MSBuildExtensionsPath)\OpenAccess.targets')" Project="$(MSBuildExtensionsPath)\OpenAccess.targets" />

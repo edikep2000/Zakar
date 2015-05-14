@@ -7,13 +7,13 @@ using Zakar.Models;
 
 namespace Zakar.App_Start
 {
-    public class ApplicationUserManager : UserManager<Zakar.Models.IdentityUser>
+    public class ApplicationUserManager : UserManager<Zakar.Models.IdentityUser, Int32>
     {
-        public ApplicationUserManager(IUserStore<Zakar.Models.IdentityUser> store)
+        public ApplicationUserManager(IUserStore<Zakar.Models.IdentityUser, Int32> store)
             : base(store)
         {
             // Configure validation logic for usernames
-            this.UserValidator = new UserValidator<Zakar.Models.IdentityUser>(this)
+            this.UserValidator = new UserValidator<Zakar.Models.IdentityUser, Int32>(this)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
@@ -36,11 +36,11 @@ namespace Zakar.App_Start
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug it in here.
-            this.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<Zakar.Models.IdentityUser>
+            this.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<Zakar.Models.IdentityUser, Int32>
             {
                 MessageFormat = "Your security code is {0}"
             });
-            this.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<Zakar.Models.IdentityUser>
+            this.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<Zakar.Models.IdentityUser, Int32>
             {
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
@@ -51,7 +51,7 @@ namespace Zakar.App_Start
             if (dataProtectionProvider != null)
             {
                 this.UserTokenProvider =
-                    new DataProtectorTokenProvider<Zakar.Models.IdentityUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+                    new DataProtectorTokenProvider<Zakar.Models.IdentityUser, Int32>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
         }
 

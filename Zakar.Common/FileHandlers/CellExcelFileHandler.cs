@@ -22,9 +22,9 @@ namespace Zakar.Common.FileHandlers
             _pcfService = pcfService;
         }
 
-        public void HandleFile(string fileName, Stream fileStream, int _churchId)
+        public void HandleFile(string fileName, Stream fileStream, int cid)
         {
-           this._churchId = _churchId;
+           this._churchId = cid;
           
 
             var workBook = new ClosedXML.Excel.XLWorkbook(fileStream);

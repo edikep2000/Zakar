@@ -23,15 +23,14 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table("IdentityUserClaim", UpdateSchema = true)]
+	[Table(UpdateSchema = true)]
 	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class IdentityUserClaim : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		private int _id;
-		[Column("Id", OpenAccessType = OpenAccessType.Int32, IsBackendCalculated = true, IsPrimaryKey = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
+		[Column(IsPrimaryKey = true)]
 		[Storage("_id")]
 		[System.ComponentModel.DataAnnotations.Required()]
-		[System.ComponentModel.DataAnnotations.Key()]
 		public virtual int Id
 		{
 			get
@@ -49,12 +48,10 @@ namespace Zakar.Models
 			}
 		}
 		
-		private string _userId;
-		[Column("UserId", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		private int _userId;
 		[Storage("_userId")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
-		public virtual string UserId
+		public virtual int UserId
 		{
 			get
 			{
@@ -72,9 +69,7 @@ namespace Zakar.Models
 		}
 		
 		private string _claimType;
-		[Column("ClaimType", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_claimType")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string ClaimType
 		{
@@ -94,9 +89,7 @@ namespace Zakar.Models
 		}
 		
 		private string _claimValue;
-		[Column("ClaimValue", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_claimValue")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string ClaimValue
 		{

@@ -23,16 +23,14 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table("IdentityUserLogin", UpdateSchema = true)]
+	[Table(UpdateSchema = true)]
 	public partial class IdentityUserLogin : INotifyPropertyChanging, INotifyPropertyChanged
 	{
-		private string _id;
-		[Column("Id", OpenAccessType = OpenAccessType.StringVariableLength, IsPrimaryKey = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		private int _id;
+		[Column(IsPrimaryKey = true)]
 		[Storage("_id")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
-		[System.ComponentModel.DataAnnotations.Key()]
-		public virtual string Id
+		public virtual int Id
 		{
 			get
 			{
@@ -50,9 +48,8 @@ namespace Zakar.Models
 		}
 		
 		private string _loginProvider;
-		[Column("LoginProvider", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_loginProvider")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
+		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string LoginProvider
 		{
 			get
@@ -71,9 +68,8 @@ namespace Zakar.Models
 		}
 		
 		private string _providerKey;
-		[Column("ProviderKey", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_providerKey")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
+		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string ProviderKey
 		{
 			get

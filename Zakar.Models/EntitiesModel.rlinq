@@ -232,11 +232,6 @@
         <orm:field name="_nonValidatedPartnershipRecords" property="NonValidatedPartnershipRecords" behavior="readwrite" uniqueId="ac29830c-1906-430f-a783-e14258edcd74" type="Zakar.Models.NonValidatedPartnershipRecord">
           <orm:collection element-class="Zakar.Models.NonValidatedPartnershipRecord" inverse-field="_partner1" order-by="" uniqueId="20c3a43a-13d5-4394-ad1c-8ae592dcb737" />
         </orm:field>
-        <orm:index name="idx_Partner_ChurchId">
-          <orm:columnMapping>
-            <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
-          </orm:columnMapping>
-        </orm:index>
       </orm:class>
       <orm:class name="Notification" uniqueId="aa2e9c80-ec64-4faf-ab26-61b2dd986f22">
         <orm:table name="Notifications" schema="dbo" />
@@ -369,8 +364,8 @@
         <orm:field name="_uniqueId" property="UniqueId" uniqueId="e457d1dd-7e16-4381-879b-c33c4178eb47" type="System.String">
           <orm:column name="UniqueId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
-        <orm:field name="_adminId" property="AdminId" uniqueId="f3fa859c-464f-4fd9-9224-734cd184dfe2" type="System.String">
-          <orm:column name="AdminId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:field name="_adminId" property="AdminId" uniqueId="f3fa859c-464f-4fd9-9224-734cd184dfe2" type="System.Int32">
+          <orm:column name="AdminId" sql-type="int" nullable="true" length="255" scale="0" ado-type="StringVariableLength" />
         </orm:field>
         <orm:field name="_zone" property="Zone" behavior="readwrite" uniqueId="41560898-846c-44f8-8265-17dfe8b39008" type="Zakar.Models.Zone">
           <orm:reference uniqueId="65773ab0-72a4-4f1a-8921-c4de61a43cc4" association-name="GroupHasZone">
@@ -409,7 +404,8 @@
           <orm:collection element-class="Zakar.Models.Partnership" inverse-field="_currency" order-by="" uniqueId="ff94042d-d547-4913-bf21-eab6cbbb01a6" />
         </orm:field>
       </orm:class>
-      <orm:class name="Church" use-default-mapping="true" use-cascade-delete="yes" uniqueId="a3f79e2c-a062-4c51-a529-18e6d578da24">
+      <orm:class name="Church" update-schema="true" use-cascade-delete="yes" uniqueId="a3f79e2c-a062-4c51-a529-18e6d578da24">
+        <orm:table name="Church" />
         <orm:identity>
           <orm:key-generator name="autoinc">
             <orm:key-generator-member property-name="Id" />
@@ -432,8 +428,8 @@
         <orm:field name="_uniqueId" property="UniqueId" uniqueId="23a4cd2e-e69b-41f5-99cf-aee68e57867f" type="System.String">
           <orm:column name="UniqueId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
-        <orm:field name="_adminId" property="AdminId" uniqueId="e1075409-b081-4511-9d29-92b0b0191fbe" type="System.String">
-          <orm:column name="AdminId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:field name="_adminId" property="AdminId" uniqueId="e1075409-b081-4511-9d29-92b0b0191fbe" type="System.Int32">
+          <orm:column name="AdminId" sql-type="int" nullable="true" length="255" scale="0" ado-type="StringVariableLength" />
         </orm:field>
         <orm:field name="_group" property="Group" behavior="readwrite" uniqueId="7bd692f9-460d-4dbf-af6f-4ecdb2867346" type="Zakar.Models.Group">
           <orm:reference uniqueId="8652b109-361f-4eed-bb74-0b3cd7456531" association-name="ChurchHasGroup">
@@ -447,7 +443,8 @@
           <orm:collection element-class="Zakar.Models.Partner" inverse-field="_church" managed="true" order-by="" uniqueId="d7cd6ab2-d5d2-43a0-b22f-f21fbf314412" />
         </orm:field>
       </orm:class>
-      <orm:class name="Zone" update-schema="true" use-default-mapping="true" uniqueId="b09798ee-f505-4b45-b113-8a1704c5dc61">
+      <orm:class name="Zone" update-schema="true" use-cascade-delete="yes" uniqueId="b09798ee-f505-4b45-b113-8a1704c5dc61">
+        <orm:table name="Zone" />
         <orm:identity>
           <orm:key-generator name="autoinc">
             <orm:key-generator-member property-name="Id" />
@@ -463,8 +460,8 @@
         <orm:field name="_uniqueId" property="UniqueId" uniqueId="cfb9d76e-a104-4c03-ab9d-18ce6a0faa7e" type="System.String">
           <orm:column name="UniqueId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
-        <orm:field name="_adminId" property="AdminId" uniqueId="1d5ecd7c-9225-469d-a879-d67cef4f7452" type="System.String">
-          <orm:column name="AdminId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:field name="_adminId" property="AdminId" uniqueId="1d5ecd7c-9225-469d-a879-d67cef4f7452" type="System.Int32">
+          <orm:column name="AdminId" sql-type="int" nullable="true" length="255" scale="0" ado-type="StringVariableLength" />
         </orm:field>
         <orm:field name="_groups" property="Groups" behavior="readwrite" uniqueId="d80945de-80ba-4803-8348-823a5c4c59b9" type="Zakar.Models.Group">
           <orm:collection element-class="Zakar.Models.Group" inverse-field="_zone" order-by="" uniqueId="65773ab0-72a4-4f1a-8921-c4de61a43cc4" />
@@ -524,19 +521,43 @@
         </orm:field>
       </orm:class>
       <orm:class name="IdentityUser" update-schema="true" behavior="readwrite" use-cascade-delete="yes" uniqueId="2802171a-a1e9-4db6-9392-5b35a49f36d8">
+        <orm:table name="IdentityUser" />
         <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="Id" />
+          </orm:key-generator>
           <orm:single-field field-name="_id" />
         </orm:identity>
-        <orm:field name="_id" property="Id" uniqueId="e6ebdcfb-e9af-4759-8e5d-5005ae4f0e81" type="System.String" />
-        <orm:field name="_firstName" property="FirstName" uniqueId="fef979e1-7342-4258-9c91-31212da813fe" type="System.String" />
-        <orm:field name="_lastName" property="LastName" uniqueId="b851c322-b550-4c99-bbc6-8b52dbced35d" type="System.String" />
-        <orm:field name="_phoneNumber" property="PhoneNumber" uniqueId="72fc20ea-aaf8-4961-ac1c-730bf662dd8a" type="System.String" />
-        <orm:field name="_userName" property="UserName" uniqueId="5bc061a7-6347-443c-853b-2e7509c5e111" type="System.String" />
-        <orm:field name="_passwordHash" property="PasswordHash" uniqueId="263345ce-c18b-4e25-bd8e-2b920613999b" type="System.String" />
-        <orm:field name="_securityStamp" property="SecurityStamp" uniqueId="f76633da-14ce-47b9-8de7-71d1a877c369" type="System.String" />
-        <orm:field name="_dateCreated" property="DateCreated" uniqueId="e72bb140-82ce-4f7a-a987-dd25192ffde3" type="System.DateTime" />
-        <orm:field name="_failedAccessAttempts" property="FailedAccessAttempts" uniqueId="e7055301-1830-4be9-81e0-558fe43fc991" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
-        <orm:field name="_dateOfLastFailedAccessAttempt" property="DateOfLastFailedAccessAttempt" uniqueId="cb8cc1ac-e1e5-44a8-b16f-10c820beb503" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+        <orm:field name="_id" property="Id" uniqueId="e6ebdcfb-e9af-4759-8e5d-5005ae4f0e81" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_firstName" property="FirstName" uniqueId="fef979e1-7342-4258-9c91-31212da813fe" type="System.String">
+          <orm:column name="FirstName" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_lastName" property="LastName" uniqueId="b851c322-b550-4c99-bbc6-8b52dbced35d" type="System.String">
+          <orm:column name="LastName" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_phoneNumber" property="PhoneNumber" uniqueId="72fc20ea-aaf8-4961-ac1c-730bf662dd8a" type="System.String">
+          <orm:column name="PhoneNumber" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_userName" property="UserName" uniqueId="5bc061a7-6347-443c-853b-2e7509c5e111" type="System.String">
+          <orm:column name="UserName" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_passwordHash" property="PasswordHash" uniqueId="263345ce-c18b-4e25-bd8e-2b920613999b" type="System.String">
+          <orm:column name="PasswordHash" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_securityStamp" property="SecurityStamp" uniqueId="f76633da-14ce-47b9-8de7-71d1a877c369" type="System.String">
+          <orm:column name="SecurityStamp" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_dateCreated" property="DateCreated" uniqueId="e72bb140-82ce-4f7a-a987-dd25192ffde3" type="System.DateTime">
+          <orm:column name="DateCreated" sql-type="datetime" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_failedAccessAttempts" property="FailedAccessAttempts" uniqueId="e7055301-1830-4be9-81e0-558fe43fc991" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="FailedAccessAttempts" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_dateOfLastFailedAccessAttempt" property="DateOfLastFailedAccessAttempt" uniqueId="cb8cc1ac-e1e5-44a8-b16f-10c820beb503" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="DateOfLastFailedAccessAttempt" sql-type="datetime" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
+        </orm:field>
         <orm:field name="_identityUserClaims" property="IdentityUserClaims" behavior="readwrite" uniqueId="36c237b9-8c97-4f38-b399-9ed17926d0f4" type="Zakar.Models.IdentityUserClaim">
           <orm:collection element-class="Zakar.Models.IdentityUserClaim" inverse-field="_identityUser" managed="true" order-by="" uniqueId="58ce0353-f161-4630-95e5-2fd307ca6795" />
         </orm:field>
@@ -547,8 +568,7 @@
           <orm:inversereference inverse-field="_identityUser" uniqueId="b342a2c4-06c9-44ec-9320-876f327c782a" />
         </orm:field>
       </orm:class>
-      <orm:class name="IdentityUserClaim" update-schema="true" uniqueId="50e8e10b-6413-4b68-aa6a-9b2066df1196">
-        <orm:table name="IdentityUserClaim" />
+      <orm:class name="IdentityUserClaim" update-schema="true" use-default-mapping="true" uniqueId="50e8e10b-6413-4b68-aa6a-9b2066df1196">
         <orm:identity>
           <orm:key-generator name="autoinc">
             <orm:key-generator-member property-name="Id" />
@@ -558,28 +578,22 @@
         <orm:field name="_id" property="Id" uniqueId="820e0fd7-0919-4d8e-82c7-936f3339c5b8" type="System.Int32">
           <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
         </orm:field>
-        <orm:field name="_userId" property="UserId" uniqueId="f66b8fdc-e5e6-4ed0-87c9-f68777ecd7cd" type="System.String">
-          <orm:column name="UserId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:field name="_userId" property="UserId" uniqueId="f66b8fdc-e5e6-4ed0-87c9-f68777ecd7cd" type="System.Int32">
+          <orm:column name="UserId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         </orm:field>
         <orm:field name="_claimType" property="ClaimType" uniqueId="8f19a0d7-5fac-40b6-b704-fc4d9a44c53b" type="System.String">
-          <orm:column name="ClaimType" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+          <orm:column name="ClaimType" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
         <orm:field name="_claimValue" property="ClaimValue" uniqueId="f790e8d0-a0a2-45a5-9741-5d2013f119ce" type="System.String">
-          <orm:column name="ClaimValue" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+          <orm:column name="ClaimValue" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
         <orm:field name="_identityUser" property="IdentityUser" behavior="readwrite" uniqueId="d31e4604-46ae-47f8-b79b-f3283e37b5ec" type="Zakar.Models.IdentityUser">
           <orm:reference uniqueId="58ce0353-f161-4630-95e5-2fd307ca6795" association-name="IdentityUserClaimHasIdentityUser">
             <orm:sharedfield name="_userId" target-class="Zakar.Models.IdentityUser" target-field="_id" />
           </orm:reference>
         </orm:field>
-        <orm:index name="idx_IdentityUserClaim_UserId">
-          <orm:columnMapping>
-            <orm:column name="UserId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-          </orm:columnMapping>
-        </orm:index>
       </orm:class>
-      <orm:class name="IdentityUserInRole" uniqueId="54595d05-d686-46a2-b20f-562a3dceac53">
-        <orm:table name="IdentityUserInRole" />
+      <orm:class name="IdentityUserInRole" update-schema="true" use-default-mapping="true" uniqueId="54595d05-d686-46a2-b20f-562a3dceac53">
         <orm:identity>
           <orm:key-generator name="autoinc">
             <orm:key-generator-member property-name="Id" />
@@ -589,11 +603,11 @@
         <orm:field name="_id" property="Id" uniqueId="10c24dae-1c1e-453f-aa47-06baa9cca8f0" type="System.Int32">
           <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
         </orm:field>
-        <orm:field name="_userId" property="UserId" uniqueId="a2c5e9c0-5ed5-4174-8da8-b53fc58132fd" type="System.String">
-          <orm:column name="UserId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:field name="_userId" property="UserId" uniqueId="a2c5e9c0-5ed5-4174-8da8-b53fc58132fd" type="System.Int32">
+          <orm:column name="UserId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         </orm:field>
-        <orm:field name="_roleId" property="RoleId" uniqueId="35e756f2-f072-4026-ba9e-1d8ec6c71693" type="System.String">
-          <orm:column name="RoleId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:field name="_roleId" property="RoleId" uniqueId="35e756f2-f072-4026-ba9e-1d8ec6c71693" type="System.Int32">
+          <orm:column name="RoleId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         </orm:field>
         <orm:field name="_identityUser" property="IdentityUser" behavior="readwrite" uniqueId="d04533bd-ca90-47f6-9965-f29f38b5ea21" type="Zakar.Models.IdentityUser">
           <orm:reference uniqueId="93e43048-f7af-4345-b828-12eceea0e6e7" association-name="IdentityUserInRoleHasIdentityUser">
@@ -605,39 +619,30 @@
             <orm:sharedfield name="_roleId" target-class="Zakar.Models.IdentityRole" target-field="_id" />
           </orm:reference>
         </orm:field>
-        <orm:index name="idx_IdentityUserInRole_RoleId">
-          <orm:columnMapping>
-            <orm:column name="RoleId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-          </orm:columnMapping>
-        </orm:index>
-        <orm:index name="idx_IdentityUserInRole_UserId">
-          <orm:columnMapping>
-            <orm:column name="UserId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-          </orm:columnMapping>
-        </orm:index>
       </orm:class>
-      <orm:class name="IdentityRole" update-schema="true" uniqueId="dd9691c9-e31a-4acc-b8de-2fa0c19c2626">
-        <orm:table name="IdentityRole" />
+      <orm:class name="IdentityRole" use-default-mapping="true" uniqueId="dd9691c9-e31a-4acc-b8de-2fa0c19c2626">
         <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="Id" />
+          </orm:key-generator>
           <orm:single-field field-name="_id" />
         </orm:identity>
-        <orm:field name="_id" property="Id" uniqueId="1bc7a34a-0baa-4fe4-a0c0-79b79027d528" type="System.String">
-          <orm:column name="Id" sql-type="varchar" nullable="false" length="255" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:field name="_id" property="Id" uniqueId="1bc7a34a-0baa-4fe4-a0c0-79b79027d528" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
         </orm:field>
         <orm:field name="_name" property="Name" uniqueId="9e679122-fdbf-4179-afce-5fa7857afb38" type="System.String">
-          <orm:column name="nme" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+          <orm:column name="nme" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
         <orm:field name="_identityUserInRoles" property="IdentityUserInRoles" behavior="readwrite" uniqueId="60bc3863-447d-4f86-afae-858fd8e54337" type="Zakar.Models.IdentityUserInRole" dependent="true">
           <orm:collection element-class="Zakar.Models.IdentityUserInRole" inverse-field="_identityRole" managed="true" order-by="" uniqueId="78eec2e1-c655-4fcb-b2d9-8c6dcf8f7f83" />
         </orm:field>
       </orm:class>
-      <orm:class name="IdentityUserLogin" update-schema="true" uniqueId="2850314b-7fc4-45a3-95d1-9588b856c9b1">
-        <orm:table name="IdentityUserLogin" />
+      <orm:class name="IdentityUserLogin" update-schema="true" use-default-mapping="true" uniqueId="2850314b-7fc4-45a3-95d1-9588b856c9b1">
         <orm:identity>
           <orm:single-field field-name="_id" />
         </orm:identity>
-        <orm:field name="_id" property="Id" uniqueId="47494857-df66-4ffb-8f01-48aa21ba4968" type="System.String">
-          <orm:column name="Id" sql-type="varchar" nullable="false" length="255" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:field name="_id" property="Id" uniqueId="47494857-df66-4ffb-8f01-48aa21ba4968" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         </orm:field>
         <orm:field name="_loginProvider" property="LoginProvider" uniqueId="602c9da2-7c33-49c2-9684-08e25f48fa77" type="System.String">
           <orm:column name="LoginProvider" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
@@ -918,62 +923,10 @@
         <orm:column name="nme" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         <orm:column name="UniqueId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         <orm:column name="ZoneId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
-        <orm:column name="AdminId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="AdminId" sql-type="int" nullable="true" length="255" scale="0" ado-type="StringVariableLength" />
       </orm:table>
     </orm:schema>
     <orm:schema schema="">
-      <orm:table name="Partner">
-        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
-        <orm:column name="Title" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="FirstName" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="LastName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="Email" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="Phone" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="DateCreated" sql-type="datetime" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
-        <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
-        <orm:column name="PCFId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
-        <orm:column name="CellId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
-        <orm:index name="idx_Partner_ChurchId">
-          <orm:columnMapping>
-            <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
-          </orm:columnMapping>
-        </orm:index>
-      </orm:table>
-      <orm:table name="IdentityUserLogin">
-        <orm:column name="Id" sql-type="varchar" nullable="false" length="255" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="LoginProvider" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="ProviderKey" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-      </orm:table>
-      <orm:table name="IdentityRole">
-        <orm:column name="Id" sql-type="varchar" nullable="false" length="255" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="nme" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-      </orm:table>
-      <orm:table name="IdentityUserClaim">
-        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
-        <orm:column name="ClaimType" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="ClaimValue" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="UserId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:index name="idx_IdentityUserClaim_UserId">
-          <orm:columnMapping>
-            <orm:column name="UserId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-          </orm:columnMapping>
-        </orm:index>
-      </orm:table>
-      <orm:table name="IdentityUserInRole">
-        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
-        <orm:column name="UserId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="RoleId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:index name="idx_IdentityUserInRole_RoleId">
-          <orm:columnMapping>
-            <orm:column name="RoleId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-          </orm:columnMapping>
-        </orm:index>
-        <orm:index name="idx_IdentityUserInRole_UserId">
-          <orm:columnMapping>
-            <orm:column name="UserId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-          </orm:columnMapping>
-        </orm:index>
-      </orm:table>
       <orm:table name="StagedZone">
         <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
         <orm:column name="nme" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
@@ -997,24 +950,31 @@
         <orm:column name="UniqueId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
       </orm:table>
-      <orm:table name="StagedCells">
+      <orm:table name="Church">
         <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
-        <orm:column name="nme" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="UniqueId" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="PCFId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
-      </orm:table>
-      <orm:table name="StagedPartner">
-        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
-        <orm:column name="ChurchId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
-        <orm:column name="DateCreated" sql-type="datetime" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
-        <orm:column name="Email" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="FirstName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="LastName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="Phone" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="Title" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
-        <orm:column name="PCFId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
-        <orm:column name="CellId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="nme" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="DefaultCurrencyId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         <orm:column name="UniqueId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="AdminId" sql-type="int" nullable="true" length="255" scale="0" ado-type="StringVariableLength" />
+        <orm:column name="GroupId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+      </orm:table>
+      <orm:table name="Zone">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="nme" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="UniqueId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="AdminId" sql-type="int" nullable="true" length="255" scale="0" ado-type="StringVariableLength" />
+      </orm:table>
+      <orm:table name="IdentityUser">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="FirstName" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="LastName" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="PhoneNumber" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="UserName" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="PasswordHash" sql-type="varchar" nullable="false" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="SecurityStamp" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="DateCreated" sql-type="datetime" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
+        <orm:column name="FailedAccessAttempts" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="DateOfLastFailedAccessAttempt" sql-type="datetime" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
       </orm:table>
     </orm:schema>
     <orm:relational-naming-settings>
@@ -1058,6 +1018,10 @@
       <BackendConfiguration>
         <Backend>MsSql</Backend>
         <ProviderName>System.Data.SqlClient</ProviderName>
+        <Runtime>
+          <ClassBehavior>ReadWrite</ClassBehavior>
+          <UseUTCForDateTime>True</UseUTCForDateTime>
+        </Runtime>
         <Logging>
           <MetricStoreSnapshotInterval>0</MetricStoreSnapshotInterval>
         </Logging>
@@ -1312,7 +1276,7 @@
       <Property Id="83d27a28-780d-4fcf-9d10-648a1422de9c" name="Name" label="Name : String" kind="Persistent" fieldName="_name" />
       <Property Id="160fcb8a-fb4d-4f64-b871-494c9277f686" name="ZoneId" type="Int32" label="ZoneId : Int32" fieldName="_zoneId" />
       <Property Id="e457d1dd-7e16-4381-879b-c33c4178eb47" name="UniqueId" label="UniqueId : String" fieldName="_uniqueId" />
-      <Property Id="f3fa859c-464f-4fd9-9224-734cd184dfe2" name="AdminId" label="AdminId : String" fieldName="_adminId" />
+      <Property Id="f3fa859c-464f-4fd9-9224-734cd184dfe2" name="AdminId" type="Int32" label="AdminId : Int32" fieldName="_adminId" />
       <AssociationTargets>
         <Association Id="65773ab0-72a4-4f1a-8921-c4de61a43cc4" SourceMultiplicity="ZeroOne" name="GroupHasZone">
           <DomainClassMoniker name="/EntitiesModel/Zone" />
@@ -1349,13 +1313,13 @@
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
-    <DomainClass Id="a3f79e2c-a062-4c51-a529-18e6d578da24" name="Church" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" useCascadeDelete="Yes" identityMechanismMember="Id">
+    <DomainClass Id="a3f79e2c-a062-4c51-a529-18e6d578da24" name="Church" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" updateSchema="true" showNavigationCompartment="true" showImplementationCompartment="true" useCascadeDelete="Yes" identityMechanismMember="Id">
       <Property Id="a5e6b117-6f26-4dbf-bf08-65326bb6d9e7" name="Id" type="Int32" label="Id : Int32" kind="Persistent" identity="true" fieldName="_id" />
       <Property Id="653e5f14-96aa-4ebe-892b-572db861c87e" name="DefaultCurrencyId" type="Int32" label="DefaultCurrencyId : Int32" nullable="true" kind="Persistent" fieldName="_defaultCurrencyId" />
       <Property Id="c279f4db-5723-49a8-8496-b80efee01b92" name="GroupId" type="Int32" label="GroupId : Int32" kind="Persistent" fieldName="_groupId" />
       <Property Id="632bfc31-41b7-4b3c-91bb-db2bf4b6cced" name="Name" label="Name : String" kind="Persistent" fieldName="_name" />
       <Property Id="23a4cd2e-e69b-41f5-99cf-aee68e57867f" name="UniqueId" label="UniqueId : String" fieldName="_uniqueId" />
-      <Property Id="e1075409-b081-4511-9d29-92b0b0191fbe" name="AdminId" label="AdminId : String" fieldName="_adminId" />
+      <Property Id="e1075409-b081-4511-9d29-92b0b0191fbe" name="AdminId" type="Int32" label="AdminId : Int32" fieldName="_adminId" />
       <AssociationTargets>
         <Association Id="8652b109-361f-4eed-bb74-0b3cd7456531" SourceMultiplicity="One" name="ChurchHasGroup">
           <DomainClassMoniker name="/EntitiesModel/Group" />
@@ -1383,11 +1347,11 @@
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
-    <DomainClass Id="b09798ee-f505-4b45-b113-8a1704c5dc61" name="Zone" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" updateSchema="true" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+    <DomainClass Id="b09798ee-f505-4b45-b113-8a1704c5dc61" name="Zone" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" updateSchema="true" showNavigationCompartment="true" showImplementationCompartment="true" useCascadeDelete="Yes" identityMechanismMember="Id">
       <Property Id="811e5c0c-6683-490d-b375-e1f0b911e287" name="Id" type="System.Int32" label="Id : System.Int32" identity="true" fieldName="_id" />
       <Property Id="61e0c7ba-cec6-42ba-a084-3ab42327d5c1" name="Name" label="Name : String" fieldName="_name" />
       <Property Id="cfb9d76e-a104-4c03-ab9d-18ce6a0faa7e" name="UniqueId" label="UniqueId : String" fieldName="_uniqueId" />
-      <Property Id="1d5ecd7c-9225-469d-a879-d67cef4f7452" name="AdminId" label="AdminId : String" fieldName="_adminId" />
+      <Property Id="1d5ecd7c-9225-469d-a879-d67cef4f7452" name="AdminId" type="Int32" label="AdminId : Int32" fieldName="_adminId" />
       <navigationalProperties>
         <classHasNavigationalProperties Id="f232568d-2d45-420f-b896-3c0d747faeb1">
           <NavigationalProperty Id="d80945de-80ba-4803-8348-823a5c4c59b9" name="Groups" type="IList&lt;Group&gt;" label="Groups : IList&lt;Group&gt;" nullable="true" kind="Persistent" fieldName="_groups" isDependent="false" isManaged="false" />
@@ -1449,8 +1413,8 @@
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
-    <DomainClass Id="2802171a-a1e9-4db6-9392-5b35a49f36d8" name="IdentityUser" namespace="Zakar.Models" showPropertiesCompartment="true" Kind="ReadWrite" updateSchema="true" showNavigationCompartment="true" showImplementationCompartment="true" useCascadeDelete="Yes" identityMechanismMember="Id">
-      <Property Id="e6ebdcfb-e9af-4759-8e5d-5005ae4f0e81" name="Id" label="Id : String" identity="true" fieldName="_id" />
+    <DomainClass Id="2802171a-a1e9-4db6-9392-5b35a49f36d8" name="IdentityUser" namespace="Zakar.Models" showPropertiesCompartment="true" Kind="ReadWrite" identityMechanism="DatabaseServerCalculated" updateSchema="true" showNavigationCompartment="true" showImplementationCompartment="true" useCascadeDelete="Yes" identityMechanismMember="Id">
+      <Property Id="e6ebdcfb-e9af-4759-8e5d-5005ae4f0e81" name="Id" type="Int32" label="Id : Int32" identity="true" fieldName="_id" />
       <Property Id="fef979e1-7342-4258-9c91-31212da813fe" name="FirstName" label="FirstName : String" fieldName="_firstName" />
       <Property Id="b851c322-b550-4c99-bbc6-8b52dbced35d" name="LastName" label="LastName : String" fieldName="_lastName" />
       <Property Id="72fc20ea-aaf8-4961-ac1c-730bf662dd8a" name="PhoneNumber" label="PhoneNumber : String" fieldName="_phoneNumber" />
@@ -1474,7 +1438,7 @@
     </DomainClass>
     <DomainClass Id="50e8e10b-6413-4b68-aa6a-9b2066df1196" name="IdentityUserClaim" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" updateSchema="true" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
       <Property Id="820e0fd7-0919-4d8e-82c7-936f3339c5b8" name="Id" type="System.Int32" label="Id : System.Int32" identity="true" fieldName="_id" />
-      <Property Id="f66b8fdc-e5e6-4ed0-87c9-f68777ecd7cd" name="UserId" label="UserId : String" fieldName="_userId" />
+      <Property Id="f66b8fdc-e5e6-4ed0-87c9-f68777ecd7cd" name="UserId" type="Int32" label="UserId : Int32" fieldName="_userId" />
       <Property Id="8f19a0d7-5fac-40b6-b704-fc4d9a44c53b" name="ClaimType" label="ClaimType : String" fieldName="_claimType" />
       <Property Id="f790e8d0-a0a2-45a5-9741-5d2013f119ce" name="ClaimValue" label="ClaimValue : String" fieldName="_claimValue" />
       <AssociationTargets>
@@ -1498,10 +1462,10 @@
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
-    <DomainClass Id="54595d05-d686-46a2-b20f-562a3dceac53" name="IdentityUserInRole" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+    <DomainClass Id="54595d05-d686-46a2-b20f-562a3dceac53" name="IdentityUserInRole" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" updateSchema="true" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
       <Property Id="10c24dae-1c1e-453f-aa47-06baa9cca8f0" name="Id" type="System.Int32" label="Id : System.Int32" identity="true" fieldName="_id" />
-      <Property Id="a2c5e9c0-5ed5-4174-8da8-b53fc58132fd" name="UserId" label="UserId : String" fieldName="_userId" />
-      <Property Id="35e756f2-f072-4026-ba9e-1d8ec6c71693" name="RoleId" label="RoleId : String" fieldName="_roleId" />
+      <Property Id="a2c5e9c0-5ed5-4174-8da8-b53fc58132fd" name="UserId" type="Int32" label="UserId : Int32" fieldName="_userId" />
+      <Property Id="35e756f2-f072-4026-ba9e-1d8ec6c71693" name="RoleId" type="Int32" label="RoleId : Int32" fieldName="_roleId" />
       <AssociationTargets>
         <Association Id="93e43048-f7af-4345-b828-12eceea0e6e7" SourceMultiplicity="ZeroOne" name="IdentityUserInRoleHasIdentityUser">
           <DomainClassMoniker name="/EntitiesModel/IdentityUser" />
@@ -1539,8 +1503,8 @@
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
-    <DomainClass Id="dd9691c9-e31a-4acc-b8de-2fa0c19c2626" name="IdentityRole" namespace="Zakar.Models" showPropertiesCompartment="true" updateSchema="true" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
-      <Property Id="1bc7a34a-0baa-4fe4-a0c0-79b79027d528" name="Id" label="Id : String" identity="true" fieldName="_id" />
+    <DomainClass Id="dd9691c9-e31a-4acc-b8de-2fa0c19c2626" name="IdentityRole" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+      <Property Id="1bc7a34a-0baa-4fe4-a0c0-79b79027d528" name="Id" type="Int32" label="Id : Int32" identity="true" fieldName="_id" />
       <Property Id="9e679122-fdbf-4179-afce-5fa7857afb38" name="Name" label="Name : String" fieldName="_name" />
       <navigationalProperties>
         <classHasNavigationalProperties Id="111601c5-b4a6-4c49-8f49-d09112f5c4b8">
@@ -1549,7 +1513,7 @@
       </navigationalProperties>
     </DomainClass>
     <DomainClass Id="2850314b-7fc4-45a3-95d1-9588b856c9b1" name="IdentityUserLogin" namespace="Zakar.Models" showPropertiesCompartment="true" updateSchema="true" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
-      <Property Id="47494857-df66-4ffb-8f01-48aa21ba4968" name="Id" label="Id : String" identity="true" fieldName="_id" />
+      <Property Id="47494857-df66-4ffb-8f01-48aa21ba4968" name="Id" type="Int32" label="Id : Int32" identity="true" fieldName="_id" />
       <Property Id="602c9da2-7c33-49c2-9684-08e25f48fa77" name="LoginProvider" label="LoginProvider : String" fieldName="_loginProvider" />
       <Property Id="bb43358c-9ca8-4226-8bb8-44285341c3e5" name="ProviderKey" label="ProviderKey : String" fieldName="_providerKey" />
       <AssociationTargets>

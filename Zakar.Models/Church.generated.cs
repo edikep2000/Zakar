@@ -23,15 +23,16 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table()]
+	[Table("Church", UpdateSchema = true)]
 	[ConcurrencyControl(OptimisticConcurrencyControlStrategy.Changed)]
 	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class Church : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		private int _id;
-		[Column(IsPrimaryKey = true)]
+		[Column("Id", OpenAccessType = OpenAccessType.Int32, IsBackendCalculated = true, IsPrimaryKey = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_id")]
 		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.DataAnnotations.Key()]
 		public virtual int Id
 		{
 			get
@@ -50,8 +51,9 @@ namespace Zakar.Models
 		}
 		
 		private string _name;
+		[Column("nme", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_name")]
-		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		public virtual string Name
 		{
 			get
@@ -70,6 +72,7 @@ namespace Zakar.Models
 		}
 		
 		private int _groupId;
+		[Column("GroupId", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_groupId")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int GroupId
@@ -90,8 +93,8 @@ namespace Zakar.Models
 		}
 		
 		private int? _defaultCurrencyId;
+		[Column("DefaultCurrencyId", OpenAccessType = OpenAccessType.Int32, IsNullable = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_defaultCurrencyId")]
-		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int? DefaultCurrencyId
 		{
 			get
@@ -110,8 +113,9 @@ namespace Zakar.Models
 		}
 		
 		private string _uniqueId;
+		[Column("UniqueId", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_uniqueId")]
-		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		public virtual string UniqueId
 		{
 			get
@@ -129,10 +133,11 @@ namespace Zakar.Models
 			}
 		}
 		
-		private string _adminId;
+		private int _adminId;
+		[Column("AdminId", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "int")]
 		[Storage("_adminId")]
-		[System.ComponentModel.DataAnnotations.Required()]
-		public virtual string AdminId
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
+		public virtual int AdminId
 		{
 			get
 			{

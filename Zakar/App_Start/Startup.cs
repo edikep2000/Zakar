@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -49,12 +50,12 @@ namespace Zakar.App_Start
             builder.RegisterType<PartnerExcelFileHandler>().AsSelf().InstancePerRequest();
             //register Report builderss
 
-            builder.RegisterType<UserService>().As<IUserStore<IdentityUser>>();
-            builder.RegisterType<UserService>().As<IUserClaimStore<IdentityUser>>();
-            builder.RegisterType<UserService>().As<IUserRoleStore<IdentityUser>>();
-            builder.RegisterType<UserService>().As<IUserLoginStore<IdentityUser>>();
-            builder.RegisterType<UserService>().As<IUserPasswordStore<IdentityUser>>();
-            builder.RegisterType<RoleService>().As<IRoleStore<IdentityRole>>();
+            builder.RegisterType<UserService>().As<IUserStore<IdentityUser, Int32>>();
+            builder.RegisterType<UserService>().As<IUserClaimStore<IdentityUser, Int32>>();
+            builder.RegisterType<UserService>().As<IUserRoleStore<IdentityUser, Int32>>();
+            builder.RegisterType<UserService>().As<IUserLoginStore<IdentityUser, Int32>>();
+            builder.RegisterType<UserService>().As<IUserPasswordStore<IdentityUser, Int32>>();
+            builder.RegisterType<RoleService>().As<IRoleStore<IdentityRole, Int32>>();
        
             builder.RegisterAssemblyTypes(persistenceAssembly)
                 .Where(i => i.Name.EndsWith("Builder"))

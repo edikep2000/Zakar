@@ -16,7 +16,7 @@ namespace Zakar.ViewModels
         [Display(Name = "Phone Number"), DataType(DataType.PhoneNumber), Required]
         public string PhoneNumber { get; set; }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Email"), DataType(DataType.EmailAddress), Required]
         public string UserName { get; set; }

@@ -20,13 +20,14 @@ namespace Zakar.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private readonly ApplicationUserManager _userManager;
-        private readonly IRoleStore<IdentityRole> _roleStore;
+        private readonly IRoleStore<IdentityRole, Int32> _roleStore;
         private readonly GroupService _groupService;
         private readonly ZoneService _zoneService;
         private readonly ChurchService _churchService;
         private readonly UserService _userService;
- 
-        public UsersController(IUnitOfWork unitOfWork, IUserStore<IdentityUser> userstore, IRoleStore<IdentityRole> roleStore, GroupService groupService, ZoneService zoneService, ChurchService churchService, ApplicationUserManager userManager, ApplicationSignInManager signInManager) : base(unitOfWork)
+
+        public UsersController(IUnitOfWork unitOfWork, IUserStore<IdentityUser, Int32> userstore, IRoleStore<IdentityRole, Int32> roleStore, GroupService groupService, ZoneService zoneService, ChurchService churchService, ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+            : base(unitOfWork)
         {
             _roleStore = roleStore;
             _groupService = groupService;
@@ -46,7 +47,7 @@ namespace Zakar.Controllers
         public async Task<ActionResult> GroupAdmins()
         {
             var t = await _roleStore.FindByNameAsync(RolesEnum.GROUP_ADMIN.ToString());
-            var userExistsInRole = t.IdentityUserInRoles.Any(i => i.UserId != "0");
+            var userExistsInRole = t.IdentityUserInRoles.Any(i => i.UserId != 0);
             ViewBag.UserExists = userExistsInRole;
             return View();
         }
@@ -149,7 +150,7 @@ namespace Zakar.Controllers
         public async Task<ActionResult> PortalAdmins()
         {
             var t = await _roleStore.FindByNameAsync(RolesEnum.PORTAL_ADMIN.ToString());
-            var userExistsInRole = t.IdentityUserInRoles.Any(i => i.UserId != "0");
+            var userExistsInRole = t.IdentityUserInRoles.Any(i => i.UserId != 0);
             ViewBag.UserExists = userExistsInRole;
             return View();
         }
@@ -243,7 +244,7 @@ namespace Zakar.Controllers
         public async Task<ActionResult> ZoneAdmins()
         {
             var t = await _roleStore.FindByNameAsync(RolesEnum.ZONE_ADMIN.ToString());
-            var userExistsInRole = t.IdentityUserInRoles.Any(i => i.UserId != "0");
+            var userExistsInRole = t.IdentityUserInRoles.Any(i => i.UserId != 0);
             ViewBag.UserExists = userExistsInRole;
             return View();
         }
@@ -349,7 +350,7 @@ namespace Zakar.Controllers
         public async Task<ActionResult> ChapterAdmins()
         {
             var t = await _roleStore.FindByNameAsync(RolesEnum.CHAPTER_ADMIN.ToString());
-            var userExistsInRole = t.IdentityUserInRoles.Any(i => i.UserId != "0");
+            var userExistsInRole = t.IdentityUserInRoles.Any(i => i.UserId != 0);
             ViewBag.UserExists = userExistsInRole;
             return View();
         }
@@ -448,9 +449,9 @@ namespace Zakar.Controllers
                 }.Build());
         }
 
-        public async Task<PartialViewResult> Delete(string id, string gridId)
+        public async Task<PartialViewResult> Delete(int id, string gridId)
         {
-            var user = await _userManager.FindByNameAsync(id);
+            var user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
                 var model = new DeleteConfirmInput()
@@ -469,7 +470,7 @@ namespace Zakar.Controllers
         {
             if (ModelState.IsValid)
             {
-                var m = await _userManager.FindByNameAsync(model.Id);
+                var m = await _userManager.FindByIdAsync(model.Id);
                 if(m != null)
                 {
                 var t =  await  _userManager.DeleteAsync(m);

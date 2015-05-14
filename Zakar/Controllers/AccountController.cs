@@ -140,7 +140,7 @@ namespace Zakar.Controllers
             {
                 return View("Error");
             }
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
+            var result = await UserManager.ConfirmEmailAsync(Convert.ToInt32(userId), code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 

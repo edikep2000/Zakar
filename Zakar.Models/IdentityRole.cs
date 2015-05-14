@@ -3,11 +3,11 @@ using Microsoft.AspNet.Identity;
 
 namespace Zakar.Models
 {
-    public partial class IdentityRole : IRole
+    public partial class IdentityRole : IRole<Int32>
     {
         public IdentityRole()
         {
-            _id = Guid.NewGuid().ToString();
+            
         }
 
         public IdentityRole(String name)
@@ -15,7 +15,7 @@ namespace Zakar.Models
             _name = name;
         }
 
-        public IdentityRole(string name, string id)
+        public IdentityRole(string name, int id)
         {
             _name = name;
             _id = id;

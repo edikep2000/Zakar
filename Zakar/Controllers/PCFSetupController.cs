@@ -101,7 +101,7 @@ namespace Zakar.Controllers
                 var c = new DeleteConfirmInput()
                     {
                         GridId = gridId,
-                        Id = m.Id.ToString(),
+                        Id = m.Id,
                         Message = string.Format("Are you sure you want to delete PCF {0}", m.Name)
                     };
                 return PartialView("Delete", c);
@@ -217,7 +217,7 @@ namespace Zakar.Controllers
                 var model = new DeleteConfirmInput()
                     {
                         GridId = gridId,
-                        Id = id.ToString(),
+                        Id = id,
                         Message = String.Format("Are you sure you want to delete staged records for {0}", m.Name)
                     };
                 return PartialView("Delete",model);

@@ -108,7 +108,7 @@ namespace Zakar.Controllers
                 var model = new DeleteConfirmInput()
                     {
                         GridId = gridId,
-                        Id = id.ToString(),
+                        Id = id,
                         Message =
                             String.Format("Are you sure you want to delete {0} and all attendant partnership logs?",
                                           p.LastName + " " + p.FirstName)
@@ -225,7 +225,7 @@ namespace Zakar.Controllers
                 var m = new DeleteConfirmInput()
                     {
                         GridId = gridId,
-                        Id = id.ToString(),
+                        Id = id,
                         Message =
                             String.Format("Are you sure you want to delete the staged record for {0}",
                                           s.LastName + " " + s.FirstName)

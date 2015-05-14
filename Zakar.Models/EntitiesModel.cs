@@ -265,6 +265,8 @@ namespace Zakar.Models
 			backend.Backend = "MsSql";
 			backend.ProviderName = "System.Data.SqlClient";
 			backend.Logging.MetricStoreSnapshotInterval = 0;
+			backend.Runtime.ClassBehavior = DataAccessKind.ReadWrite;
+			backend.Runtime.UseUTCForAutoSetValues = true;
 		
 			CustomizeBackendConfiguration(ref backend);
 		

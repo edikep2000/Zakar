@@ -23,16 +23,15 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table("IdentityRole", UpdateSchema = true)]
+	[Table()]
+	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class IdentityRole : INotifyPropertyChanging, INotifyPropertyChanged
 	{
-		private string _id;
-		[Column("Id", OpenAccessType = OpenAccessType.StringVariableLength, IsPrimaryKey = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		private int _id;
+		[Column(IsPrimaryKey = true)]
 		[Storage("_id")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
-		[System.ComponentModel.DataAnnotations.Key()]
-		public virtual string Id
+		public virtual int Id
 		{
 			get
 			{
@@ -50,9 +49,7 @@ namespace Zakar.Models
 		}
 		
 		private string _name;
-		[Column("nme", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_name")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string Name
 		{

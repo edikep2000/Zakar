@@ -23,15 +23,14 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table("IdentityUserInRole")]
+	[Table(UpdateSchema = true)]
 	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class IdentityUserInRole : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		private int _id;
-		[Column("Id", OpenAccessType = OpenAccessType.Int32, IsBackendCalculated = true, IsPrimaryKey = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
+		[Column(IsPrimaryKey = true)]
 		[Storage("_id")]
 		[System.ComponentModel.DataAnnotations.Required()]
-		[System.ComponentModel.DataAnnotations.Key()]
 		public virtual int Id
 		{
 			get
@@ -49,12 +48,10 @@ namespace Zakar.Models
 			}
 		}
 		
-		private string _userId;
-		[Column("UserId", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		private int _userId;
 		[Storage("_userId")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
-		public virtual string UserId
+		public virtual int UserId
 		{
 			get
 			{
@@ -71,12 +68,10 @@ namespace Zakar.Models
 			}
 		}
 		
-		private string _roleId;
-		[Column("RoleId", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		private int _roleId;
 		[Storage("_roleId")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		[System.ComponentModel.DataAnnotations.Required()]
-		public virtual string RoleId
+		public virtual int RoleId
 		{
 			get
 			{
