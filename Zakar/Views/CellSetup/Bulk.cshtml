@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Bulk Upload PCFs";
+    ViewBag.Title = "Bulk Upload Cells";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,15 +8,13 @@
 
 <br/>
 <br/>
-
-
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-md-8">
             <div class="ibox-content float-e-margins white-bg">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        @using (Html.BeginForm("Bulk","PCFSetup", FormMethod.Post, new{encType = "multipart/form-data"}))
+                        @using (Html.BeginForm("Bulk","CellSetup", FormMethod.Post, new{encType = "multipart/form-data"}))
                         {
                             <input type="file" name="file" id="file"/>
                             <br/>

@@ -1,1 +1,6 @@
-﻿
+﻿@model Zakar.ViewModels.CellViewModel
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.Partial("EditorPartials/_cellEditorPartial")
+}

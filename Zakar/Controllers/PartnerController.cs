@@ -20,11 +20,14 @@ namespace Zakar.Controllers
         private readonly StagedPartnerService _stagedPartnerService;
         private readonly ChurchService _churchService;
         private readonly PartnerExcelFileHandler _fileHandler;
-        public PartnerController(IUnitOfWork unitOfWork, ChurchService churchService, StagedPartnerService stagedPartnerService, PartnerService partnerService) : base(unitOfWork)
+
+        public PartnerController(IUnitOfWork unitOfWork, ChurchService churchService, StagedPartnerService stagedPartnerService, PartnerService partnerService, PartnerExcelFileHandler fileHandler)
+            : base(unitOfWork)
         {
             _churchService = churchService;
             _stagedPartnerService = stagedPartnerService;
             _partnerService = partnerService;
+            _fileHandler = fileHandler;
         }
 
         #region Partner Crud
@@ -249,11 +252,15 @@ namespace Zakar.Controllers
         #endregion
 
         #region HelperMethods
-        private Church GetChurchAdmin()
+        private  Church GetChurchAdmin()
         {
-            var admin = User.Identity.GetUserId();
-            var church = _churchService.GetChurchForAdmin(admin);
-            return church;
+            var user = base.UserStore.FindById(User.Identity.GetUserId<Int32>());
+            if (user.ChurchId.HasValue)
+            {
+                var church = _churchService.GetChurchForAdmin(user.ChurchId.Value);
+                return church;
+            }
+            return null;
         }
         #endregion
     }

@@ -116,10 +116,9 @@ namespace Zakar.Models
 		}
 		
 		private string _userName;
-		[Column("UserName", OpenAccessType = OpenAccessType.StringVariableLength, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
+		[Column("UserName", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_userName")]
 		[System.ComponentModel.DataAnnotations.StringLength(255)]
-		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string UserName
 		{
 			get
@@ -203,9 +202,8 @@ namespace Zakar.Models
 		}
 		
 		private int? _failedAccessAttempts;
-		[Column("FailedAccessAttempts", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
+		[Column("FailedAccessAttempts", OpenAccessType = OpenAccessType.Int32, IsNullable = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_failedAccessAttempts")]
-		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int? FailedAccessAttempts
 		{
 			get
@@ -240,6 +238,66 @@ namespace Zakar.Models
 					this.OnPropertyChanging("DateOfLastFailedAccessAttempt");
 					this._dateOfLastFailedAccessAttempt = value;
 					this.OnPropertyChanged("DateOfLastFailedAccessAttempt");
+				}
+			}
+		}
+		
+		private int? _zoneId;
+		[Column("ZoneId", OpenAccessType = OpenAccessType.Int32, IsNullable = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
+		[Storage("_zoneId")]
+		public virtual int? ZoneId
+		{
+			get
+			{
+				return this._zoneId;
+			}
+			set
+			{
+				if(this._zoneId != value)
+				{
+					this.OnPropertyChanging("ZoneId");
+					this._zoneId = value;
+					this.OnPropertyChanged("ZoneId");
+				}
+			}
+		}
+		
+		private int? _groupId;
+		[Column("GroupId", OpenAccessType = OpenAccessType.Int32, IsNullable = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
+		[Storage("_groupId")]
+		public virtual int? GroupId
+		{
+			get
+			{
+				return this._groupId;
+			}
+			set
+			{
+				if(this._groupId != value)
+				{
+					this.OnPropertyChanging("GroupId");
+					this._groupId = value;
+					this.OnPropertyChanged("GroupId");
+				}
+			}
+		}
+		
+		private int? _churchId;
+		[Column("ChurchId", OpenAccessType = OpenAccessType.Int32, IsNullable = true, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
+		[Storage("_churchId")]
+		public virtual int? ChurchId
+		{
+			get
+			{
+				return this._churchId;
+			}
+			set
+			{
+				if(this._churchId != value)
+				{
+					this.OnPropertyChanging("ChurchId");
+					this._churchId = value;
+					this.OnPropertyChanged("ChurchId");
 				}
 			}
 		}

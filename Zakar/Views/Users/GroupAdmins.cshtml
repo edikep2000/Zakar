@@ -29,21 +29,20 @@
         new Column(){Name = "LastName", Header = "Last Name"},
         new Column(){Name = "PhoneNumber", Header = "Phone Number"},
         new Column(){Name = "UserName", Header = "Username"},
-        new Column(){Width = 60, ClientFormat = "<button type='button' rel='tooltip' title = 'Delete Record'  class='btn btn-primary' onclick=\"awe.open('deleteAdmin', { params:{ id: .UserName } })\"><i class='fa fa-trash'></i></button>"},
+        new Column(){Width = 60, ClientFormat = @Utils.DeleteFormat("deleteAdmin")},
         new Column(){Width = 60, ClientFormat = @Utils.DetailsFormat("detailsAdmin")})
-
 }
 else
 {
         @Html.Awe().InitPopupForm().Name("createUser").Url(Url.Action("GroupAdminCreate", "Users")).Group("Arm").Modal(true).Title("New Group Admin").RefreshOnSuccess(true)
-     <div class="well">
-                <h3>Sorry</h3>
-                There is nothing to display
-                <br/>
-                <br/>
-                <button type="button" class="btn btn-primary" onclick="awe.open('createUser')" >
-                    New Group Admin
+    <div class="well">
+        <h3>Sorry</h3>
+        There is nothing to display
+                <br />
+        <br />
+        <button type="button" class="btn btn-primary" onclick="awe.open('createUser')">
+            New Group Admin
                     <i class="fa fa-user-plus"></i>
-                </button>
-            </div>
+        </button>
+    </div>
 }

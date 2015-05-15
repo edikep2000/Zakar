@@ -1885,6 +1885,9 @@
     <Content Include="Views\PCFSetup\Stage.cshtml" />
     <Content Include="Views\PCFSetup\StagePost.cshtml" />
     <Content Include="Views\PCFSetup\Bulk.cshtml" />
+    <Content Include="Views\CellSetup\Bulk.cshtml" />
+    <Content Include="Views\CellSetup\Stage.cshtml" />
+    <Content Include="Views\CellSetup\StagePost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

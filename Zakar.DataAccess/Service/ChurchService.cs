@@ -61,9 +61,9 @@ namespace Zakar.DataAccess.Service
             _repository.Delete(id);
         }
 
-        public Church GetChurchForAdmin(string userId)
+        public Church GetChurchForAdmin(int churchId)
         {
-            return _repository.Find(i => i.AdminId.Equals(userId)).FirstOrDefault();
+            return GetSingle(churchId);
         }
     }
 }

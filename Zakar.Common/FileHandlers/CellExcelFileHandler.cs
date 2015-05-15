@@ -58,7 +58,7 @@ namespace Zakar.Common.FileHandlers
                     var m = new StagedCells()
                     {
                         Name = row.FirstCellUsed().CellRight().GetString(),
-                        UniqueId = UniqueIdGenerator.GenerateUniqueIdForPCF(name: row.FirstCellUsed().GetString()),
+                        UniqueId = UniqueIdGenerator.GenerateUniqueIdForCell(name: row.FirstCellUsed().GetString()),
                         PCFId = pcfId,
                         ChurchId = this._churchId
                     };

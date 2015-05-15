@@ -27,7 +27,8 @@ namespace Zakar.Controllers
         private readonly ChurchService _churchService;
 
 
-        public BulkUploadController(IUnitOfWork unitOfWork, ZoneExcelFileHandler zoneExcelFileHandler, GroupExcelFileHandler groupExcelFileHandler, ChapterExcelFileHandler chapterExcelFileHandler, StagedZoneService stagedZoneService, StagedGroupService stagedGroupService, StagedChurchService stagedChurchService, ZoneService zoneService, GroupService groupService, ChurchService churchService) : base(unitOfWork)
+        public BulkUploadController(IUnitOfWork unitOfWork, ZoneExcelFileHandler zoneExcelFileHandler, GroupExcelFileHandler groupExcelFileHandler, ChapterExcelFileHandler chapterExcelFileHandler, StagedZoneService stagedZoneService, StagedGroupService stagedGroupService, StagedChurchService stagedChurchService, ZoneService zoneService, GroupService groupService, ChurchService churchService)
+            : base(unitOfWork)
         {
             _zoneExcelFileHandler = zoneExcelFileHandler;
             _groupExcelFileHandler = groupExcelFileHandler;

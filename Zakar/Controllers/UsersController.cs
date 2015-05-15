@@ -24,10 +24,9 @@ namespace Zakar.Controllers
         private readonly GroupService _groupService;
         private readonly ZoneService _zoneService;
         private readonly ChurchService _churchService;
-        private readonly UserService _userService;
 
-        public UsersController(IUnitOfWork unitOfWork, IUserStore<IdentityUser, Int32> userstore, IRoleStore<IdentityRole, Int32> roleStore, GroupService groupService, ZoneService zoneService, ChurchService churchService, ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-            : base(unitOfWork)
+        public UsersController(IUnitOfWork context, IRoleStore<IdentityRole, Int32> roleStore, GroupService groupService, ZoneService zoneService, ChurchService churchService, ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+            : base(context)
         {
             _roleStore = roleStore;
             _groupService = groupService;
@@ -35,7 +34,6 @@ namespace Zakar.Controllers
             _churchService = churchService;
             _userManager = userManager;
             _signInManager = signInManager;
-            _userService = (UserService) userstore;
         }
         
         public ActionResult Index()
@@ -43,114 +41,13 @@ namespace Zakar.Controllers
             return View();
         }
         
-        #region GroupAdmin
-        public async Task<ActionResult> GroupAdmins()
-        {
-            var t = await _roleStore.FindByNameAsync(RolesEnum.GROUP_ADMIN.ToString());
-            var userExistsInRole = t.IdentityUserInRoles.Any(i => i.UserId != 0);
-            ViewBag.UserExists = userExistsInRole;
-            return View();
-        }
-
-        public PartialViewResult GroupAdminCreate()
-        {
-
-            return PartialView();
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> GroupAdminCreate(GroupAdminRegisterModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new IdentityUser
-                {
-                    DateCreated = DateTime.Now,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    PhoneNumber = model.PhoneNumber,
-                    PasswordHash = model.Password,
-                    UserName = model.Username
-                };
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    var s = await _userManager.AddToRoleAsync(user.Id, RolesEnum.GROUP_ADMIN.ToString());
-                    if (s.Succeeded)
-                    {
-                        var group = _groupService.GetSingle(model.GroupId);
-                        if (group != null)
-                        {
-                            group.AdminId = user.Id;
-                        }
-                        return Json(new { });
-
-                    }
-                    else if (s.Errors != null && s.Errors.Any())
-                    {
-                        foreach (var e in s.Errors)
-                        {
-                            ModelState.AddModelError("", e);
-                        }
-                    }
-                }
-                else if (result.Errors != null && result.Errors.Any())
-                {
-                    foreach (var e in result.Errors)
-                    {
-                        ModelState.AddModelError("", e);
-                    }
-                }
-            }
-            return PartialView(model);
-        }
-
-        [HttpPost]
-        public ActionResult GroupAdminRead(GridParams g, string username, string name, string phoneNumber, string groupName)
-        {
-            var admins =
-                 _userManager.Users.Where(
-                     i => i.IdentityUserInRoles.Any(k => k.IdentityRole.Name == RolesEnum.GROUP_ADMIN.ToString()));
-            if (!string.IsNullOrEmpty(username))
-                admins = admins.Where(i => i.UserName.Contains(username));
-            if (!String.IsNullOrEmpty(name))
-                admins = admins.Where(i => i.FirstName.Contains(name) || i.LastName.Contains(name));
-            if (!String.IsNullOrEmpty(phoneNumber))
-                admins = admins.Where(i => i.PhoneNumber == phoneNumber);
-            if (!String.IsNullOrEmpty(groupName))
-            {
-                var queryable = _groupService.GetAll().Where(i => i.Name.Contains(groupName)).Select(I => I.AdminId);
-                admins = admins.Where(i => queryable.Any(k => k == i.Id));
-            }
-
-            var model = admins.Select(i => new UserViewModel()
-            {
-                FirstName = i.FirstName,
-                LastName = i.LastName,
-                PhoneNumber = i.PhoneNumber,
-                UserName = i.UserName,
-                Id = i.Id,
-            });
-            return Json(new GridModelBuilder<UserViewModel>(model, g)
-            {
-                Key = "UserName",
-                Map = o => new
-                {
-                    o.Id,
-                    o.FirstName,
-                    o.LastName,
-                    o.PhoneNumber,
-                    o.UserName,
-                }
-            }.Build());
-        }
-        #endregion
+     
 
         #region PortalAdmins
         public async Task<ActionResult> PortalAdmins()
         {
             var t = await _roleStore.FindByNameAsync(RolesEnum.PORTAL_ADMIN.ToString());
-            var userExistsInRole = t.IdentityUserInRoles.Any(i => i.UserId != 0);
+            var userExistsInRole = t != null && t.IdentityUserInRoles.Any(i => i.UserId != 0);
             ViewBag.UserExists = userExistsInRole;
             return View();
         }
@@ -172,23 +69,26 @@ namespace Zakar.Controllers
                     LastName = model.LastName,
                     PhoneNumber = model.PhoneNumber,
                     PasswordHash = model.Password,
-                    UserName = model.Username
+                    UserName = model.Username,
+                    FailedAccessAttempts = 0,
                 };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var role = await _roleStore.FindByNameAsync(RolesEnum.PORTAL_ADMIN.ToString());
+                IdentityResult result = IdentityResult.Failed();
+                if (role != null)
+                {
+                    user.IdentityUserInRoles.Add(new IdentityUserInRole()
+                        {
+                            IdentityRole = role,
+                            IdentityUser = user
+                        });
+                    result = await _userManager.CreateAsync(user, model.Password);
+                }
+
                 if (result.Succeeded)
                 {
-                    var s = await _userManager.AddToRoleAsync(user.Id, RolesEnum.PORTAL_ADMIN.ToString());
-                    if (s.Succeeded)
-                    {
+                 
                        return Json(new { });
-                    }
-                    if (s.Errors != null && s.Errors.Any())
-                    {
-                        foreach (var e in s.Errors)
-                        {
-                            ModelState.AddModelError("", e);
-                        }
-                    }
+                    
                 }
                 else if (result.Errors != null && result.Errors.Any())
                 {
@@ -235,16 +135,13 @@ namespace Zakar.Controllers
                 }
             }.Build());
         }
-
-       
-        
         #endregion
 
         #region ZoneAdmins
         public async Task<ActionResult> ZoneAdmins()
         {
             var t = await _roleStore.FindByNameAsync(RolesEnum.ZONE_ADMIN.ToString());
-            var userExistsInRole = t.IdentityUserInRoles.Any(i => i.UserId != 0);
+            var userExistsInRole = t != null && t.IdentityUserInRoles.Any(i => i.UserId != 0);
             ViewBag.UserExists = userExistsInRole;
             return View();
         }
@@ -266,30 +163,27 @@ namespace Zakar.Controllers
                     LastName = model.LastName,
                     PhoneNumber = model.PhoneNumber,
                     PasswordHash = model.Password,
-                    UserName = model.Username
+                    UserName = model.Username,
+                    FailedAccessAttempts = 0,
                 };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var role = await _roleStore.FindByNameAsync(RolesEnum.ZONE_ADMIN.ToString());
+                IdentityResult result = IdentityResult.Failed();
+                 var zone = _zoneService.GetSingle(model.ZoneId);
+                if (role != null && zone != null)
+                {
+                    user.IdentityUserInRoles.Add(new IdentityUserInRole()
+                    {
+                        IdentityRole = role,
+                        IdentityUser = user
+                    });
+                    user.ZoneId = zone.Id;
+                    result = await _userManager.CreateAsync(user, model.Password);
+                }
+
                 if (result.Succeeded)
                 {
-                    var s = await _userManager.AddToRoleAsync(user.Id, RolesEnum.ZONE_ADMIN.ToString());
-                    if (s.Succeeded)
-                    {
-                        var zone = _zoneService.GetSingle(model.ZoneId);
-                        if (zone != null)
-                        {
-                            zone.AdminId = user.Id;
-                        }
+                   
                         return Json(new { });
-
-                    }
-                    else if (s.Errors != null && s.Errors.Any())
-                    {
-                        foreach (var e in s.Errors)
-                        {
-                            ModelState.AddModelError("", e);
-                        }
-                    }
-
                 }
                 else if (result.Errors != null && result.Errors.Any())
                 {
@@ -317,8 +211,8 @@ namespace Zakar.Controllers
                 admins = admins.Where(i => i.PhoneNumber == phoneNumber);
             if (!String.IsNullOrEmpty(zoneName))
             {
-                var queryable = _zoneService.GetAll().Where(i => i.Name.Contains(zoneName)).Select(I => I.AdminId);
-                admins = admins.Where(i => queryable.Any(k => k == i.Id));
+                var queryable = _zoneService.GetAll().Where(i => i.Name.Contains(zoneName)).Select(I => I.Id);
+                admins = admins.Where(i => queryable.Any(k => k == i.ZoneId));
             }
 
             var model = admins.Select(i => new UserViewModel()
@@ -343,14 +237,113 @@ namespace Zakar.Controllers
             }.Build());
         }
 
-     
+        #endregion
+
+        #region GroupAdmin
+        public async Task<ActionResult> GroupAdmins()
+        {
+            var t = await _roleStore.FindByNameAsync(RolesEnum.GROUP_ADMIN.ToString());
+            var userExistsInRole = t != null && t.IdentityUserInRoles.Any(i => i.UserId != 0);
+            ViewBag.UserExists = userExistsInRole;
+            return View();
+        }
+
+        public PartialViewResult GroupAdminCreate()
+        {
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> GroupAdminCreate(GroupAdminRegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new IdentityUser
+                {
+                    DateCreated = DateTime.Now,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    PhoneNumber = model.PhoneNumber,
+                    PasswordHash = model.Password,
+                    UserName = model.Username,
+                    FailedAccessAttempts = 0,
+                };
+                var role = await _roleStore.FindByNameAsync(RolesEnum.GROUP_ADMIN.ToString());
+                var group = _groupService.GetSingle(model.GroupId);
+                var result = IdentityResult.Failed();
+                if (group != null && role != null)
+                {
+                    user.IdentityUserInRoles.Add(new IdentityUserInRole()
+                        {
+                            IdentityRole = role,
+                            IdentityUser = user
+                        });
+                    user.GroupId = group.Id;
+                    result = await _userManager.CreateAsync(user, model.Password);
+                }
+               
+                if (result.Succeeded)
+                {
+                   return Json(new { });
+                }
+                if (result.Errors != null && result.Errors.Any())
+                {
+                    foreach (var e in result.Errors)
+                    {
+                        ModelState.AddModelError("", e);
+                    }
+                }
+            }
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult GroupAdminRead(GridParams g, string username, string name, string phoneNumber, string groupName)
+        {
+            var admins =
+                 _userManager.Users.Where(
+                     i => i.IdentityUserInRoles.Any(k => k.IdentityRole.Name == RolesEnum.GROUP_ADMIN.ToString()));
+            if (!string.IsNullOrEmpty(username))
+                admins = admins.Where(i => i.UserName.Contains(username));
+            if (!String.IsNullOrEmpty(name))
+                admins = admins.Where(i => i.FirstName.Contains(name) || i.LastName.Contains(name));
+            if (!String.IsNullOrEmpty(phoneNumber))
+                admins = admins.Where(i => i.PhoneNumber == phoneNumber);
+            if (!String.IsNullOrEmpty(groupName))
+            {
+                var queryable = _groupService.GetAll().Where(i => i.Name.Contains(groupName)).Select(I => I.Id);
+                admins = admins.Where(i => queryable.Any(k => k == i.GroupId));
+            }
+
+            var model = admins.Select(i => new UserViewModel()
+            {
+                FirstName = i.FirstName,
+                LastName = i.LastName,
+                PhoneNumber = i.PhoneNumber,
+                UserName = i.UserName,
+                Id = i.Id,
+            });
+            return Json(new GridModelBuilder<UserViewModel>(model, g)
+            {
+                Key = "UserName",
+                Map = o => new
+                {
+                    o.Id,
+                    o.FirstName,
+                    o.LastName,
+                    o.PhoneNumber,
+                    o.UserName,
+                }
+            }.Build());
+        }
         #endregion
 
         #region ChapterAdmins
         public async Task<ActionResult> ChapterAdmins()
         {
             var t = await _roleStore.FindByNameAsync(RolesEnum.CHAPTER_ADMIN.ToString());
-            var userExistsInRole = t.IdentityUserInRoles.Any(i => i.UserId != 0);
+            var userExistsInRole = t != null && t.IdentityUserInRoles.Any(i => i.UserId != 0);
             ViewBag.UserExists = userExistsInRole;
             return View();
         }
@@ -373,32 +366,31 @@ namespace Zakar.Controllers
                     LastName = model.LastName,
                     PhoneNumber = model.PhoneNumber,
                     PasswordHash = model.Password,
-                    UserName = model.Username
+                    UserName = model.Username,
+                    FailedAccessAttempts = 0,
+                   
                 };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var result = IdentityResult.Failed();
+                var role = await _roleStore.FindByNameAsync(RolesEnum.CHAPTER_ADMIN.ToString());
+                var chapter = _churchService.GetSingle(model.ChapterId);
+                if (role != null && chapter != null)
+                {
+                    user.IdentityUserInRoles.Add(new IdentityUserInRole()
+                        {
+                            IdentityRole = role,
+                            IdentityUser = user
+                        });
+                    user.ChurchId = model.ChapterId;
+                    result = await _userManager.CreateAsync(user, model.Password);
+
+                }
+              
                 if (result.Succeeded)
                 {
-                    var s = await _userManager.AddToRoleAsync(user.Id, RolesEnum.CHAPTER_ADMIN.ToString());
-                    if (s.Succeeded)
-                    {
-                        var church = _churchService.GetSingle(model.ChapterId);
-                        if (church != null)
-                        {
-                            church.AdminId = user.Id;
-                         }
-                        return Json(new {});
-                      
-                    }
-                    else if(s.Errors != null && s.Errors.Any())
-                    {
-                        foreach (var e in s.Errors)
-                        {
-                            ModelState.AddModelError("", e);
-                        }
-                    }
-                   
+
+                    return Json(new { });
                 }
-                else if(result.Errors != null && result.Errors.Any())
+                if(result.Errors != null && result.Errors.Any())
                 {
                     foreach (var e in result.Errors)
                     {
@@ -423,8 +415,8 @@ namespace Zakar.Controllers
                 chapterAdmins = chapterAdmins.Where(i => i.PhoneNumber == phoneNumber);
             if (!String.IsNullOrEmpty(chapterName))
             {
-                var chapter = _churchService.GetAll().Where(i => i.Name.Contains(chapterName)).Select(I => I.AdminId);
-                chapterAdmins = chapterAdmins.Where(i => chapter.Any(k => k == i.Id));
+                var chapter = _churchService.GetAll().Where(i => i.Name.Contains(chapterName)).Select(I => I.Id);
+                chapterAdmins = chapterAdmins.Where(i => chapter.Any(k => k == i.ChurchId));
             }
 
             var model = chapterAdmins.Select(i => new UserViewModel()
@@ -460,7 +452,7 @@ namespace Zakar.Controllers
                         Id = id,
                         Message = String.Format("Are you sure you want to delete {0} {1} with username {2}", user.LastName, user.FirstName, user.UserName)
                     };
-                return PartialView("model");
+                return PartialView("Delete", model);
             }
             return PartialView();
         }
@@ -481,7 +473,7 @@ namespace Zakar.Controllers
                 }
             }
             ModelState.AddModelError("","Unable to delete user");
-            return PartialView(model);
+            return PartialView("Delete", model);
         } 
         #endregion
 	}

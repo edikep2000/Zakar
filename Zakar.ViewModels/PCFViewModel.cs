@@ -17,5 +17,9 @@ namespace Zakar.ViewModels
         [Display(Name = "Church")]
         [Required]
         public int ChurchId { get; set; }
+
+        [Display(Name = "Parent Church")]
+        
+        public string ChurchName { get; set; }
     }
 }

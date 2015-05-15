@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using AutoMapper;
 using Omu.AwesomeMvc;
 using Telerik.OpenAccess;
@@ -22,8 +23,9 @@ namespace Zakar.Controllers
         private readonly ChurchService _churchService;
         private readonly PartnerService _partnerService;
         private readonly PCFExcelFileHandler _pcfExcelFileHandler;
-        
-        public PCFSetupController(IUnitOfWork unitOfWork, StagedPCFService stagedPCFService, PCFService pcfService, ChurchService churchService, PartnerService partnerService, PCFExcelFileHandler pcfExcelFileHandler) : base(unitOfWork)
+
+        public PCFSetupController(IUnitOfWork unitOfWork, StagedPCFService stagedPCFService, PCFService pcfService, ChurchService churchService, PartnerService partnerService, PCFExcelFileHandler pcfExcelFileHandler)
+            : base(unitOfWork)
         {
             _stagedPCFService = stagedPCFService;
             _pcfService = pcfService;
@@ -40,6 +42,7 @@ namespace Zakar.Controllers
             return View();
         }
 
+        [OutputCache(Duration = 60)]
         public PartialViewResult Create()
         {
             var church = GetChurchAdmin();
@@ -77,6 +80,7 @@ namespace Zakar.Controllers
             return PartialView(model);
         }
 
+        [HttpPost]
         public ActionResult Edit(PCFViewModel model)
         {
             if (ModelState.IsValid)
@@ -118,12 +122,38 @@ namespace Zakar.Controllers
                 if (m != null)
                 {
                     var partners = _partnerService.Find(i => i.PCFId == Convert.ToInt32(model.Id));
-                    partners.UpdateAll(c => c.Set(k => k.PCFId, null));
+                    if(partners.Any())
+                        partners.UpdateAll(c => c.Set(k => k.PCFId, null));
                     _pcfService.Delete(m);
                 }
                 return Json(new {});
             }
             return PartialView("Delete", model);
+        }
+
+        public ActionResult PCFRead(GridParams g, String search)
+        {
+            search = (search ?? "").Trim().ToLower();
+            var model = _pcfService.Find(I => I.Name.Contains(search)).Select(i => new PCFViewModel()
+                {
+                    ChurchId = i.ChurchId,
+                    Id = i.Id,
+                    Name = i.Name,
+                    UniqueId = i.UniqueId,
+                    ChurchName = i.Church.Name
+                });
+            return Json(new GridModelBuilder<PCFViewModel>(model, g)
+                {
+                    Key = "Id",
+                    Map = o => new
+                        {
+                            o.Id,
+                            o.ChurchName,
+                            o.ChurchId,
+                            o.Name,
+                            o.UniqueId
+                        }
+                }.Build());
         }
         #endregion
 
@@ -176,9 +206,16 @@ namespace Zakar.Controllers
             return View();
         }
 
-        public ActionResult StageRead(GridParams g)
+        public ActionResult StageRead(GridParams g, string search)
         {
-            return Json(new {});
+            search = (search ?? "").Trim().ToLower();
+            var model = _stagedPCFService.GetAll().Where(i => i.Name.Contains(search));
+
+            return Json(new GridModelBuilder<StagedPCFs>(model.OrderByDescending(i => i.Id).AsQueryable(), g)
+                {
+                    Key = "Id",
+                    GetItem = () => _stagedPCFService.GetSingle(Convert.ToInt32(g.Key))
+                }.Build());
         }
 
         public PartialViewResult StagePost(int id)
@@ -204,6 +241,7 @@ namespace Zakar.Controllers
             {
                 var m = Mapper.Map<PCF>(model);
                 _pcfService.Insert(m);
+                _stagedPCFService.Delete(model.Id);
                 return Json(new {});
             }
             return PartialView(model);
@@ -240,9 +278,13 @@ namespace Zakar.Controllers
         #region HelperMethods
         private Church GetChurchAdmin()
         {
-            var admin = User.Identity.GetUserId();
-            var church = _churchService.GetChurchForAdmin(admin);
-            return church;
+            var admin = base.UserStore.FindById(User.Identity.GetUserId<Int32>());
+            if (admin.ChurchId.HasValue)
+            {
+                var church = _churchService.GetChurchForAdmin(admin.ChurchId.Value);
+                return church;
+            }
+            return null;
         }
         #endregion
     }

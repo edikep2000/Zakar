@@ -26,7 +26,8 @@ namespace Zakar.Controllers
         private readonly CurrencyService _currencyService;
 
         // GET: Zone
-        public SetupController(IUnitOfWork unitOfWork, ChurchService churchService, GroupService groupService, ZoneService zoneService, PartnershipArmService armService, PCFService pcfService, CellService cellService, CurrencyService currencyService) : base(unitOfWork)
+        public SetupController(IUnitOfWork unitOfWork, ChurchService churchService, GroupService groupService, ZoneService zoneService, PartnershipArmService armService, PCFService pcfService, CellService cellService, CurrencyService currencyService)
+            : base(unitOfWork)
         {
             _churchService = churchService;
             _groupService = groupService;

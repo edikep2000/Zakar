@@ -133,27 +133,6 @@ namespace Zakar.Models
 			}
 		}
 		
-		private int _adminId;
-		[Column("AdminId", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "int")]
-		[Storage("_adminId")]
-		[System.ComponentModel.DataAnnotations.StringLength(255)]
-		public virtual int AdminId
-		{
-			get
-			{
-				return this._adminId;
-			}
-			set
-			{
-				if(this._adminId != value)
-				{
-					this.OnPropertyChanging("AdminId");
-					this._adminId = value;
-					this.OnPropertyChanged("AdminId");
-				}
-			}
-		}
-		
 		private Group _group;
 		[ForeignKeyAssociation(SharedFields = "GroupId", TargetFields = "Id", IsManaged = true)]
 		[Storage("_group")]

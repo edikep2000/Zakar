@@ -1,0 +1,26 @@
+﻿@model Zakar.ViewModels.CellViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.Partial("_validationSummary")
+
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new{@class="control-label"})
+        @Html.TextBoxFor(m => m.Name, new{@class="form-control"})
+    </div>
+    
+        <div class="form-group">
+    @Html.LabelFor(m => m.UniqueId, new{@class="control-label"})
+    @Html.TextBoxFor(m => m.UniqueId, new{@class="form-control"})
+</div>
+
+    
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PCFId, new{@class="control-label"})
+        @Html.Awe().AjaxDropdownFor(m => m.PCFId).Url(Url.Action("GetPCFs","AjaxList")).Parameter("ChurchId", Convert.ToInt32(ViewBag.ChurchId)).HtmlAttributes(new{@class="form-control"})
+    </div>
+    
+}

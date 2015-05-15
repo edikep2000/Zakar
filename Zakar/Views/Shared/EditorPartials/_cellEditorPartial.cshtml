@@ -9,5 +9,5 @@
 
 <div class="form-group">
     @Html.LabelFor(m => m.PCFId, new{@class="control-label"})
-    @Html.Awe().AjaxDropdownFor(m => m.PCFId).Url(Url.Action("GetPCFs","AjaxList")).HtmlAttributes(new{@class="form-control"})
+    @Html.Awe().AjaxDropdownFor(m => m.PCFId).Url(Url.Action("GetPCFs","AjaxList")).Parameter("ChurchId", Convert.ToInt32(ViewBag.ChurchId)).HtmlAttributes(new{@class="form-control"})
 </div>

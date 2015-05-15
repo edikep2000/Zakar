@@ -1,4 +1,5 @@
-﻿
+﻿@using Zakar.Common
+
 @{
     ViewBag.Title = "Manage PCFs";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,9 +7,9 @@
     var modelExists = ViewBag.ModelExists is bool && (bool) ViewBag.ModelExists;
 }
 
-@Html.Awe().InitPopupForm().Name("edit").Url(Url.Action("ArmEdit","PCFSetup")).Group("PCF").Modal(true).Title("Edit PCF").Success("refreshGrid('grid')")
-@Html.Awe().InitPopupForm().Name("delete").Url(Url.Action("ArmDelete","PCFSetup")).Group("PCF").Modal(true).Title("Delete PCF").Success("refreshGrid('grid')")
-@Html.Awe().InitPopup().Name("details").Url(Url.Action("ArmDetails","PCFSetup")).Group("PCF").Modal(true).Title("PCF Details")
+@Html.Awe().InitPopupForm().Name("edit").Url(Url.Action("Edit","PCFSetup")).Group("PCF").Modal(true).Title("Edit PCF").Success("refreshGrid('grid')")
+@Html.Awe().InitPopupForm().Name("delete").Url(Url.Action("Delete","PCFSetup")).Group("PCF").Modal(true).Title("Delete PCF").Success("refreshGrid('grid')")
+@Html.Awe().InitPopup().Name("details").Url(Url.Action("Details","PCFSetup")).Group("PCF").Modal(true).Title("PCF Details")
 
 
 @Html.Partial("_headerPartial")
@@ -18,8 +19,23 @@
     <div class="ibox  float-e-margins white-bg">
 
         @if (modelExists)
-        {
-
+        {   @Html.Awe().InitPopupForm().Name("create").Url(Url.Action("Create", "PCFSetup")).Group("PCF").Modal(true).Title("New PCF").Success("refreshGrid('grid')")
+             <br/>
+            <br/>
+            <button type="button" class="btn btn-primary" onclick="awe.open('create')" >
+                New PCF
+                <i class="fa fa-plus-circle"></i>
+            </button>
+            
+            <br/>
+            @Html.Awe().Grid("grid").Url(Url.Action("PCFRead","PCFSetup")).ShowGroupBar(true).Sortable(true).ShowFooter(true).LoadOnParentChange(true).Columns(
+            new Column(){Hidden = false, Name = "UniqueId", Header = "Id", Width = 90},
+            new Column(){Header = "Church", Name = "ChurchName", Groupable = true},
+            new Column(){Header = "Name", Name = "Name", Groupable = false},
+            new Column(){Width = 80, ClientFormat = @Utils.EditFormat("edit")},
+            new Column(){Width = 80, ClientFormat = @Utils.DetailsFormat("details")},
+            new Column(){Width = 80, ClientFormat = @Utils.DeleteFormat("delete")}
+            )
         }
         else
         {

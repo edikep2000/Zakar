@@ -1,8 +1,46 @@
-﻿
+﻿@using Zakar.Common
 @{
-    ViewBag.Title = "View1";
+    ViewBag.Title = "Manage Cells";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var modelExists = ViewBag.ModelExists is bool && (bool) ViewBag.ModelExists;
 }
 
-<h2>View1</h2>
+@Html.Awe().InitPopupForm().Name("edit").Url(Url.Action("Edit","CellSetup")).Group("Cell").Modal(true).Title("Edit Cell").Success("refreshGrid('grid')")
+@Html.Awe().InitPopupForm().Name("delete").Url(Url.Action("Delete","CellSetup")).Group("Cell").Modal(true).Title("Delete Cell").Success("refreshGrid('grid')")
+@Html.Awe().InitPopup().Name("details").Url(Url.Action("Details","CellSetup")).Group("Cell").Modal(true).Title("Cell Details")
 
+@Html.Partial("_headerPartial")
+<br/>
+<br/>
+@if (modelExists)
+{
+        @Html.Awe().InitPopupForm().Name("create").Url(Url.Action("Create", "CellSetup")).Group("Cell").Modal(true).Title("New Cell").RefreshOnSuccess(true)
+    <button type="button" class="btn btn-primary" onclick="awe.open('create')" >
+        New Cell
+        <i class="fa fa-plus-circle"></i>
+    </button>
+    <br/>
+    <br/>
+    @Html.Awe().Grid("grid").Url(Url.Action("CellRead","CellSetup")).ShowGroupBar(true).Sortable(true).ShowFooter(true).LoadOnParentChange(true).Columns(
+    new Column(){Hidden = false, Name = "UniqueId", Header = "Id", Width = 90},
+    new Column(){Name = "Name"},
+    new Column(){Name = "PCFName", Header = "PCF"},
+    new Column(){Width = 100, ClientFormat = @Utils.EditFormat("edit")},
+    new Column(){Width = 100, ClientFormat = @Utils.DeleteFormat("delete")},
+    new Column(){Width = 100, ClientFormat = @Utils.DetailsFormat("details")})
+    
+}
+else
+{
+    <div class="well">
+        <h3>Sorry</h3>
+        There is nothing to display
+        <br/>
+        <br/>
+        @Html.Awe().InitPopupForm().Name("create").Url(Url.Action("Create", "CellSetup")).Group("Cell").Modal(true).Title("New Cell").RefreshOnSuccess(true)
+        <button type="button" class="btn btn-primary" onclick="awe.open('create')" >
+            New Cell
+            <i class="fa fa-plus-circle"></i>
+        </button>
+    </div>
+}

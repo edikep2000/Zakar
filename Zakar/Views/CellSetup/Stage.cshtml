@@ -1,21 +1,20 @@
 ﻿@using Zakar.Common
 
 @{
-    ViewBag.Title = "Staged PCF Records";
+    ViewBag.Title = "Staged Cells";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var modelExists = ViewBag.ModelExists is bool && (bool) ViewBag.ModelExists;
 }
 
-
 @Html.Partial("_headerPartial")
 <br/><br/>
 
-@Html.Awe().InitPopupForm().Name("edit").Url(Url.Action("StagePost","PCFSetup")).Success("refreshGrid('grid')").Title("Post Record").CloseOnSuccess(true)
-@Html.Awe().InitPopupForm().Name("delete").Url(Url.Action("StageDelete","PCFSetup")).Success("refreshGrid('grid')").Title("Delete Record").Parameter("gridId","grid").OkText("Delete").CloseOnSuccess(true)
+@Html.Awe().InitPopupForm().Name("edit").Url(Url.Action("StagePost","CellSetup")).Success("refreshGrid('grid')").Title("Post Record").CloseOnSuccess(true)
+@Html.Awe().InitPopupForm().Name("delete").Url(Url.Action("StageDelete","CellSetup")).Success("refreshGrid('grid')").Title("Delete Record").Parameter("gridId","grid").OkText("Delete").CloseOnSuccess(true)
 
 @if (modelExists)
 {
-    @Html.Awe().Grid("grid").Url(Url.Action("StageRead", "PCFSetup")).Groupable(false).Parent("txtSearch","search").Sortable(true).Columns(
+    @Html.Awe().Grid("grid").Url(Url.Action("StageRead", "CellSetup")).Groupable(false).Parent("txtSearch","search").Sortable(true).Columns(
         new Column() { Name = "UniqueId", Width = 100, Header = "Unique Id"},
         new Column() { Name = "Name"},
         new Column() {Width = 90, ClientFormat = @Utils.EditFormat("edit")},
@@ -28,6 +27,6 @@ else
         You have nothing staged for processing.
         <br/>
         <br/>
-        <a href="@Url.Action("Bulk","PCFSetup")" class="btn btn-primary">Upload PCFs</a>
+        <a href="@Url.Action("Bulk","CellSetup")" class="btn btn-primary">Upload Cells</a>
     </div>
 }
