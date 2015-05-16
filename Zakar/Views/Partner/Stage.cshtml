@@ -1,0 +1,41 @@
+﻿@using Zakar.Common
+@using Zakar.Common.Enums
+
+@{
+    ViewBag.Title = "Staged Partner Records";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var modelExists = ViewBag.ModelExists is bool && (bool) ViewBag.ModelExists;
+}
+
+@Html.Partial("_headerPartial")
+
+@Html.Awe().InitPopupForm().Name("edit").Url(Url.Action("StageCreate" , "Partner")).Success("refreshGrid('grid')").Title("Transfer Record").CloseOnSuccess(true)
+@Html.Awe().InitPopupForm().Name("delete").Url(Url.Action("StageDelete","Partner")).Success("refreshGrid('grid')").Title("Confirm Delete").CloseOnSuccess(true)
+<br/>
+<br/>
+@if (modelExists)
+{
+    @Html.Awe().Grid("grid").Url(Url.Action("StagePartnerRead","Partner")).Groupable(true).LoadOnParentChange(true).Parent("textSearch","search").LoadOnParentChange(true).Columns(
+    new Column(){Header="Id", Name = "UniqueId", Width=70},
+    new Column(){Header = "Full Name", Name = "FullName", Width = 150},
+    new Column(){Header = "EmailAddress", Name = "Email"},
+    new Column(){Header = "Phone", Name = "Phone"},
+    new Column(){Header = "Gender",Name = "Gender"},
+        new Column(){Header = "Cell", Name = "CellName"},
+    new Column(){Header = "PCF",Name = "PCFName"},
+    new Column(){ClientFormat = @Utils.EditFormat("edit"), Width = 80},
+    new Column(){ClientFormat = @Utils.DeleteFormat("delete"), Width = 80})
+}
+else
+{
+     <div class="well">
+        <h3>Sorry</h3>
+        There is nothing to display
+        <br/>
+        <br/>
+        <a class="btn btn-primary" href="@Url.Action("Bulk","Partner")" >
+           Upload Partners
+            <i class="fa fa-plus-circle"></i>
+        </a>
+    </div>
+}

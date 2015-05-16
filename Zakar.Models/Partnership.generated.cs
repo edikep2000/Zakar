@@ -197,6 +197,27 @@ namespace Zakar.Models
 			}
 		}
 		
+		private string _trackingId;
+		[Column("TrackingId", Length = 100, Scale = 0, SqlType = "varchar")]
+		[Storage("_trackingId")]
+		[System.ComponentModel.DataAnnotations.Required()]
+		public virtual string TrackingId
+		{
+			get
+			{
+				return this._trackingId;
+			}
+			set
+			{
+				if(this._trackingId != value)
+				{
+					this.OnPropertyChanging("TrackingId");
+					this._trackingId = value;
+					this.OnPropertyChanged("TrackingId");
+				}
+			}
+		}
+		
 		private PartnershipArm _partnershipArm;
 		[ForeignKeyAssociation(ConstraintName = "FK_PartnershipArmPartnership", SharedFields = "PartnershipArmId", TargetFields = "Id")]
 		[Storage("_partnershipArm")]
@@ -218,7 +239,7 @@ namespace Zakar.Models
 		}
 		
 		private Partner _partner;
-		[ForeignKeyAssociation(ConstraintName = "FK_PartnerPartnership", SharedFields = "PartnerId", TargetFields = "Id")]
+		[ForeignKeyAssociation(ConstraintName = "FK_PartnerPartnership", SharedFields = "PartnerId", TargetFields = "Id", IsManaged = true)]
 		[Storage("_partner")]
 		public virtual Partner Partner
 		{

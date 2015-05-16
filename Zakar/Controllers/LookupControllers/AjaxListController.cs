@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Omu.AwesomeMvc;
 using Zakar.DataAccess.Service;
@@ -15,8 +16,6 @@ namespace Zakar.Controllers.LookupControllers
         private readonly CellService _cellService;
         private readonly PCFService _pcfService;
 
-
-
         public AjaxListController(ZoneService zoneService, GroupService groupService, ChurchService churchService, PartnershipArmService armService, CurrencyService currencyService, PCFService pcfService, CellService cellService)
         {
             _zoneService = zoneService;
@@ -27,7 +26,6 @@ namespace Zakar.Controllers.LookupControllers
             _pcfService = pcfService;
             _cellService = cellService;
         }
-
         public ActionResult GetZones(int? v)
         {
             var model = _zoneService.GetAll().Select(i => new SelectableItem(i.Id, i.Name, v == i.Id)).AsEnumerable();
@@ -57,7 +55,6 @@ namespace Zakar.Controllers.LookupControllers
             }
         }
 
-
         public ActionResult GetChurches(int? v, int groupId = 0)
         {
             var model = _churchService.GetAll();
@@ -84,6 +81,43 @@ namespace Zakar.Controllers.LookupControllers
                     Selected = i.Id == v
                 });
             return Json(returnValue);
+        }
+
+        public ActionResult GetTitles(string v)
+        {
+            var model = new List<string>()
+                {
+                    "Brother",
+                    "Sister",
+                    "Pastor",
+                    "Deacon",
+                    "Deaconess",
+                    "Reverend",
+                    "Evangelist"
+                };
+            var returnValue = model.Select(i => new SelectableItem()
+                {
+                    Selected = v == i,
+                    Text = i,
+                    Value = i
+                });
+            return Json(returnValue);
+        }
+
+        public ActionResult GetGender(string v)
+        {
+            var list = new List<string>
+                {
+                    "Male",
+                    "Female"
+                };
+            var model = list.Select(i => new SelectableItem()
+                {
+                    Selected = i == v,
+                    Text = i,
+                    Value = i
+                });
+            return Json(model);
         }
 
         public ActionResult GetCells(int? v, int pcfId = 0, int churchId = 0)

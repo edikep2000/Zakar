@@ -102,9 +102,9 @@
                 <li class="@Html.IsSelected(controller: "Partners")">
                     <a href="#"><i class="fa fa-users"></i><span class="nav-label">Partners</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li class="@Html.IsSelected(action: "New")"><a href="@Url.Action("New", "Partner")">New Partner</a></li>
-                        <li class="@Html.IsSelected(action: "Upload")"><a href="@Url.Action("Upload", "Partner")">Upload Partners</a></li>
-                        <li class="@Html.IsSelected(action: "Manage")"><a href="@Url.Action("Manage", "Partner")">Manage Partners</a></li>
+                 
+                        <li class="@Html.IsSelected(action: "Bulk")"><a href="@Url.Action("Bulk", "Partner")">Upload Partners</a></li>
+                        <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Partner")">Manage Partners</a></li>
                     </ul>
                 </li>
             }

@@ -118,6 +118,9 @@
         <orm:field name="_dateCreated" property="DateCreated" behavior="readwrite" uniqueId="8e724441-008a-4688-8dc5-4b62d5845f4a" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
           <orm:column name="DateCreated" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
         </orm:field>
+        <orm:field name="_trackingId" property="TrackingId" uniqueId="1a2172ff-5ad4-43f0-9b9d-ab6e80c850b2" type="System.String">
+          <orm:column name="TrackingId" sql-type="varchar" nullable="false" length="100" scale="0" ado-type="" />
+        </orm:field>
         <orm:field name="_partnershipArm" property="PartnershipArm" behavior="readwrite" uniqueId="ce8cba39-5260-464a-92bd-7c410a0ef99a" type="Zakar.Models.PartnershipArm">
           <orm:reference uniqueId="da7334d0-d68d-413e-8bc2-c277253bed49" association-name="PartnershipHasPartnershipArm">
             <orm:sharedfield name="_partnershipArmId" target-class="Zakar.Models.PartnershipArm" target-field="_id" />
@@ -180,7 +183,8 @@
           <orm:collection element-class="Zakar.Models.NonValidatedPartnershipRecord" inverse-field="_partnershipArm1" order-by="" uniqueId="9bbb6462-edfd-4e2d-a808-261b8f1f6a1c" />
         </orm:field>
       </orm:class>
-      <orm:class name="Partner" use-default-mapping="true" uniqueId="611d3049-18e7-4416-8410-132c163247bf">
+      <orm:class name="Partner" uniqueId="611d3049-18e7-4416-8410-132c163247bf">
+        <orm:table name="Partner" />
         <orm:identity>
           <orm:key-generator name="autoinc">
             <orm:key-generator-member property-name="Id" />
@@ -221,17 +225,28 @@
         <orm:field name="_uniqueId" property="UniqueId" uniqueId="f42f623f-9ad7-4a3b-a921-b0a4d949eb3c" type="System.String">
           <orm:column name="UniqueId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
+        <orm:field name="_dateOfBirth" property="DateOfBirth" uniqueId="960caeaa-9793-43ca-9ade-3027d51bfab4" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="DateOfBirth" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="" />
+        </orm:field>
+        <orm:field name="_gender" property="Gender" uniqueId="cfb8ea0e-88d2-4898-9064-c3cc0cc92611" type="System.String">
+          <orm:column name="Gender" sql-type="varchar" nullable="false" length="100" scale="0" ado-type="" />
+        </orm:field>
         <orm:field name="_church" property="Church" behavior="readwrite" uniqueId="c272b761-f394-443c-8b64-a2f7e008cbc9" type="Zakar.Models.Church">
           <orm:reference uniqueId="d7cd6ab2-d5d2-43a0-b22f-f21fbf314412" association-name="PartnerHasChurch">
             <orm:sharedfield name="_churchId" target-class="Zakar.Models.Church" target-field="_id" />
           </orm:reference>
         </orm:field>
-        <orm:field name="_partnerships" property="Partnerships" behavior="readwrite" uniqueId="1fcd1db0-1a10-4ad5-af81-9d11af0d6782" type="Zakar.Models.Partnership">
-          <orm:collection element-class="Zakar.Models.Partnership" inverse-field="_partner" order-by="" uniqueId="2c78b20c-08ff-4399-a94b-2ec78a3369bd" />
+        <orm:field name="_partnerships" property="Partnerships" behavior="readwrite" uniqueId="1fcd1db0-1a10-4ad5-af81-9d11af0d6782" type="Zakar.Models.Partnership" dependent="true">
+          <orm:collection element-class="Zakar.Models.Partnership" inverse-field="_partner" managed="true" order-by="" uniqueId="2c78b20c-08ff-4399-a94b-2ec78a3369bd" />
         </orm:field>
         <orm:field name="_nonValidatedPartnershipRecords" property="NonValidatedPartnershipRecords" behavior="readwrite" uniqueId="ac29830c-1906-430f-a783-e14258edcd74" type="Zakar.Models.NonValidatedPartnershipRecord">
           <orm:collection element-class="Zakar.Models.NonValidatedPartnershipRecord" inverse-field="_partner1" order-by="" uniqueId="20c3a43a-13d5-4394-ad1c-8ae592dcb737" />
         </orm:field>
+        <orm:index name="idx_Partner_ChurchId">
+          <orm:columnMapping>
+            <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
       </orm:class>
       <orm:class name="Notification" uniqueId="aa2e9c80-ec64-4faf-ab26-61b2dd986f22">
         <orm:table name="Notifications" schema="dbo" />
@@ -760,7 +775,8 @@
           <orm:column name="ChurchId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         </orm:field>
       </orm:class>
-      <orm:class name="StagedPartner" update-schema="true" use-default-mapping="true" uniqueId="c7835a81-759d-4b05-bfa9-facf3c34d96b">
+      <orm:class name="StagedPartner" update-schema="true" uniqueId="c7835a81-759d-4b05-bfa9-facf3c34d96b">
+        <orm:table name="StagedPartner" />
         <orm:identity>
           <orm:key-generator name="autoinc">
             <orm:key-generator-member property-name="Id" />
@@ -803,6 +819,41 @@
         <orm:field name="_dateOfBirth" property="DateOfBirth" uniqueId="22247197-96fe-4549-a29e-44129f04e9c2" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
           <orm:column name="DateOfBirth" sql-type="datetime" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
         </orm:field>
+        <orm:field name="_gender" property="Gender" uniqueId="fc565907-87c9-4540-a0eb-3601bda4efd8" type="System.String">
+          <orm:column name="Gender" sql-type="varchar" nullable="false" length="100" scale="0" ado-type="" />
+        </orm:field>
+      </orm:class>
+      <orm:class name="StagedPartnership" use-default-mapping="true" uniqueId="463c91df-86f8-4e6b-80ad-d9c88b7d257b">
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="Id" />
+          </orm:key-generator>
+          <orm:single-field field-name="_id" />
+        </orm:identity>
+        <orm:field name="_id" property="Id" uniqueId="736a1b7b-a2d7-48c5-a26f-c25eb341e3ba" type="System.Int32">
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_amount" property="Amount" uniqueId="864a1181-0edc-4c8f-acf3-5a4c928f8257" type="System.Decimal">
+          <orm:column name="Amount" sql-type="numeric" nullable="false" length="20" scale="10" converter="OpenAccessRuntime.Data.DecimalConverter" ado-type="Numeric" />
+        </orm:field>
+        <orm:field name="_currencyId" property="CurrencyId" uniqueId="04adbb14-3cb2-4c8d-805b-fb303dbe90ca" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="CurrencyId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_dateCreated" property="DateCreated" uniqueId="d36c108d-dbc2-4db9-81b5-ddd1b963b5a2" type="System.DateTime">
+          <orm:column name="DateCreated" sql-type="datetime" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_month" property="Month" uniqueId="f8ec8845-abb5-49f4-b001-a4100a1436f2" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="mnth" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_partnerId" property="PartnerId" uniqueId="eba5703f-5376-41f1-8f85-e5dccba1afb5" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="PartnerId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_armId" property="ArmId" uniqueId="d7d2948f-9f57-4ab7-a274-167c21d6f7c2" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="ArmId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_year" property="Year" uniqueId="828daeaa-2812-4f9b-a342-266d11294235" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="yr" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        </orm:field>
       </orm:class>
     </orm:namespace>
     <orm:schema schema="dbo">
@@ -843,6 +894,7 @@
         <orm:column name="Year" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         <orm:column name="CurrencyId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         <orm:column name="DateCreated" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+        <orm:column name="TrackingId" sql-type="varchar" nullable="false" length="100" scale="0" ado-type="" />
         <orm:index name="IX_FK_PartnershipArmPartnership">
           <orm:columnMapping>
             <orm:column name="PartnershipArmId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
@@ -976,6 +1028,41 @@
         <orm:column name="GroupId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         <orm:column name="ChurchId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
       </orm:table>
+      <orm:table name="Partner">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="Title" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="FirstName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="LastName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="Email" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="Phone" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="DateCreated" sql-type="datetime" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
+        <orm:column name="PCFId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="CellId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="UniqueId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="DateOfBirth" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="" />
+        <orm:column name="Gender" sql-type="varchar" nullable="false" length="100" scale="0" ado-type="" />
+        <orm:index name="idx_Partner_ChurchId">
+          <orm:columnMapping>
+            <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+      </orm:table>
+      <orm:table name="StagedPartner">
+        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="ChurchId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="DateCreated" sql-type="datetime" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
+        <orm:column name="Email" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="FirstName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="LastName" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="Phone" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="Title" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="PCFId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="CellId" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="UniqueId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="DateOfBirth" sql-type="datetime" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
+        <orm:column name="Gender" sql-type="varchar" nullable="false" length="100" scale="0" ado-type="" />
+      </orm:table>
     </orm:schema>
     <orm:relational-naming-settings>
       <orm:remove-leading-underscore>False</orm:remove-leading-underscore>
@@ -1078,6 +1165,7 @@
       <Property Id="14bf120e-e6e9-4bac-b5b1-5c97342e1649" name="PartnerId" type="Int32" label="PartnerId : Int32" kind="Persistent" fieldName="_partnerId" />
       <Property Id="d1044f47-c294-44bd-8856-637b2991d2df" name="PartnershipArmId" type="Int32" label="PartnershipArmId : Int32" kind="Persistent" fieldName="_partnershipArmId" />
       <Property Id="60b40d54-0265-4a04-96df-a3371aed4a18" name="Year" type="Int32" label="Year : Int32" kind="Persistent" fieldName="_year" />
+      <Property Id="1a2172ff-5ad4-43f0-9b9d-ab6e80c850b2" name="TrackingId" label="TrackingId : String" fieldName="_trackingId" />
       <AssociationTargets>
         <Association Id="da7334d0-d68d-413e-8bc2-c277253bed49" SourceMultiplicity="One" name="PartnershipHasPartnershipArm">
           <DomainClassMoniker name="/EntitiesModel/PartnershipArm" />
@@ -1124,7 +1212,7 @@
           <NavigationalProperty Id="ce8cba39-5260-464a-92bd-7c410a0ef99a" name="PartnershipArm" type="PartnershipArm" label="PartnershipArm : PartnershipArm" nullable="true" kind="Persistent" fieldName="_partnershipArm" isDependent="false" isManaged="false" />
         </classHasNavigationalProperties>
         <classHasNavigationalProperties Id="3653b3ed-6e85-4070-aaac-0b31c6ab0284">
-          <NavigationalProperty Id="059c6f58-84c2-45bb-bd88-88e23b0e0efb" name="Partner" type="Partner" label="Partner : Partner" nullable="true" kind="Persistent" fieldName="_partner" isDependent="false" isManaged="false" />
+          <NavigationalProperty Id="059c6f58-84c2-45bb-bd88-88e23b0e0efb" name="Partner" type="Partner" label="Partner : Partner" nullable="true" kind="Persistent" fieldName="_partner" isDependent="false" isManaged="true" />
         </classHasNavigationalProperties>
         <classHasNavigationalProperties Id="1937addf-33d0-4117-9a88-65c88c84aef1">
           <NavigationalProperty Id="0d1cb284-e773-46d4-a80e-589e2d8cd049" name="Currency" type="Currency" label="Currency : Currency" nullable="true" kind="Persistent" fieldName="_currency" isDependent="false" isManaged="false" />
@@ -1157,6 +1245,8 @@
       <Property Id="41057cf6-e60d-40b3-82e3-7d991de9e90b" name="PCFId" type="Int32" label="PCFId : Int32" nullable="true" fieldName="_pCFId" />
       <Property Id="b9273399-6c0e-48aa-8934-5bcf49bcd654" name="CellId" type="Int32" label="CellId : Int32" nullable="true" fieldName="_cellId" />
       <Property Id="f42f623f-9ad7-4a3b-a921-b0a4d949eb3c" name="UniqueId" label="UniqueId : String" fieldName="_uniqueId" />
+      <Property Id="960caeaa-9793-43ca-9ade-3027d51bfab4" name="DateOfBirth" type="DateTime" label="DateOfBirth : DateTime" nullable="true" fieldName="_dateOfBirth" />
+      <Property Id="cfb8ea0e-88d2-4898-9064-c3cc0cc92611" name="Gender" label="Gender : String" fieldName="_gender" />
       <AssociationTargets>
         <Association Id="d7cd6ab2-d5d2-43a0-b22f-f21fbf314412" SourceMultiplicity="ZeroOne" name="PartnerHasChurch">
           <DomainClassMoniker name="/EntitiesModel/Church" />
@@ -1174,7 +1264,7 @@
       </AssociationTargets>
       <navigationalProperties>
         <classHasNavigationalProperties Id="c0f0677f-dbd6-4395-a377-d27e2ee36afc">
-          <NavigationalProperty Id="1fcd1db0-1a10-4ad5-af81-9d11af0d6782" name="Partnerships" type="IList&lt;Partnership&gt;" label="Partnerships : IList&lt;Partnership&gt;" nullable="true" kind="Persistent" fieldName="_partnerships" isDependent="false" isManaged="false" />
+          <NavigationalProperty Id="1fcd1db0-1a10-4ad5-af81-9d11af0d6782" name="Partnerships" type="IList&lt;Partnership&gt;" label="Partnerships : IList&lt;Partnership&gt;" nullable="true" kind="Persistent" fieldName="_partnerships" isDependent="true" isManaged="true" />
         </classHasNavigationalProperties>
         <classHasNavigationalProperties Id="5270f9f3-516c-4af7-bb5e-a94b06383be5">
           <NavigationalProperty Id="ac29830c-1906-430f-a783-e14258edcd74" name="NonValidatedPartnershipRecords" type="IList&lt;NonValidatedPartnershipRecord&gt;" label="NonValidatedPartnershipRecords : IList&lt;NonValidatedPartnershipRecord&gt;" nullable="true" kind="Persistent" fieldName="_nonValidatedPartnershipRecords" isDependent="false" isManaged="false" />
@@ -1580,6 +1670,17 @@
       <Property Id="160a1103-92e7-4fe5-958c-04ea35078cda" name="CellId" type="Int32" label="CellId : Int32" nullable="true" fieldName="_cellId" />
       <Property Id="dd4f4108-7f74-41bd-9ad1-999bfe291eb9" name="UniqueId" label="UniqueId : String" nullable="true" fieldName="_uniqueId" />
       <Property Id="22247197-96fe-4549-a29e-44129f04e9c2" name="DateOfBirth" type="DateTime" label="DateOfBirth : DateTime" nullable="true" fieldName="_dateOfBirth" />
+      <Property Id="fc565907-87c9-4540-a0eb-3601bda4efd8" name="Gender" label="Gender : String" fieldName="_gender" />
+    </DomainClass>
+    <DomainClass Id="463c91df-86f8-4e6b-80ad-d9c88b7d257b" name="StagedPartnership" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
+      <Property Id="736a1b7b-a2d7-48c5-a26f-c25eb341e3ba" name="Id" type="System.Int32" label="Id : System.Int32" identity="true" fieldName="_id" />
+      <Property Id="864a1181-0edc-4c8f-acf3-5a4c928f8257" name="Amount" type="Decimal" label="Amount : Decimal" fieldName="_amount" />
+      <Property Id="04adbb14-3cb2-4c8d-805b-fb303dbe90ca" name="CurrencyId" type="Int32" label="CurrencyId : Int32" nullable="true" fieldName="_currencyId" />
+      <Property Id="d36c108d-dbc2-4db9-81b5-ddd1b963b5a2" name="DateCreated" type="DateTime" label="DateCreated : DateTime" fieldName="_dateCreated" />
+      <Property Id="f8ec8845-abb5-49f4-b001-a4100a1436f2" name="Month" type="Int32" label="Month : Int32" nullable="true" fieldName="_month" />
+      <Property Id="eba5703f-5376-41f1-8f85-e5dccba1afb5" name="PartnerId" type="Int32" label="PartnerId : Int32" nullable="true" fieldName="_partnerId" />
+      <Property Id="d7d2948f-9f57-4ab7-a274-167c21d6f7c2" name="ArmId" type="Int32" label="ArmId : Int32" nullable="true" fieldName="_armId" />
+      <Property Id="828daeaa-2812-4f9b-a342-266d11294235" name="Year" type="Int32" label="Year : Int32" nullable="true" fieldName="_year" />
     </DomainClass>
   </Types>
   <domainContext>
@@ -1611,6 +1712,7 @@
         <entitySetProperty name="StagedPCFs" namespace="Zakar.Models" type="StagedPCFs" label="StagedPCFs : IQueryable&lt;Zakar.Models.StagedPCFs&gt;" />
         <entitySetProperty name="StagedCells" namespace="Zakar.Models" type="StagedCells" label="StagedCells : IQueryable&lt;Zakar.Models.StagedCells&gt;" />
         <entitySetProperty name="StagedPartners" namespace="Zakar.Models" type="StagedPartner" label="StagedPartners : IQueryable&lt;Zakar.Models.StagedPartner&gt;" />
+        <entitySetProperty name="StagedPartnerships" namespace="Zakar.Models" type="StagedPartnership" label="StagedPartnerships : IQueryable&lt;Zakar.Models.StagedPartnership&gt;" />
       </domainContainer>
     </domainModelHasDomainContext>
   </domainContext>

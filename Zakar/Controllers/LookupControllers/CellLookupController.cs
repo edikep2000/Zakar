@@ -26,19 +26,36 @@ namespace Zakar.Controllers.LookupControllers
             return Json(new KeyContent(0, ""));
         }
 
-        public ActionResult Search(string search, int page)
+        public ActionResult Search(string search, int page,int pcfId = 0)
         {
             search = (search ?? "").ToLower().Trim();
-            var list =
-                _cellService.GetAll()
-                    .Where(i => i.Name.Contains(search))
-                    .OrderByDescending(i => i.Id)
-                    .ToPagedList(page, 10);
-            return Json(new AjaxListResult
+            if (pcfId == 0)
             {
-                More = list.HasNextPage,
-                Items = list.Select(i => new KeyContent(i.Id, i.Name))
-            });
+                var list =
+              _cellService.GetAll()
+                  .Where(i => i.Name.Contains(search))
+                  .OrderByDescending(i => i.Id)
+                  .ToPagedList(page, 10);
+                return Json(new AjaxListResult
+                {
+                    More = list.HasNextPage,
+                    Items = list.Select(i => new KeyContent(i.Id, i.Name))
+                });
+            }
+            else
+            {
+                var list =
+              _cellService.Find(i => i.PCFId == pcfId)
+                  .Where(i => i.Name.Contains(search))
+                  .OrderByDescending(i => i.Id)
+                  .ToPagedList(page, 10);
+                return Json(new AjaxListResult
+                {
+                    More = list.HasNextPage,
+                    Items = list.Select(i => new KeyContent(i.Id, i.Name))
+                });
+            }
+          
         }
     }
 }

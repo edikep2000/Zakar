@@ -16,14 +16,7 @@ namespace Zakar.ViewModels
         [Required, StringLength(50)]
         public string FirstName { get; set; }
 
-        public string FullName
-        {
-            get
-            {
-                return (this.Title + " " + this.FirstName + " " + this.LastName);
-            }
-        }
-
+        [Key]
         public int Id { get; set; }
 
         [StringLength(50), Required]
@@ -35,10 +28,20 @@ namespace Zakar.ViewModels
         [Required, StringLength(10)]
         public string Title { get; set; }
 
+        [Display(Name = "Partner Id")]
         public String UniqueId { get; set; }
 
+        [Display(Name = "Cell")]
         public int CellId { get; set; }
 
+        [Display(Name = "PCF")]
         public int PCFId { get; set; }
+
+        [Display(Name = "Date Of Birth")]
+        public DateTime DateOfBirth { get; set; }
+
+        [Display(Name = "Gender")]
+        [Required]
+        public String Gender { get; set; }
     }
 }

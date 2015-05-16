@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using Telerik.OpenAccess;
 using Zakar.App_Start;
+using Zakar.Models;
 
 namespace Zakar.Controllers
 {
@@ -21,6 +22,11 @@ namespace Zakar.Controllers
             {
                 UnitOfWork.SaveChanges();
             }
+        }
+
+        protected EntitiesModel AccessContext
+        {
+            get { return (EntitiesModel) this.UnitOfWork; }
         }
 
         protected ApplicationUserManager UserStore

@@ -1,0 +1,63 @@
+﻿@using Zakar.Common
+@using Zakar.Common.Enums
+
+@{
+    ViewBag.Title = "Manage Partners";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var modelExists = ViewBag.ModelExists is bool && (bool) ViewBag.ModelExists;
+}
+
+@Html.Partial("_headerPartial")
+
+@*TODO Mapping Details Editor For the Standard File and MultiColumn Editor  *@
+@Html.Awe().InitPopupForm().Name("edit").Url(Url.Action("Edit","Partner")).OkText("Save Changes").CancelText("Discard Changes").Title("Edit Partner").Success("refreshGrid('grid')")
+@Html.Awe().InitPopupForm().Name("delete").Url(Url.Action("Delete","Partner")).OkText("Yes").CancelText("No").Title("Confirm Partner Delete").Success("refreshGrid('grid')")
+<br/>
+<br/>
+@if (modelExists)
+{
+    @Html.Awe().InitPopupForm().Name("create").Url(Url.Action("New", "Partner")).Group("Partner").Modal(true).Title("New Partner").Success("refreshGrid('grid')")
+    <br/>
+    <button type="button" class="btn btn-primary" onclick=" awe.open('create') " >
+        New Partner
+        <i class="fa fa-plus-circle"></i>
+    </button>
+    <br/>
+    <br/>
+    @Html.Awe().Grid("grid").Url(Url.Action("PartnerRead","Partner")).Groupable(true).LoadOnParentChange(true).Parent("textSearch","search").LoadOnParentChange(true).Columns(
+    new Column(){Header="Id", Name = "UniqueId", Width=70},
+    new Column(){Header = "Full Name", Name = "FullName", Width = 150},
+    new Column(){Header = "Cell", Name = "CellName"},
+    new Column(){Header = "PCF",Name = "PCFName"},
+    new Column(){Header = "Church", Name = "ChurchName", Hidden = User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString())},
+    new Column(){Header = "EmailAddress", Name = "Email"},
+    new Column(){Header = "Phone", Name = "Phone"},
+    new Column(){Header = "Gender",Name = "Gender"},
+    new Column(){ClientFormat = @Utils.EditFormat("edit"), Width = 80},
+    new Column(){ClientFormat = @Utils.DeleteFormat("delete"), Width = 80},
+    new Column(){ClientFormat = @Utils.DetailsFormat("details"), Width = 80})
+}
+else
+{
+    <div class="well">
+        <h3>Sorry</h3>
+        There is nothing to display
+        <br/>
+        <br/>
+        @Html.Awe().InitPopupForm().Name("create").Url(Url.Action("New", "Partner")).Group("Partner").Modal(true).Title("New Partner").RefreshOnSuccess(true)
+        <button type="button" class="btn btn-primary" onclick=" awe.open('create') " >
+            New Partner
+            <i class="fa fa-plus-circle"></i>
+        </button>
+    </div>
+}
+
+@section Styles
+{
+    @Styles.Render("~/plugins/dataPickerStyles")
+}
+
+@section scripts
+{
+    @Scripts.Render("~/plugins/dataPicker")
+}

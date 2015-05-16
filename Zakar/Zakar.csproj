@@ -1888,6 +1888,13 @@
     <Content Include="Views\CellSetup\Bulk.cshtml" />
     <Content Include="Views\CellSetup\Stage.cshtml" />
     <Content Include="Views\CellSetup\StagePost.cshtml" />
+    <Content Include="Views\Partner\Index.cshtml" />
+    <Content Include="Views\Partner\New.cshtml" />
+    <Content Include="Views\Partner\Edit.cshtml" />
+    <Content Include="Views\Partner\Bulk.cshtml" />
+    <Content Include="Views\Partner\Stage.cshtml" />
+    <Content Include="Views\Partner\StageCreate.cshtml" />
+    <Content Include="Views\Shared\EditorPartials\_partnerEditorPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

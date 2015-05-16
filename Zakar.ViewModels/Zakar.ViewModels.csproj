@@ -75,6 +75,7 @@
     <Compile Include="NotificationsPartialsModel.cs" />
     <Compile Include="NotificationViewModel.cs" />
     <Compile Include="PartnerhipArmListModel.cs" />
+    <Compile Include="PartnerListModel.cs" />
     <Compile Include="PartnerRankingViewModel.cs" />
     <Compile Include="PartnerSearchModel.cs" />
     <Compile Include="PartnershipArmRankingViewModel.cs" />

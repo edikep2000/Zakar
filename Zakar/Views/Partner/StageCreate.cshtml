@@ -1,0 +1,10 @@
+﻿@model Zakar.ViewModels.PartnerViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.UniqueId)
+    @Html.HiddenFor(m => m.ChurchId)
+    @Html.HiddenFor(m => m.DateCreated)
+    @Html.Partial("EditorPartials/_partnerEditorPartial", Model)
+}

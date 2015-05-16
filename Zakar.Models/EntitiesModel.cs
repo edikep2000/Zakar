@@ -259,6 +259,14 @@ namespace Zakar.Models
 			}
 		}
 		
+		public IQueryable<StagedPartnership> StagedPartnerships 
+		{
+			get
+			{
+				return this.GetAll<StagedPartnership>();
+			}
+		}
+		
 		public static BackendConfiguration GetBackendConfiguration()
 		{
 			BackendConfiguration backend = new BackendConfiguration();
@@ -384,6 +392,10 @@ namespace Zakar.Models
 			get;
 		}
 		IQueryable<StagedPartner> StagedPartners
+		{
+			get;
+		}
+		IQueryable<StagedPartnership> StagedPartnerships
 		{
 			get;
 		}
