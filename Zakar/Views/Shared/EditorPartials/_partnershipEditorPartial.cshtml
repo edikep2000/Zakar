@@ -1,0 +1,56 @@
+﻿@using System.Activities.Expressions
+@using Zakar.Controllers.Extensions
+@model Zakar.ViewModels.PartnershipViewModel
+           
+<div class="form-group">
+ @Html.LabelFor(m => m.PartnershipArmId, new{@class="control-label"})
+    <br/>
+ @Html.Awe().AjaxDropdownFor(m => m.PartnershipArmId).Url(Url.Action("GetItems","PartnershipArmAjaxDropDown")).HtmlAttributes(new{@class="form-control"})
+    @Html.ValidationMessageFor(m => m.PartnershipArmId)
+</div>
+
+<div class="form-group">
+@Html.LabelFor(m => m.PartnerId, new{@class="control-label"})
+    <br/>
+@Html.Awe().LookupFor(m => m.PartnerId).HtmlAttributes(new{@class="form-control"}).GetItemUrl(Url.Action("GetItem", "PartnerLookup")).SearchUrl(Url.Action("Search", "PartnerLookup")).Parameter("church", ((Controller)ViewContext.Controller).CurrentChurchAdministered().Id)
+@Html.ValidationMessageFor(m => m.PartnerId)
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Amount, new{@class="control-label"})
+    <br/>
+    <div class="row">
+        <div class="col-md-3">
+            @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
+        </div>
+    </div>
+    @Html.ValidationMessageFor(m => m.Amount)
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.CurrencyId, new{@class="control-label"})
+    <br/>
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Awe().AjaxDropdownFor(m => m.CurrencyId).HtmlAttributes(new { @class = "form-control" }).Url(Url.Action("GetItems", "CurrencyAjaxDropDown"))
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Month, new{@class="control-label"})
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Awe().AjaxDropdownFor(m => m.Month).Url(Url.Action("GetItems","MonthAjaxDropDown")).HtmlAttributes(new{@class="form-control"})
+        </div>
+      
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Year, new{@class="control-label"})
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Awe().AjaxDropdownFor(m => m.Year).Url(Url.Action("GetItems", "YearAjaxDropDown")).HtmlAttributes(new { @class = "form-control" })
+        </div>
+    </div>
+</div>

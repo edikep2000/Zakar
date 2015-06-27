@@ -11,13 +11,24 @@ go
 
 -- Zakar.Models.Church
 CREATE TABLE [Church] (
-    [AdminId] int NULL,                     -- _adminId
     [DefaultCurrencyId] int NULL,           -- _defaultCurrencyId
     [GroupId] int NOT NULL,                 -- _group
     [Id] int IDENTITY NOT NULL,             -- _id
     [nme] varchar(255) NULL,                -- _name
     [UniqueId] varchar(255) NULL,           -- _uniqueId
     CONSTRAINT [pk_Church] PRIMARY KEY ([Id])
+)
+
+go
+
+-- Zakar.Models.Currency
+CREATE TABLE [Currency] (
+    [ConversionRateToDefault] numeric(20,10) NOT NULL, -- _conversionRateToDefault
+    [Id] int IDENTITY NOT NULL,             -- _id
+    [IsDefaultCurrency] tinyint NOT NULL,   -- _isDefaultCurrency
+    [nme] varchar(255) NULL,                -- _name
+    [Symbol] varchar(255) NULL,             -- _symbol
+    CONSTRAINT [pk_Currency] PRIMARY KEY ([Id])
 )
 
 go
@@ -33,16 +44,19 @@ go
 
 -- Zakar.Models.IdentityUser
 CREATE TABLE [IdentityUser] (
+    [ChurchId] int NULL,                    -- _churchId
     [DateCreated] datetime NOT NULL,        -- _dateCreated
     [DateOfLastFailedAccessAttempt] datetime NULL, -- _dateOfLastFailedAccessAttempt
-    [FailedAccessAttempts] int NOT NULL,    -- _failedAccessAttempts
+    [FailedAccessAttempts] int NULL,        -- _failedAccessAttempts
     [FirstName] varchar(255) NOT NULL,      -- _firstName
+    [GroupId] int NULL,                     -- _groupId
     [Id] int IDENTITY NOT NULL,             -- _id
     [LastName] varchar(255) NOT NULL,       -- _lastName
     [PasswordHash] varchar(255) NOT NULL,   -- _passwordHash
     [PhoneNumber] varchar(255) NOT NULL,    -- _phoneNumber
     [SecurityStamp] varchar(255) NULL,      -- _securityStamp
-    [UserName] varchar(255) NOT NULL,       -- _userName
+    [UserName] varchar(255) NULL,           -- _userName
+    [ZoneId] int NULL,                      -- _zoneId
     CONSTRAINT [pk_IdentityUser] PRIMARY KEY ([Id])
 )
 
@@ -95,8 +109,10 @@ CREATE TABLE [Partner] (
     [CellId] int NULL,                      -- _cellId
     [ChurchId] int NOT NULL,                -- _church
     [DateCreated] datetime NOT NULL,        -- _dateCreated
+    [DateOfBirth] datetime NULL,            -- _dateOfBirth
     [Email] varchar(255) NULL,              -- _email
     [FirstName] varchar(255) NULL,          -- _firstName
+    [Gender] varchar(100) NOT NULL,         -- _gender
     [Id] int IDENTITY NOT NULL,             -- _id
     [LastName] varchar(255) NULL,           -- _lastName
     [PCFId] int NULL,                       -- _pCFId
@@ -104,6 +120,23 @@ CREATE TABLE [Partner] (
     [Title] varchar(255) NULL,              -- _title
     [UniqueId] varchar(255) NULL,           -- _uniqueId
     CONSTRAINT [pk_Partner] PRIMARY KEY ([Id])
+)
+
+go
+
+-- Zakar.Models.Partnership
+CREATE TABLE [Partnership] (
+    [Amount] numeric(20,10) NOT NULL,       -- _amount
+    [CurrencyId] int NOT NULL,              -- _currency
+    [DateCreated] datetime NULL,            -- _dateCreated
+    [Id] bigint IDENTITY NOT NULL,          -- _id
+    [mnth] int NOT NULL,                    -- _month
+    [PartnerId] int NOT NULL,               -- _partner
+    [PartnershipArmId] int NOT NULL,        -- _partnershipArm
+    [Source] varchar NOT NULL,              -- _source
+    [TrackingId] varchar(255) NULL,         -- _trackingId
+    [yr] int NOT NULL,                      -- _year
+    CONSTRAINT [pk_Partnership] PRIMARY KEY ([Id])
 )
 
 go
@@ -161,6 +194,7 @@ CREATE TABLE [StagedPartner] (
     [DateOfBirth] datetime NULL,            -- _dateOfBirth
     [Email] varchar(255) NULL,              -- _email
     [FirstName] varchar(255) NULL,          -- _firstName
+    [Gender] varchar(100) NOT NULL,         -- _gender
     [Id] int IDENTITY NOT NULL,             -- _id
     [LastName] varchar(255) NULL,           -- _lastName
     [PCFId] int NULL,                       -- _pCFId
@@ -168,6 +202,21 @@ CREATE TABLE [StagedPartner] (
     [Title] varchar(255) NULL,              -- _title
     [UniqueId] varchar(255) NULL,           -- _uniqueId
     CONSTRAINT [pk_StagedPartner] PRIMARY KEY ([Id])
+)
+
+go
+
+-- Zakar.Models.StagedPartnership
+CREATE TABLE [StagedPartnership] (
+    [Amount] numeric(20,10) NOT NULL,       -- _amount
+    [ArmId] int NULL,                       -- _armId
+    [CurrencyId] int NULL,                  -- _currencyId
+    [DateCreated] datetime NOT NULL,        -- _dateCreated
+    [Id] int IDENTITY NOT NULL,             -- _id
+    [mnth] int NULL,                        -- _month
+    [PartnerId] int NULL,                   -- _partnerId
+    [yr] int NULL,                          -- _year
+    CONSTRAINT [pk_StagedPartnership] PRIMARY KEY ([Id])
 )
 
 go
@@ -184,23 +233,10 @@ go
 
 -- Zakar.Models.Zone
 CREATE TABLE [Zone] (
-    [AdminId] int NULL,                     -- _adminId
     [Id] int IDENTITY NOT NULL,             -- _id
     [nme] varchar(255) NULL,                -- _name
     [UniqueId] varchar(255) NULL,           -- _uniqueId
     CONSTRAINT [pk_Zone] PRIMARY KEY ([Id])
-)
-
-go
-
--- Zakar.Models.Currency
-CREATE TABLE [dbo].[Currencies] (
-    [ConversionRateToDefault] decimal(18,2) NOT NULL, -- _conversionRateToDefault
-    [Id] int IDENTITY NOT NULL,             -- _id
-    [IsDefaultCurrency] bit NULL,           -- _isDefaultCurrency
-    [Name] nvarchar(max) NOT NULL,          -- _name
-    [Symbol] nvarchar(max) NOT NULL,        -- _symbol
-    CONSTRAINT [pk_Currencies] PRIMARY KEY ([Id])
 )
 
 go
@@ -254,21 +290,6 @@ CREATE TABLE [dbo].[PartnershipArms] (
 
 go
 
--- Zakar.Models.Partnership
-CREATE TABLE [dbo].[Partnerships] (
-    [Amount] decimal(18,2) NOT NULL,        -- _amount
-    [CurrencyId] int NOT NULL,              -- _currency
-    [DateCreated] datetime NULL,            -- _dateCreated
-    [Id] int IDENTITY NOT NULL,             -- _id
-    [Month] int NOT NULL,                   -- _month
-    [PartnerId] int NOT NULL,               -- _partner
-    [PartnershipArmId] int NOT NULL,        -- _partnershipArm
-    [Year] int NOT NULL,                    -- _year
-    CONSTRAINT [pk_Partnerships] PRIMARY KEY ([Id])
-)
-
-go
-
 -- Zakar.Models.QueuedNotification
 CREATE TABLE [dbo].[QueuedNotifications] (
     [ChurchId] int NULL,                    -- _churchId
@@ -306,7 +327,6 @@ go
 
 -- Zakar.Models.Group
 CREATE TABLE [dbo].[grp] (
-    [AdminId] int NULL,                     -- _adminId
     [Id] int IDENTITY NOT NULL,             -- _id
     [nme] varchar(255) NULL,                -- _name
     [UniqueId] varchar(255) NULL,           -- _uniqueId
@@ -348,6 +368,18 @@ ALTER TABLE [Partner] ADD CONSTRAINT [ref_Partner_Church] FOREIGN KEY ([ChurchId
 
 go
 
+ALTER TABLE [Partnership] ADD CONSTRAINT [ref_Partnership_Currency] FOREIGN KEY ([CurrencyId]) REFERENCES [Currency]([Id])
+
+go
+
+ALTER TABLE [Partnership] ADD CONSTRAINT [ref_Partnership_Partner] FOREIGN KEY ([PartnerId]) REFERENCES [Partner]([Id])
+
+go
+
+ALTER TABLE [Partnership] ADD CONSTRAINT [ref_Prtnrshp_Prtnrshp_FF95D7C8] FOREIGN KEY ([PartnershipArmId]) REFERENCES [dbo].[PartnershipArms]([Id])
+
+go
+
 ALTER TABLE [dbo].[NonValidatedPartnershipRecords] ADD CONSTRAINT [FK_NonValidatedPartnershipRecords_Partners] FOREIGN KEY ([Partner]) REFERENCES [Partner]([Id])
 
 go
@@ -357,18 +389,6 @@ ALTER TABLE [dbo].[NonValidatedPartnershipRecords] ADD CONSTRAINT [FK_NonValidat
 go
 
 ALTER TABLE [dbo].[Notifications] ADD CONSTRAINT [FK_NotificationCateoryNotifications] FOREIGN KEY ([NotificationCateoryCategoryId]) REFERENCES [dbo].[NotificationCategories]([CategoryId])
-
-go
-
-ALTER TABLE [dbo].[Partnerships] ADD CONSTRAINT [FK_CurrencyPartnership] FOREIGN KEY ([CurrencyId]) REFERENCES [dbo].[Currencies]([Id])
-
-go
-
-ALTER TABLE [dbo].[Partnerships] ADD CONSTRAINT [FK_PartnerPartnership] FOREIGN KEY ([PartnerId]) REFERENCES [Partner]([Id])
-
-go
-
-ALTER TABLE [dbo].[Partnerships] ADD CONSTRAINT [FK_PartnershipArmPartnership] FOREIGN KEY ([PartnershipArmId]) REFERENCES [dbo].[PartnershipArms]([Id])
 
 go
 
@@ -415,6 +435,21 @@ CREATE INDEX [idx_Partner_ChurchId] ON [Partner]([ChurchId])
 
 go
 
+-- Index 'idx_Partnership_CurrencyId' was not detected in the database. It will be created
+CREATE INDEX [idx_Partnership_CurrencyId] ON [Partnership]([CurrencyId])
+
+go
+
+-- Index 'idx_Partnership_PartnerId' was not detected in the database. It will be created
+CREATE INDEX [idx_Partnership_PartnerId] ON [Partnership]([PartnerId])
+
+go
+
+-- Index 'idx_Prtnrship_PartnershipArmId' was not detected in the database. It will be created
+CREATE INDEX [idx_Prtnrship_PartnershipArmId] ON [Partnership]([PartnershipArmId])
+
+go
+
 -- Index 'idx_NnVldtdPrtnrshpRcrds_Prtnr' was not detected in the database. It will be created
 CREATE INDEX [idx_NnVldtdPrtnrshpRcrds_Prtnr] ON [dbo].[NonValidatedPartnershipRecords]([Partner])
 
@@ -427,21 +462,6 @@ go
 
 -- Index 'IX_FK_NotificationCateoryNotifications' was not detected in the database. It will be created
 CREATE INDEX [IX_FK_NotificationCateoryNotifications] ON [dbo].[Notifications]([NotificationCateoryCategoryId])
-
-go
-
--- Index 'IX_FK_PartnershipArmPartnership' was not detected in the database. It will be created
-CREATE INDEX [IX_FK_PartnershipArmPartnership] ON [dbo].[Partnerships]([PartnershipArmId])
-
-go
-
--- Index 'IX_FK_PartnerPartnership' was not detected in the database. It will be created
-CREATE INDEX [IX_FK_PartnerPartnership] ON [dbo].[Partnerships]([PartnerId])
-
-go
-
--- Index 'IX_FK_CurrencyPartnership' was not detected in the database. It will be created
-CREATE INDEX [IX_FK_CurrencyPartnership] ON [dbo].[Partnerships]([CurrencyId])
 
 go
 

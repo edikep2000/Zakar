@@ -23,16 +23,15 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table("Currencies", SchemaName = "dbo")]
+	[Table()]
 	[ConcurrencyControl(OptimisticConcurrencyControlStrategy.Changed)]
 	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class Currency : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		private int _id;
-		[Column("Id", OpenAccessType = OpenAccessType.Int32, IsBackendCalculated = true, IsPrimaryKey = true, Length = 0, Scale = 0, SqlType = "int")]
+		[Column(IsPrimaryKey = true)]
 		[Storage("_id")]
 		[System.ComponentModel.DataAnnotations.Required()]
-		[System.ComponentModel.DataAnnotations.Key()]
 		public virtual int Id
 		{
 			get
@@ -51,7 +50,6 @@ namespace Zakar.Models
 		}
 		
 		private string _name;
-		[Column("Name", OpenAccessType = OpenAccessType.UnicodeStringInfiniteLength, Length = 0, Scale = 0, SqlType = "nvarchar(max)")]
 		[Storage("_name")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string Name
@@ -72,7 +70,6 @@ namespace Zakar.Models
 		}
 		
 		private string _symbol;
-		[Column("Symbol", OpenAccessType = OpenAccessType.UnicodeStringInfiniteLength, Length = 0, Scale = 0, SqlType = "nvarchar(max)")]
 		[Storage("_symbol")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual string Symbol
@@ -93,8 +90,8 @@ namespace Zakar.Models
 		}
 		
 		private bool _isDefaultCurrency;
-		[Column("IsDefaultCurrency", OpenAccessType = OpenAccessType.Bit, IsNullable = true, Length = 0, Scale = 0, SqlType = "bit")]
 		[Storage("_isDefaultCurrency")]
+		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual bool IsDefaultCurrency
 		{
 			get
@@ -113,7 +110,6 @@ namespace Zakar.Models
 		}
 		
 		private decimal _conversionRateToDefault;
-		[Column("ConversionRateToDefault", OpenAccessType = OpenAccessType.Decimal, Length = 18, Scale = 2, SqlType = "decimal")]
 		[Storage("_conversionRateToDefault")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual decimal ConversionRateToDefault
@@ -134,7 +130,7 @@ namespace Zakar.Models
 		}
 		
 		private IList<Partnership> _partnerships = new List<Partnership>();
-		[Collection(InverseProperty = "Currency")]
+		[Collection(InverseProperty = "Currency", Depend = true, IsManaged = true)]
 		[Storage("_partnerships")]
 		public virtual IList<Partnership> Partnerships
 		{

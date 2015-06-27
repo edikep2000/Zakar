@@ -86,7 +86,7 @@
         </orm:index>
       </orm:class>
       <orm:class name="Partnership" update-schema="true" uniqueId="ed2072f6-a1b7-4f51-8b81-669f10f38e54">
-        <orm:table name="Partnerships" schema="dbo" />
+        <orm:table name="Partnership" />
         <orm:identity>
           <orm:key-generator name="autoinc">
             <orm:key-generator-member property-name="Id" />
@@ -94,32 +94,35 @@
           <orm:single-field field-name="_id" />
         </orm:identity>
         <orm:concurrency strategy="changed" />
-        <orm:field name="_id" property="Id" behavior="readwrite" uniqueId="6da14db5-5546-43b1-b48d-a3e4773d7b8a" type="System.Int32">
-          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:field name="_id" property="Id" behavior="readwrite" uniqueId="6da14db5-5546-43b1-b48d-a3e4773d7b8a" type="System.Int64">
+          <orm:column name="Id" sql-type="bigint" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.BigIntConverter" backend-calculated="true" ado-type="Int64" />
         </orm:field>
         <orm:field name="_partnershipArmId" property="PartnershipArmId" behavior="readwrite" uniqueId="d1044f47-c294-44bd-8856-637b2991d2df" type="System.Int32">
-          <orm:column name="PartnershipArmId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          <orm:column name="PartnershipArmId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         </orm:field>
         <orm:field name="_partnerId" property="PartnerId" behavior="readwrite" uniqueId="14bf120e-e6e9-4bac-b5b1-5c97342e1649" type="System.Int32">
-          <orm:column name="PartnerId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          <orm:column name="PartnerId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         </orm:field>
         <orm:field name="_amount" property="Amount" behavior="readwrite" uniqueId="ae358eec-c13f-46ab-9831-756aab23d573" type="System.Decimal">
-          <orm:column name="Amount" sql-type="decimal" nullable="false" length="18" scale="2" ado-type="Decimal" />
+          <orm:column name="Amount" sql-type="numeric" nullable="false" length="20" scale="10" converter="OpenAccessRuntime.Data.DecimalConverter" ado-type="Numeric" />
         </orm:field>
         <orm:field name="_month" property="Month" behavior="readwrite" uniqueId="bbfd1af1-b6f6-4d7a-bcad-268a706495a1" type="System.Int32">
-          <orm:column name="Month" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          <orm:column name="mnth" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         </orm:field>
         <orm:field name="_year" property="Year" behavior="readwrite" uniqueId="60b40d54-0265-4a04-96df-a3371aed4a18" type="System.Int32">
-          <orm:column name="Year" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          <orm:column name="yr" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         </orm:field>
         <orm:field name="_currencyId" property="CurrencyId" behavior="readwrite" uniqueId="08bcfe58-2ce7-48ef-a43b-e7436ab4c7a9" type="System.Int32">
-          <orm:column name="CurrencyId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          <orm:column name="CurrencyId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         </orm:field>
         <orm:field name="_dateCreated" property="DateCreated" behavior="readwrite" uniqueId="8e724441-008a-4688-8dc5-4b62d5845f4a" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
-          <orm:column name="DateCreated" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
+          <orm:column name="DateCreated" sql-type="datetime" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
         </orm:field>
         <orm:field name="_trackingId" property="TrackingId" uniqueId="1a2172ff-5ad4-43f0-9b9d-ab6e80c850b2" type="System.String">
-          <orm:column name="TrackingId" sql-type="varchar" nullable="false" length="100" scale="0" ado-type="" />
+          <orm:column name="TrackingId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_source" property="Source" uniqueId="c8e53aa3-cefb-4eae-8fee-82d151bef181" type="System.String">
+          <orm:column name="Source" sql-type="varchar" nullable="false" length="0" scale="0" ado-type="" />
         </orm:field>
         <orm:field name="_partnershipArm" property="PartnershipArm" behavior="readwrite" uniqueId="ce8cba39-5260-464a-92bd-7c410a0ef99a" type="Zakar.Models.PartnershipArm">
           <orm:reference uniqueId="da7334d0-d68d-413e-8bc2-c277253bed49" association-name="PartnershipHasPartnershipArm">
@@ -139,21 +142,6 @@
             <orm:constraint name="FK_CurrencyPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="Currencies" />
           </orm:reference>
         </orm:field>
-        <orm:index name="IX_FK_PartnershipArmPartnership">
-          <orm:columnMapping>
-            <orm:column name="PartnershipArmId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-          </orm:columnMapping>
-        </orm:index>
-        <orm:index name="IX_FK_PartnerPartnership">
-          <orm:columnMapping>
-            <orm:column name="PartnerId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-          </orm:columnMapping>
-        </orm:index>
-        <orm:index name="IX_FK_CurrencyPartnership">
-          <orm:columnMapping>
-            <orm:column name="CurrencyId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-          </orm:columnMapping>
-        </orm:index>
       </orm:class>
       <orm:class name="PartnershipArm" uniqueId="7fd0b57f-19f8-43b6-8317-990bb4732183">
         <orm:table name="PartnershipArms" schema="dbo" />
@@ -176,8 +164,8 @@
         <orm:field name="_shortFormName" property="ShortFormName" behavior="readwrite" uniqueId="0dba790b-7d4e-480a-a412-268dfdde38c0" type="System.String">
           <orm:column name="ShortFormName" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
         </orm:field>
-        <orm:field name="_partnerships" property="Partnerships" behavior="readwrite" uniqueId="9dd0eb8b-3d95-4654-bdfc-a0370ab9b5aa" type="Zakar.Models.Partnership">
-          <orm:collection element-class="Zakar.Models.Partnership" inverse-field="_partnershipArm" order-by="" uniqueId="da7334d0-d68d-413e-8bc2-c277253bed49" />
+        <orm:field name="_partnerships" property="Partnerships" behavior="readwrite" uniqueId="9dd0eb8b-3d95-4654-bdfc-a0370ab9b5aa" type="Zakar.Models.Partnership" dependent="true">
+          <orm:collection element-class="Zakar.Models.Partnership" inverse-field="_partnershipArm" managed="true" order-by="" uniqueId="da7334d0-d68d-413e-8bc2-c277253bed49" />
         </orm:field>
         <orm:field name="_nonValidatedPartnershipRecords" property="NonValidatedPartnershipRecords" behavior="readwrite" uniqueId="90e27cd8-7224-4347-aeff-fb2927e29224" type="Zakar.Models.NonValidatedPartnershipRecord">
           <orm:collection element-class="Zakar.Models.NonValidatedPartnershipRecord" inverse-field="_partnershipArm1" order-by="" uniqueId="9bbb6462-edfd-4e2d-a808-261b8f1f6a1c" />
@@ -388,8 +376,7 @@
           <orm:collection element-class="Zakar.Models.Church" inverse-field="_group" managed="true" order-by="" uniqueId="8652b109-361f-4eed-bb74-0b3cd7456531" />
         </orm:field>
       </orm:class>
-      <orm:class name="Currency" uniqueId="c93b8563-2213-4596-bf79-fab4a4faf732">
-        <orm:table name="Currencies" schema="dbo" />
+      <orm:class name="Currency" use-default-mapping="true" uniqueId="c93b8563-2213-4596-bf79-fab4a4faf732">
         <orm:identity>
           <orm:key-generator name="autoinc">
             <orm:key-generator-member property-name="Id" />
@@ -398,22 +385,22 @@
         </orm:identity>
         <orm:concurrency strategy="changed" />
         <orm:field name="_id" property="Id" behavior="readwrite" uniqueId="05a6eb21-ce39-4b2c-800d-aa7d0c5506d5" type="System.Int32">
-          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+          <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
         </orm:field>
         <orm:field name="_name" property="Name" behavior="readwrite" uniqueId="a9d3d48b-ac85-415a-aa25-c29f2c8d91d3" type="System.String">
-          <orm:column name="Name" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+          <orm:column name="nme" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
         <orm:field name="_symbol" property="Symbol" behavior="readwrite" uniqueId="2f55a5a1-dc13-48c0-ad5a-c334631dcbe1" type="System.String">
-          <orm:column name="Symbol" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+          <orm:column name="Symbol" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         </orm:field>
         <orm:field name="_isDefaultCurrency" property="IsDefaultCurrency" behavior="readwrite" uniqueId="139c653e-70d1-4965-97cd-d032c3c2be24" type="System.Boolean">
-          <orm:column name="IsDefaultCurrency" sql-type="bit" nullable="true" length="0" scale="0" ado-type="Bit" />
+          <orm:column name="IsDefaultCurrency" sql-type="tinyint" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.OneZero2BooleanConverter" ado-type="Bit" />
         </orm:field>
         <orm:field name="_conversionRateToDefault" property="ConversionRateToDefault" behavior="readwrite" uniqueId="01f41da0-5612-4384-88f3-3a62c943ca12" type="System.Decimal">
-          <orm:column name="ConversionRateToDefault" sql-type="decimal" nullable="false" length="18" scale="2" ado-type="Decimal" />
+          <orm:column name="ConversionRateToDefault" sql-type="numeric" nullable="false" length="20" scale="10" converter="OpenAccessRuntime.Data.DecimalConverter" ado-type="Numeric" />
         </orm:field>
-        <orm:field name="_partnerships" property="Partnerships" behavior="readwrite" uniqueId="b367e752-9452-49c0-9a99-3926db675a78" type="Zakar.Models.Partnership">
-          <orm:collection element-class="Zakar.Models.Partnership" inverse-field="_currency" order-by="" uniqueId="ff94042d-d547-4913-bf21-eab6cbbb01a6" />
+        <orm:field name="_partnerships" property="Partnerships" behavior="readwrite" uniqueId="b367e752-9452-49c0-9a99-3926db675a78" type="Zakar.Models.Partnership" dependent="true">
+          <orm:collection element-class="Zakar.Models.Partnership" inverse-field="_currency" managed="true" order-by="" uniqueId="ff94042d-d547-4913-bf21-eab6cbbb01a6" />
         </orm:field>
       </orm:class>
       <orm:class name="Church" update-schema="true" uniqueId="a3f79e2c-a062-4c51-a529-18e6d578da24">
@@ -885,41 +872,6 @@
           <orm:column name="NotificationCateoryCategoryId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         </orm:constraint>
       </orm:table>
-      <orm:table name="Partnerships" schema="dbo">
-        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
-        <orm:column name="PartnershipArmId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-        <orm:column name="PartnerId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-        <orm:column name="Amount" sql-type="decimal" nullable="false" length="18" scale="2" ado-type="Decimal" />
-        <orm:column name="Month" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-        <orm:column name="Year" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-        <orm:column name="CurrencyId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-        <orm:column name="DateCreated" sql-type="datetime" nullable="true" length="0" scale="0" ado-type="DateTime" />
-        <orm:column name="TrackingId" sql-type="varchar" nullable="false" length="100" scale="0" ado-type="" />
-        <orm:index name="IX_FK_PartnershipArmPartnership">
-          <orm:columnMapping>
-            <orm:column name="PartnershipArmId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-          </orm:columnMapping>
-        </orm:index>
-        <orm:index name="IX_FK_PartnerPartnership">
-          <orm:columnMapping>
-            <orm:column name="PartnerId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-          </orm:columnMapping>
-        </orm:index>
-        <orm:index name="IX_FK_CurrencyPartnership">
-          <orm:columnMapping>
-            <orm:column name="CurrencyId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-          </orm:columnMapping>
-        </orm:index>
-        <orm:constraint name="FK_PartnershipArmPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="PartnershipArms">
-          <orm:column name="PartnershipArmId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-        </orm:constraint>
-        <orm:constraint name="FK_PartnerPartnership" schema="dbo" delete-action="dbdefaultrule">
-          <orm:column name="PartnerId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-        </orm:constraint>
-        <orm:constraint name="FK_CurrencyPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="Currencies">
-          <orm:column name="CurrencyId" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-        </orm:constraint>
-      </orm:table>
       <orm:table name="PartnershipArms" schema="dbo">
         <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
         <orm:column name="Name" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
@@ -962,13 +914,6 @@
         <orm:constraint name="FK_NonValidatedPartnershipRecords_Partners" schema="dbo" delete-action="cascade">
           <orm:column name="Partner" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         </orm:constraint>
-      </orm:table>
-      <orm:table name="Currencies" schema="dbo">
-        <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
-        <orm:column name="Name" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
-        <orm:column name="Symbol" sql-type="nvarchar(max)" nullable="false" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
-        <orm:column name="IsDefaultCurrency" sql-type="bit" nullable="true" length="0" scale="0" ado-type="Bit" />
-        <orm:column name="ConversionRateToDefault" sql-type="decimal" nullable="false" length="18" scale="2" ado-type="Decimal" />
       </orm:table>
       <orm:table name="grp" schema="dbo">
         <orm:column name="Id" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.IntConverter" backend-calculated="true" ado-type="Int32" />
@@ -1062,6 +1007,18 @@
         <orm:column name="UniqueId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
         <orm:column name="DateOfBirth" sql-type="datetime" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
         <orm:column name="Gender" sql-type="varchar" nullable="false" length="100" scale="0" ado-type="" />
+      </orm:table>
+      <orm:table name="Partnership">
+        <orm:column name="Id" sql-type="bigint" nullable="false" length="0" scale="0" primary-key="true" converter="OpenAccessRuntime.Data.BigIntConverter" backend-calculated="true" ado-type="Int64" />
+        <orm:column name="Amount" sql-type="numeric" nullable="false" length="20" scale="10" converter="OpenAccessRuntime.Data.DecimalConverter" ado-type="Numeric" />
+        <orm:column name="mnth" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="yr" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="DateCreated" sql-type="datetime" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.MssqlMinDateConverter" ado-type="DateTime" />
+        <orm:column name="TrackingId" sql-type="varchar" nullable="true" length="255" scale="0" converter="OpenAccessRuntime.Data.VariableLengthAnsiStringConverter" ado-type="StringVariableLength" />
+        <orm:column name="PartnershipArmId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="PartnerId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="CurrencyId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+        <orm:column name="Source" sql-type="varchar" nullable="false" length="0" scale="0" ado-type="" />
       </orm:table>
     </orm:schema>
     <orm:relational-naming-settings>
@@ -1157,7 +1114,7 @@
       </navigationalProperties>
     </DomainClass>
     <DomainClass Id="ed2072f6-a1b7-4f51-8b81-669f10f38e54" name="Partnership" namespace="Zakar.Models" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" updateSchema="true" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="Id">
-      <Property Id="6da14db5-5546-43b1-b48d-a3e4773d7b8a" name="Id" type="Int32" label="Id : Int32" kind="Persistent" identity="true" fieldName="_id" />
+      <Property Id="6da14db5-5546-43b1-b48d-a3e4773d7b8a" name="Id" type="Int64" label="Id : Int64" kind="Persistent" identity="true" fieldName="_id" />
       <Property Id="ae358eec-c13f-46ab-9831-756aab23d573" name="Amount" type="Decimal" label="Amount : Decimal" kind="Persistent" fieldName="_amount" />
       <Property Id="08bcfe58-2ce7-48ef-a43b-e7436ab4c7a9" name="CurrencyId" type="Int32" label="CurrencyId : Int32" kind="Persistent" fieldName="_currencyId" />
       <Property Id="8e724441-008a-4688-8dc5-4b62d5845f4a" name="DateCreated" type="DateTime" label="DateCreated : DateTime" nullable="true" kind="Persistent" fieldName="_dateCreated" />
@@ -1166,6 +1123,7 @@
       <Property Id="d1044f47-c294-44bd-8856-637b2991d2df" name="PartnershipArmId" type="Int32" label="PartnershipArmId : Int32" kind="Persistent" fieldName="_partnershipArmId" />
       <Property Id="60b40d54-0265-4a04-96df-a3371aed4a18" name="Year" type="Int32" label="Year : Int32" kind="Persistent" fieldName="_year" />
       <Property Id="1a2172ff-5ad4-43f0-9b9d-ab6e80c850b2" name="TrackingId" label="TrackingId : String" fieldName="_trackingId" />
+      <Property Id="c8e53aa3-cefb-4eae-8fee-82d151bef181" name="Source" label="Source : String" fieldName="_source" />
       <AssociationTargets>
         <Association Id="da7334d0-d68d-413e-8bc2-c277253bed49" SourceMultiplicity="One" name="PartnershipHasPartnershipArm">
           <DomainClassMoniker name="/EntitiesModel/PartnershipArm" />
@@ -1209,13 +1167,13 @@
       </AssociationTargets>
       <navigationalProperties>
         <classHasNavigationalProperties Id="0e61d04e-27a3-4775-be72-521067c4e93c">
-          <NavigationalProperty Id="ce8cba39-5260-464a-92bd-7c410a0ef99a" name="PartnershipArm" type="PartnershipArm" label="PartnershipArm : PartnershipArm" nullable="true" kind="Persistent" fieldName="_partnershipArm" isDependent="false" isManaged="false" />
+          <NavigationalProperty Id="ce8cba39-5260-464a-92bd-7c410a0ef99a" name="PartnershipArm" type="PartnershipArm" label="PartnershipArm : PartnershipArm" nullable="true" kind="Persistent" fieldName="_partnershipArm" isDependent="false" isManaged="true" />
         </classHasNavigationalProperties>
         <classHasNavigationalProperties Id="3653b3ed-6e85-4070-aaac-0b31c6ab0284">
           <NavigationalProperty Id="059c6f58-84c2-45bb-bd88-88e23b0e0efb" name="Partner" type="Partner" label="Partner : Partner" nullable="true" kind="Persistent" fieldName="_partner" isDependent="false" isManaged="true" />
         </classHasNavigationalProperties>
         <classHasNavigationalProperties Id="1937addf-33d0-4117-9a88-65c88c84aef1">
-          <NavigationalProperty Id="0d1cb284-e773-46d4-a80e-589e2d8cd049" name="Currency" type="Currency" label="Currency : Currency" nullable="true" kind="Persistent" fieldName="_currency" isDependent="false" isManaged="false" />
+          <NavigationalProperty Id="0d1cb284-e773-46d4-a80e-589e2d8cd049" name="Currency" type="Currency" label="Currency : Currency" nullable="true" kind="Persistent" fieldName="_currency" isDependent="false" isManaged="true" />
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
@@ -1226,7 +1184,7 @@
       <Property Id="0dba790b-7d4e-480a-a412-268dfdde38c0" name="ShortFormName" label="ShortFormName : String" kind="Persistent" fieldName="_shortFormName" />
       <navigationalProperties>
         <classHasNavigationalProperties Id="5c7c891b-daa3-4554-9df0-c26673b5cd7e">
-          <NavigationalProperty Id="9dd0eb8b-3d95-4654-bdfc-a0370ab9b5aa" name="Partnerships" type="IList&lt;Partnership&gt;" label="Partnerships : IList&lt;Partnership&gt;" nullable="true" kind="Persistent" fieldName="_partnerships" isDependent="false" isManaged="false" />
+          <NavigationalProperty Id="9dd0eb8b-3d95-4654-bdfc-a0370ab9b5aa" name="Partnerships" type="IList&lt;Partnership&gt;" label="Partnerships : IList&lt;Partnership&gt;" nullable="true" kind="Persistent" fieldName="_partnerships" isDependent="true" isManaged="true" />
         </classHasNavigationalProperties>
         <classHasNavigationalProperties Id="61f8c0b9-901b-4f2d-ac3b-58c36d64a53c">
           <NavigationalProperty Id="90e27cd8-7224-4347-aeff-fb2927e29224" name="NonValidatedPartnershipRecords" type="IList&lt;NonValidatedPartnershipRecord&gt;" label="NonValidatedPartnershipRecords : IList&lt;NonValidatedPartnershipRecord&gt;" nullable="true" kind="Persistent" fieldName="_nonValidatedPartnershipRecords" isDependent="false" isManaged="false" />
@@ -1398,7 +1356,7 @@
       <Property Id="2f55a5a1-dc13-48c0-ad5a-c334631dcbe1" name="Symbol" label="Symbol : String" kind="Persistent" fieldName="_symbol" />
       <navigationalProperties>
         <classHasNavigationalProperties Id="e49e21bd-3bcc-4c92-af19-8d284e155af1">
-          <NavigationalProperty Id="b367e752-9452-49c0-9a99-3926db675a78" name="Partnerships" type="IList&lt;Partnership&gt;" label="Partnerships : IList&lt;Partnership&gt;" nullable="true" kind="Persistent" fieldName="_partnerships" isDependent="false" isManaged="false" />
+          <NavigationalProperty Id="b367e752-9452-49c0-9a99-3926db675a78" name="Partnerships" type="IList&lt;Partnership&gt;" label="Partnerships : IList&lt;Partnership&gt;" nullable="true" kind="Persistent" fieldName="_partnerships" isDependent="true" isManaged="true" />
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>

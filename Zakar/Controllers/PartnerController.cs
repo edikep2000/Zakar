@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
-using Microsoft.AspNet.Identity;
 using Omu.AwesomeMvc;
 using Telerik.OpenAccess;
 using Zakar.Common.Enums;
 using Zakar.Common.FileHandlers;
+using Zakar.Controllers.Extensions;
 using Zakar.DataAccess.Service;
 using Zakar.Models;
 using Zakar.ViewModels;
@@ -37,13 +37,10 @@ namespace Zakar.Controllers
         }
 
         #region Partner Crud
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var church = GetChurchAdmin();
-            if (church != null)
-            {
-                ViewBag.ModelExists = _partnerService.GetForChurch(church.Id).Any();
-            }
+            var church = await this.CurrentChurchAdministered();
+            ViewBag.ModelExists = _partnerService.GetForChurch(church.Id).Any();
             return View();
         }
 
@@ -52,30 +49,29 @@ namespace Zakar.Controllers
             return PartialView();
         }
         [HttpPost]
-        public ActionResult New(PartnerViewModel model)
+        public async Task<ActionResult> New(PartnerViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var m = Mapper.Map<Partner>(model);
-                var church = GetChurchAdmin();
+                var church = await this.CurrentChurchAdministered();
                 if (church != null)
                 {
                     m.ChurchId = church.Id;
                     m.DateCreated = DateTime.Now;
-                    m.UniqueId = Zakar.Common.IDGenerators.UniqueIdGenerator.GenerateUniqueIdForPartner(String.Format("{0} {1}", model.LastName, model.FirstName));
                     _partnerService.Insert(m);
                     base.AccessContext.FlushChanges();
                     m.UniqueId = "P" + m.Id.ToString();
                     //TODO, Send SMS And Or Email To the Partner with New Id
                     return Json(new { });
                 }
-                ModelState.AddModelError("", "Partner Must Belong to A Church");
+ 
             }
             return PartialView(model);
         }
 
 
-        public ActionResult PartnerRead(GridParams g, string search, int cellId = 0, int pcfId = 0, int churchId = 0, int groupId = 0, int zoneId = 0)
+        public async Task<ActionResult> PartnerRead(GridParams g, string search, int cellId = 0, int pcfId = 0, int churchId = 0, int groupId = 0, int zoneId = 0)
         {
             search = (search ?? "").Trim();
             var query = _partnerService.GetAll().Where(i => i.FirstName.Contains(search) || i.LastName.Contains(search));
@@ -86,14 +82,15 @@ namespace Zakar.Controllers
             }
             else if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
             {
-                query = query.Where(i => i.ChurchId == GetChurchAdmin().Id);
+                var church = await this.CurrentChurchAdministered();
+                query = query.Where(i => i.ChurchId == church.Id);
             }
             if (pcfId != 0)
                 query = query.Where(i => i.PCFId == pcfId);
             if (cellId != 0)
                 query = query.Where(i => i.CellId == cellId);
             var cells = GetCells();
-            var pcfs = GetPCFs();
+            var pcfs = GetPcFs();
 
             var model = query.Select(i => new PartnerListModel
             {
@@ -207,14 +204,13 @@ namespace Zakar.Controllers
         [HttpPost]
         public async Task<ActionResult> Bulk(HttpPostedFileBase file)
         {
-
             if (file != null && file.ContentLength > 0)
             {
                 //something was actuall uploaded
                 var stream = file.InputStream;
                 try
                 {
-                    var c = GetChurchAdmin();
+                    var c = await this.CurrentChurchAdministered();
                     if (c != null)
                     {
                         _fileHandler.HandleFile(file.FileName, stream, c.Id);
@@ -236,9 +232,9 @@ namespace Zakar.Controllers
             return await Task.FromResult(View());
         }
         
-        public ActionResult Stage()
+        public async Task<ActionResult> Stage()
         {
-            var c = GetChurchAdmin();
+            var c = await this.CurrentChurchAdministered();
             if (c != null)
             {
                 ViewBag.ModelExists = _stagedPartnerService.Find(i => i.ChurchId == c.Id).Any();
@@ -246,16 +242,17 @@ namespace Zakar.Controllers
             return View();
         }
 
-        public ActionResult StagePartnerRead(GridParams g, string search, int cellId = 0, int pcfId = 0)
+        public async Task<ActionResult> StagePartnerRead(GridParams g, string search, int cellId = 0, int pcfId = 0)
         {
+            var church = await this.CurrentChurchAdministered();
             search = (search ?? "").Trim();
-            var query = _stagedPartnerService.GetAll().Where(i => i.ChurchId == GetChurchAdmin().Id && (i.FirstName.Contains(search) || i.LastName.Contains(search)));
+            var query = _stagedPartnerService.GetAll().Where(i => i.ChurchId == church.Id && (i.FirstName.Contains(search) || i.LastName.Contains(search)));
             if (pcfId != 0)
                 query = query.Where(i => i.PCFId == pcfId);
             if (cellId != 0)
                 query = query.Where(i => i.CellId == cellId);
             var cells = GetCells();
-            var pcfs = GetPCFs();
+            var pcfs = GetPcFs();
             var model = query.Select(i => new PartnerListModel
             {
                 Id = i.Id,
@@ -371,26 +368,17 @@ namespace Zakar.Controllers
         #endregion
 
         #region HelperMethods
-        private  Church GetChurchAdmin()
-        {
-            var user = base.UserStore.FindById(User.Identity.GetUserId<Int32>());
-            if (user.ChurchId.HasValue)
-            {
-                var church = _churchService.GetChurchForAdmin(user.ChurchId.Value);
-                return church;
-            }
-            return null;
-        }
-
         private Dictionary<int, string> GetCells()
         {
-            var cell = _cellService.GetCellInChurch(GetChurchAdmin().Id);
+            var church = this.CurrentChurchAdministered();
+            var cell = _cellService.GetCellInChurch(church.Id);
             return cell.ToDictionary(c => c.Id, v => v.Name);
         } 
-        private Dictionary<int, String> GetPCFs()
+        private Dictionary<int, String> GetPcFs()
         {
-            var church = _pcfService.GetForChurch(GetChurchAdmin().Id);
-            return church.ToDictionary(c => c.Id, v => v.Name);
+            var church = this.CurrentChurchAdministered();
+            var ch = _pcfService.GetForChurch(church.Id);
+            return ch.ToDictionary(c => c.Id, v => v.Name);
         }
         #endregion
     }

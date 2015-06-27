@@ -141,8 +141,14 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL" />
-    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.OpenAccess, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Data Access\bin\Telerik.OpenAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Zakar.Models\bin\Debug\Telerik.OpenAccess.35.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -214,6 +220,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AjaxList\CurrencyAjaxDropDownController.cs" />
+    <Compile Include="Controllers\AjaxList\GenderAjaxDropDownController.cs" />
+    <Compile Include="Controllers\AjaxList\MonthAjaxDropDownController.cs" />
+    <Compile Include="Controllers\AjaxList\PartnershipArmAjaxDropDownController.cs" />
+    <Compile Include="Controllers\AjaxList\YearAjaxDropDownController.cs" />
+    <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
+    <Compile Include="Controllers\GridController\PartnerGridController.cs" />
+    <Compile Include="Controllers\GridController\PartnershipGridController.cs" />
     <Compile Include="Controllers\LookupControllers\AjaxListController.cs" />
     <Compile Include="Controllers\ArmsController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
@@ -227,6 +241,7 @@
     <Compile Include="Controllers\LookupControllers\ChapterLookupController.cs" />
     <Compile Include="Controllers\LookupControllers\CurrencyLookupController.cs" />
     <Compile Include="Controllers\LookupControllers\GroupLookupController.cs" />
+    <Compile Include="Controllers\LookupControllers\PartnerLookUpController.cs" />
     <Compile Include="Controllers\LookupControllers\PartnershipArmLookupController.cs" />
     <Compile Include="Controllers\LookupControllers\PCFLookupController.cs" />
     <Compile Include="Controllers\LookupControllers\RolesLookupController.cs" />
@@ -234,6 +249,7 @@
     <Compile Include="Controllers\MobileClientController.cs" />
     <Compile Include="Controllers\MobilePartnerController.cs" />
     <Compile Include="Controllers\PartnerController.cs" />
+    <Compile Include="Controllers\PartnershipController.cs" />
     <Compile Include="Controllers\PCFSetupController.cs" />
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Controllers\LookupControllers\ZoneLookupController.cs" />
@@ -1895,10 +1911,21 @@
     <Content Include="Views\Partner\Stage.cshtml" />
     <Content Include="Views\Partner\StageCreate.cshtml" />
     <Content Include="Views\Shared\EditorPartials\_partnerEditorPartial.cshtml" />
+    <Content Include="Views\Partnership\Index.cshtml" />
+    <Content Include="Views\Partnership\New.cshtml" />
+    <Content Include="Views\Partnership\Edit.cshtml" />
+    <Content Include="Views\Partnership\Bulk.cshtml" />
+    <Content Include="Views\Partnership\Stage.cshtml" />
+    <Content Include="Views\Partnership\Partial1.cshtml" />
+    <Content Include="Views\Shared\EditorPartials\_partnershipEditorPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\ChapterSetup\" />
+    <Folder Include="Views\CurrencyAjaxDropDown\" />
+    <Folder Include="Views\PartnerGrid\" />
+    <Folder Include="Views\PartnerLookUp\" />
+    <Folder Include="Views\PartnershipGrid\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

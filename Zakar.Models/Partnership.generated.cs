@@ -23,17 +23,17 @@ using Zakar.Models;
 
 namespace Zakar.Models	
 {
-	[Table("Partnerships", SchemaName = "dbo", UpdateSchema = true)]
+	[Table("Partnership", UpdateSchema = true)]
 	[ConcurrencyControl(OptimisticConcurrencyControlStrategy.Changed)]
 	[KeyGenerator(KeyGenerator.Autoinc)]
 	public partial class Partnership : INotifyPropertyChanging, INotifyPropertyChanged
 	{
-		private int _id;
-		[Column("Id", OpenAccessType = OpenAccessType.Int32, IsBackendCalculated = true, IsPrimaryKey = true, Length = 0, Scale = 0, SqlType = "int")]
+		private long _id;
+		[Column("Id", OpenAccessType = OpenAccessType.Int64, IsBackendCalculated = true, IsPrimaryKey = true, Length = 0, Scale = 0, SqlType = "bigint", Converter = "OpenAccessRuntime.Data.BigIntConverter")]
 		[Storage("_id")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		[System.ComponentModel.DataAnnotations.Key()]
-		public virtual int Id
+		public virtual long Id
 		{
 			get
 			{
@@ -51,7 +51,7 @@ namespace Zakar.Models
 		}
 		
 		private int _partnershipArmId;
-		[Column("PartnershipArmId", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int")]
+		[Column("PartnershipArmId", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_partnershipArmId")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int PartnershipArmId
@@ -72,7 +72,7 @@ namespace Zakar.Models
 		}
 		
 		private int _partnerId;
-		[Column("PartnerId", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int")]
+		[Column("PartnerId", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_partnerId")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int PartnerId
@@ -93,7 +93,7 @@ namespace Zakar.Models
 		}
 		
 		private decimal _amount;
-		[Column("Amount", OpenAccessType = OpenAccessType.Decimal, Length = 18, Scale = 2, SqlType = "decimal")]
+		[Column("Amount", OpenAccessType = OpenAccessType.Numeric, Length = 20, Scale = 10, SqlType = "numeric", Converter = "OpenAccessRuntime.Data.DecimalConverter")]
 		[Storage("_amount")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual decimal Amount
@@ -114,7 +114,7 @@ namespace Zakar.Models
 		}
 		
 		private int _month;
-		[Column("Month", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int")]
+		[Column("mnth", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_month")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int Month
@@ -135,7 +135,7 @@ namespace Zakar.Models
 		}
 		
 		private int _year;
-		[Column("Year", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int")]
+		[Column("yr", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_year")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int Year
@@ -156,7 +156,7 @@ namespace Zakar.Models
 		}
 		
 		private int _currencyId;
-		[Column("CurrencyId", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int")]
+		[Column("CurrencyId", OpenAccessType = OpenAccessType.Int32, Length = 0, Scale = 0, SqlType = "int", Converter = "OpenAccessRuntime.Data.IntConverter")]
 		[Storage("_currencyId")]
 		[System.ComponentModel.DataAnnotations.Required()]
 		public virtual int CurrencyId
@@ -177,7 +177,7 @@ namespace Zakar.Models
 		}
 		
 		private DateTime? _dateCreated;
-		[Column("DateCreated", OpenAccessType = OpenAccessType.DateTime, IsNullable = true, Length = 0, Scale = 0, SqlType = "datetime")]
+		[Column("DateCreated", OpenAccessType = OpenAccessType.DateTime, IsNullable = true, Length = 0, Scale = 0, SqlType = "datetime", Converter = "OpenAccessRuntime.Data.MssqlMinDateConverter")]
 		[Storage("_dateCreated")]
 		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.DateTime)]
 		public virtual DateTime? DateCreated
@@ -198,9 +198,9 @@ namespace Zakar.Models
 		}
 		
 		private string _trackingId;
-		[Column("TrackingId", Length = 100, Scale = 0, SqlType = "varchar")]
+		[Column("TrackingId", OpenAccessType = OpenAccessType.StringVariableLength, IsNullable = true, Length = 255, Scale = 0, SqlType = "varchar", Converter = "OpenAccessRuntime.Data.VariableLengthAnsiStringConverter")]
 		[Storage("_trackingId")]
-		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.DataAnnotations.StringLength(255)]
 		public virtual string TrackingId
 		{
 			get
@@ -218,8 +218,29 @@ namespace Zakar.Models
 			}
 		}
 		
+		private string _source;
+		[Column("Source", Length = 0, Scale = 0, SqlType = "varchar")]
+		[Storage("_source")]
+		[System.ComponentModel.DataAnnotations.Required()]
+		public virtual string Source
+		{
+			get
+			{
+				return this._source;
+			}
+			set
+			{
+				if(this._source != value)
+				{
+					this.OnPropertyChanging("Source");
+					this._source = value;
+					this.OnPropertyChanged("Source");
+				}
+			}
+		}
+		
 		private PartnershipArm _partnershipArm;
-		[ForeignKeyAssociation(ConstraintName = "FK_PartnershipArmPartnership", SharedFields = "PartnershipArmId", TargetFields = "Id")]
+		[ForeignKeyAssociation(SharedFields = "PartnershipArmId", TargetFields = "Id", IsManaged = true)]
 		[Storage("_partnershipArm")]
 		public virtual PartnershipArm PartnershipArm
 		{
@@ -239,7 +260,7 @@ namespace Zakar.Models
 		}
 		
 		private Partner _partner;
-		[ForeignKeyAssociation(ConstraintName = "FK_PartnerPartnership", SharedFields = "PartnerId", TargetFields = "Id", IsManaged = true)]
+		[ForeignKeyAssociation(SharedFields = "PartnerId", TargetFields = "Id", IsManaged = true)]
 		[Storage("_partner")]
 		public virtual Partner Partner
 		{
@@ -259,7 +280,7 @@ namespace Zakar.Models
 		}
 		
 		private Currency _currency;
-		[ForeignKeyAssociation(ConstraintName = "FK_CurrencyPartnership", SharedFields = "CurrencyId", TargetFields = "Id")]
+		[ForeignKeyAssociation(SharedFields = "CurrencyId", TargetFields = "Id", IsManaged = true)]
 		[Storage("_currency")]
 		public virtual Currency Currency
 		{

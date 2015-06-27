@@ -22,7 +22,7 @@ namespace Zakar.ViewModels
 
         public int PartnershipArmId { get; set; }
 
-        public int PartnershipId { get; set; }
+        public long PartnershipId { get; set; }
 
         public int Year { get; set; }
     }

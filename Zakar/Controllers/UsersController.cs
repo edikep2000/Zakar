@@ -368,6 +368,7 @@ namespace Zakar.Controllers
                     PasswordHash = model.Password,
                     UserName = model.Username,
                     FailedAccessAttempts = 0,
+                    
                    
                 };
                 var result = IdentityResult.Failed();

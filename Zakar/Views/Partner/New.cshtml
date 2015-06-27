@@ -6,15 +6,3 @@
     @Html.Partial("_validationSummary")
     @Html.Partial("EditorPartials/_partnerEditorPartial")
 }
-
-<script type="text/javascript">
-    $('body').on('click', '#data_1', function () {
-        $('#data_1').datepicker({
-            todayBtn: "linked",
-            keyboardNavigation: false,
-            forceParse: false,
-            calendarWeeks: true,
-            autoclose: true,
-        });
-    });
-</script>

@@ -113,7 +113,7 @@ namespace Zakar.Models
 		}
 		
 		private IList<Partnership> _partnerships = new List<Partnership>();
-		[Collection(InverseProperty = "PartnershipArm")]
+		[Collection(InverseProperty = "PartnershipArm", Depend = true, IsManaged = true)]
 		[Storage("_partnerships")]
 		public virtual IList<Partnership> Partnerships
 		{
