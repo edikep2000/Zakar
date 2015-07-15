@@ -67,6 +67,16 @@ namespace Zakar.Common.Mappers
            Mapper.CreateMap<PartnershipArm, PartnershipArmViewModel>()
                 .ForSourceMember(m => m.NonValidatedPartnershipRecords, c => c.Ignore())
                .ForSourceMember(m => m.Partnerships, c => c.Ignore());
+
+
+           Mapper.CreateMap<Partnership, PartnershipViewModel>()
+               .ForSourceMember(m => m.Partner, c => c.Ignore())
+               .ForSourceMember(m => m.PartnershipArm, c => c.Ignore())
+               .ForSourceMember(m => m.Currency, c => c.Ignore());
+           Mapper.CreateMap<PartnershipViewModel, Partnership>()
+                 .ForMember(m => m.Partner, c => c.Ignore())
+               .ForMember(m => m.PartnershipArm, c => c.Ignore())
+               .ForMember(m => m.Currency, c => c.Ignore());
        }
     }
 }

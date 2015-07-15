@@ -81,7 +81,6 @@ namespace Zakar.Common.FileHandlers
                             };
                             _stagedPartnerService.Insert(item);
                         }
-                       
                     }
                 }
             }

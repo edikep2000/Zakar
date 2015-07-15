@@ -78,6 +78,7 @@
     <Compile Include="Service\StagedChurchService.cs" />
     <Compile Include="Service\StagedGroupService.cs" />
     <Compile Include="Service\StagedPartnerService.cs" />
+    <Compile Include="Service\StagedPartnershipService.cs" />
     <Compile Include="Service\StagedPCFService.cs" />
     <Compile Include="Service\StagedZoneService.cs" />
     <Compile Include="Service\SystemSettingsService.cs" />

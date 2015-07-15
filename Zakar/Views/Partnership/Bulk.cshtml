@@ -1,7 +1,36 @@
 ﻿
 @{
-    ViewBag.Title = "Bulk";
+    ViewBag.Title = "Upload Partnership Records From Excel File";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Bulk</h2>
+@Html.Partial("_headerPartial")
+
+<br />
+<br />
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="ibox-content float-e-margins white-bg">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        @using (Html.BeginForm("Bulk", "Partnership", FormMethod.Post, new { encType = "multipart/form-data" }))
+                        {
+                            <input type="file" name="file" id="file" />
+                            <br />
+
+                            <button class="btn btn-success btn-sm" type="submit">
+                                <i class="fa fa-file-excel-o"></i> Upload
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+
+
+</div>

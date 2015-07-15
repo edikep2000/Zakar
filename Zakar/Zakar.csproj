@@ -760,6 +760,8 @@
     <Content Include="Content\kendo\2014.3.1411\images\kendoui.ttf" />
     <Content Include="Content\kendo\2014.3.1411\images\kendoui.woff" />
     <None Include="Properties\PublishProfiles\test.blwcampusministry.net - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\zakar - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\zakar - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrapPopup.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />

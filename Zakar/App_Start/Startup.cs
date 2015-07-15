@@ -48,6 +48,7 @@ namespace Zakar.App_Start
             builder.RegisterType<PCFExcelFileHandler>().AsSelf().InstancePerRequest();
             builder.RegisterType<CellExcelFileHandler>().AsSelf().InstancePerRequest();
             builder.RegisterType<PartnerExcelFileHandler>().AsSelf().InstancePerRequest();
+            builder.RegisterType<PartnershipLogExcelFileHandler>().AsSelf().InstancePerRequest();
             //register Report builderss
 
             builder.RegisterType<UserService>().As<IUserStore<IdentityUser, Int32>>();

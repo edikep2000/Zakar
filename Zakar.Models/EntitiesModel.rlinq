@@ -127,19 +127,16 @@
         <orm:field name="_partnershipArm" property="PartnershipArm" behavior="readwrite" uniqueId="ce8cba39-5260-464a-92bd-7c410a0ef99a" type="Zakar.Models.PartnershipArm">
           <orm:reference uniqueId="da7334d0-d68d-413e-8bc2-c277253bed49" association-name="PartnershipHasPartnershipArm">
             <orm:sharedfield name="_partnershipArmId" target-class="Zakar.Models.PartnershipArm" target-field="_id" />
-            <orm:constraint name="FK_PartnershipArmPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="PartnershipArms" />
           </orm:reference>
         </orm:field>
         <orm:field name="_partner" property="Partner" behavior="readwrite" uniqueId="059c6f58-84c2-45bb-bd88-88e23b0e0efb" type="Zakar.Models.Partner">
           <orm:reference uniqueId="2c78b20c-08ff-4399-a94b-2ec78a3369bd" association-name="PartnershipHasPartner">
             <orm:sharedfield name="_partnerId" target-class="Zakar.Models.Partner" target-field="_id" />
-            <orm:constraint name="FK_PartnerPartnership" schema="dbo" delete-action="dbdefaultrule" />
           </orm:reference>
         </orm:field>
         <orm:field name="_currency" property="Currency" behavior="readwrite" uniqueId="0d1cb284-e773-46d4-a80e-589e2d8cd049" type="Zakar.Models.Currency">
           <orm:reference uniqueId="ff94042d-d547-4913-bf21-eab6cbbb01a6" association-name="PartnershipHasCurrency">
             <orm:sharedfield name="_currencyId" target-class="Zakar.Models.Currency" target-field="_id" />
-            <orm:constraint name="FK_CurrencyPartnership" schema="dbo" delete-action="dbdefaultrule" destination-table="Currencies" />
           </orm:reference>
         </orm:field>
       </orm:class>
@@ -487,6 +484,11 @@
         <orm:field name="_cells" property="Cells" behavior="readwrite" uniqueId="e5addd1e-0e19-40bd-98bc-0a1510700613" type="Zakar.Models.Cell" dependent="true">
           <orm:collection element-class="Zakar.Models.Cell" inverse-field="_pCF" managed="true" order-by="" uniqueId="477e3c89-206d-4be4-aa06-b15f3546bae8" />
         </orm:field>
+        <orm:index name="idx_PCF_ChurchId">
+          <orm:columnMapping>
+            <orm:column name="ChurchId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
       </orm:class>
       <orm:class name="Cell" update-schema="true" use-default-mapping="true" uniqueId="7d65657c-148f-4a03-97b7-26af84512c5c">
         <orm:identity>
@@ -512,6 +514,11 @@
             <orm:sharedfield name="_pCFId" target-class="Zakar.Models.PCF" target-field="_id" />
           </orm:reference>
         </orm:field>
+        <orm:index name="idx_Cell_PCFId">
+          <orm:columnMapping>
+            <orm:column name="PCFId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
       </orm:class>
       <orm:class name="IdentityUser" update-schema="true" behavior="readwrite" uniqueId="2802171a-a1e9-4db6-9392-5b35a49f36d8">
         <orm:table name="IdentityUser" />
@@ -594,6 +601,11 @@
             <orm:sharedfield name="_userId" target-class="Zakar.Models.IdentityUser" target-field="_id" />
           </orm:reference>
         </orm:field>
+        <orm:index name="idx_IdentityUserClaim_UserId">
+          <orm:columnMapping>
+            <orm:column name="UserId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
       </orm:class>
       <orm:class name="IdentityUserInRole" update-schema="true" use-default-mapping="true" uniqueId="54595d05-d686-46a2-b20f-562a3dceac53">
         <orm:identity>
@@ -621,6 +633,16 @@
             <orm:sharedfield name="_roleId" target-class="Zakar.Models.IdentityRole" target-field="_id" />
           </orm:reference>
         </orm:field>
+        <orm:index name="idx_IdentityUserInRole_RoleId">
+          <orm:columnMapping>
+            <orm:column name="RoleId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:index name="idx_IdentityUserInRole_UserId">
+          <orm:columnMapping>
+            <orm:column name="UserId" sql-type="int" nullable="false" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
       </orm:class>
       <orm:class name="IdentityRole" use-default-mapping="true" uniqueId="dd9691c9-e31a-4acc-b8de-2fa0c19c2626">
         <orm:identity>
@@ -841,6 +863,7 @@
         <orm:field name="_year" property="Year" uniqueId="828daeaa-2812-4f9b-a342-266d11294235" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
           <orm:column name="yr" sql-type="int" nullable="true" length="0" scale="0" converter="OpenAccessRuntime.Data.IntConverter" ado-type="Int32" />
         </orm:field>
+        <orm:field name="_churchId" property="ChurchId" uniqueId="0a8b5695-714d-44d2-8bcf-116114474ed9" type="System.Int32" />
       </orm:class>
     </orm:namespace>
     <orm:schema schema="dbo">
@@ -1639,6 +1662,7 @@
       <Property Id="eba5703f-5376-41f1-8f85-e5dccba1afb5" name="PartnerId" type="Int32" label="PartnerId : Int32" nullable="true" fieldName="_partnerId" />
       <Property Id="d7d2948f-9f57-4ab7-a274-167c21d6f7c2" name="ArmId" type="Int32" label="ArmId : Int32" nullable="true" fieldName="_armId" />
       <Property Id="828daeaa-2812-4f9b-a342-266d11294235" name="Year" type="Int32" label="Year : Int32" nullable="true" fieldName="_year" />
+      <Property Id="0a8b5695-714d-44d2-8bcf-116114474ed9" name="ChurchId" type="Int32" label="ChurchId : Int32" fieldName="_churchId" />
     </DomainClass>
   </Types>
   <domainContext>
