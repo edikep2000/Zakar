@@ -1,0 +1,16 @@
+﻿@model Zakar.ViewModels.PartnershipViewModel
+
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+
+        <div class="ibox-content">
+            @using (Html.BeginForm())
+            {
+                @Html.HiddenFor(m => m.Id)
+                @Html.Partial("_validationSummary")
+                @Html.Partial("EditorPartials/_partnershipEditorPartial")
+             
+            }
+        </div>
+    </div>
+</div>

@@ -249,6 +249,7 @@
     <Compile Include="Controllers\MobileClientController.cs" />
     <Compile Include="Controllers\MobilePartnerController.cs" />
     <Compile Include="Controllers\PartnerController.cs" />
+    <Compile Include="Controllers\PartnerReportsController.cs" />
     <Compile Include="Controllers\PartnershipController.cs" />
     <Compile Include="Controllers\PCFSetupController.cs" />
     <Compile Include="Controllers\SetupController.cs" />
@@ -1920,6 +1921,9 @@
     <Content Include="Views\Partnership\Stage.cshtml" />
     <Content Include="Views\Partnership\Partial1.cshtml" />
     <Content Include="Views\Shared\EditorPartials\_partnershipEditorPartial.cshtml" />
+    <Content Include="Views\Partnership\StageCreate.cshtml" />
+    <Content Include="Views\Partnership\StageDelete.cshtml" />
+    <Content Include="Views\PartnerReports\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

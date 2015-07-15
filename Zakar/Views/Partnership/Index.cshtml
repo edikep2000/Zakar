@@ -1,5 +1,67 @@
-﻿
+﻿@using Zakar.Common
+@using Zakar.Common.Enums
+@using Zakar.Controllers.Extensions
+
 @{
     ViewBag.Title = "Manage Partnership Records";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@Html.Partial("_headerPartial")
+
+<br/>
+<br/>
+
+<div class="wrapper wrapper-content">
+    <div class="ibox">
+        <div class="ibox-heading">
+            
+        </div>
+        <div class="ibox-content">
+            @if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
+            {
+                @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead","Partnership")).Parent("search","txtSearch").Parameter("churchId", ((Controller)this.ViewContext.Controller).CurrentChurchAdministered().Result.Id).Groupable(true).Sortable(true).Columns(
+                new Column(){Name = "TrackingId", Header = "Tracking Id"},
+                     new Column() { Name = "PartnerFullName", Header = "Partner" },
+                     new Column() { Name = "PartnershipArm", Header = "Arm" },
+                new Column(){Header = "Amount", ClientFormat = ".Currency .Amount"},
+                new Column(){Name = "StringMonth", Header = "Month", Groupable = false},
+                new Column(){Name = "Year", Header = "Year"},
+                new Column() {Width = 90, ClientFormat = @Utils.DetailsFormat("delete") })
+            }
+            else if (User.IsInRole(RolesEnum.GROUP_ADMIN.ToString()))
+            {
+                @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead", "Partnership")).Parent("search", "txtSearch").Parameter("groupId", ((Controller)this.ViewContext.Controller).CurrentGroupAdministered().Result.Id).Groupable(true).Sortable(true).Columns(
+                new Column() { Name = "TrackingId", Header = "Tracking Id" },
+                     new Column() { Name = "PartnerFullName", Header = "Partner" },
+                     new Column() { Name = "PartnershipArm", Header = "Arm" },
+                new Column() { Header = "Amount", ClientFormat = ".Currency .Amount" },
+                new Column() { Name = "StringMonth", Header = "Month", Groupable = false },
+                new Column() { Name = "Year", Header = "Year" },
+                new Column() { Width = 90, ClientFormat = @Utils.DetailsFormat("delete") })
+            }
+            else if (User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
+            {
+                @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead", "Partnership")).Parent("search", "txtSearch").Parameter("zoneId", ((Controller)this.ViewContext.Controller).CurrentUser().ZoneId).Groupable(true).Sortable(true).Columns(
+                new Column() { Name = "TrackingId", Header = "Tracking Id" },
+                     new Column() { Name = "PartnerFullName", Header = "Partner" },
+                     new Column() { Name = "PartnershipArm", Header = "Arm" },
+                new Column() { Header = "Amount", ClientFormat = ".Currency .Amount" },
+                new Column() { Name = "StringMonth", Header = "Month", Groupable = false },
+                new Column() { Name = "Year", Header = "Year" },
+                new Column() { Width = 90, ClientFormat = @Utils.DetailsFormat("delete") })
+            }
+            else if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
+            {
+                @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead", "Partnership")).Parent("search", "txtSearch").Groupable(true).Sortable(true).Columns(
+                new Column() { Name = "TrackingId", Header = "Tracking Id" },
+                     new Column() { Name = "PartnerFullName", Header = "Partner" },
+                     new Column() { Name = "PartnershipArm", Header = "Arm" },
+                new Column() { Header = "Amount", ClientFormat = ".Currency .Amount" },
+                new Column() { Name = "StringMonth", Header = "Month", Groupable = false },
+                new Column() { Name = "Year", Header = "Year" },
+                new Column() { Width = 90, ClientFormat = @Utils.DetailsFormat("delete") })
+            }
+        </div>
+    </div>
+</div>

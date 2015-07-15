@@ -35,10 +35,11 @@
     new Column(){Header = "Gender",Name = "Gender"},
     new Column(){ClientFormat = @Utils.EditFormat("edit"), Width = 80},
     new Column(){ClientFormat = @Utils.DeleteFormat("delete"), Width = 80},
-    new Column(){ClientFormat = @Utils.DetailsFormat("details"), Width = 80})
+    new Column(){ClientFormat = "<a href=\"/PartnerReports/ViewAll/.Id\" class='btn btn=btn-primary' title='Reports'>hu</a>", Width = 80})
 }
 else
 {
+   
     <div class="well">
         <h3>Sorry</h3>
         There is nothing to display

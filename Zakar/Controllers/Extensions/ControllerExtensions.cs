@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -12,8 +13,14 @@ using Zakar.Models;
 
 namespace Zakar.Controllers.Extensions
 {
-    public static class ControllerExtensions 
+    public static class ControllerExtensions
     {
+        public static IdentityUser CurrentUser(this Controller controller)
+        {
+            var userService = DependencyResolver.Current.GetService<ApplicationUserManager>();
+            var user = userService.FindById(controller.User.Identity.GetUserId<Int32>());
+            return user;
+        }
         public static async Task<Church> CurrentChurchAdministered(this Controller controller)
         {
             var userService = DependencyResolver.Current.GetService<ApplicationUserManager>();
@@ -49,7 +56,11 @@ namespace Zakar.Controllers.Extensions
                 var c = churchService.GetSingle(groupId);
                 return c;
             }
+        }
 
+        public static decimal Round(this decimal d)
+        {
+            return Decimal.Round(d, 2);
         }
 
 

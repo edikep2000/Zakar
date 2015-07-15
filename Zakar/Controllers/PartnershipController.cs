@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls.WebParts;
 using AutoMapper;
+using DocumentFormat.OpenXml.Bibliography;
 using DocumentFormat.OpenXml.EMMA;
 using Microsoft.AspNet.Identity;
 using Omu.AwesomeMvc;
@@ -41,6 +42,50 @@ namespace Zakar.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+      
+        public ActionResult PartnershipRead(GridParams g, int? churchId, int? groupId, string search)
+        {
+            search = (search ?? "").Trim();
+            var models =
+                _partnershipService.GetAll()
+                    .Where(
+                        i =>
+                            i.Partner.FirstName.Contains(search) || i.Partner.LastName.Contains(search) ||
+                            i.PartnershipArm.Name.Contains(search) || i.TrackingId.Contains(search));
+            models = churchId.HasValue ? models.Where(i => i.Partner.ChurchId == churchId) : models;
+            models = groupId.HasValue ? models.Where(i => i.Partner.Church.GroupId == groupId) : models;
+
+            var model = models.Select(i => new PartnershipListModel
+            {
+                Id = i.Id,
+                TrackingId = i.TrackingId,
+                PartnerFullName = i.Partner.LastName +" " + i.Partner.FirstName,
+                PartnershipArm = i.PartnershipArm.Name,
+                Currency = i.Currency.Symbol,
+                Amount = i.Amount,
+                Month =i.Month,
+                Year = i.Year,
+                DateCreated = i.DateCreated.HasValue ? i.DateCreated.Value : DateTime.Now
+            });
+            return Json(new GridModelBuilder<PartnershipListModel>(model.OrderByDescending(i => i.DateCreated), g)
+            {
+                Key = "Id",
+                Map = o => new
+                {
+                    o.Id,
+                    o.TrackingId,
+                    o.PartnerFullName,
+                    o.PartnershipArm,
+                    o.Currency,
+                    o.Amount,
+                    o.Month,
+                    o.Year,
+                    o.DateCreated,
+                    StringMonth = ((MonthEnums)o.Month).ToString()
+                }
+            }.Build());
         }
 
         public PartialViewResult New()
@@ -199,7 +244,7 @@ namespace Zakar.Controllers
             {
                 var p = new PartnershipViewModel
                 {
-                    Amount = s.Amount,
+                    Amount = s.Amount.Round(),
                     CurrencyId = s.CurrencyId.HasValue ? s.CurrencyId.Value : 0,
                     Month = s.Month.HasValue ? s.Month.Value : 0,
                     PartnerId = s.PartnerId.HasValue ? s.PartnerId.Value : 0,
@@ -248,8 +293,8 @@ namespace Zakar.Controllers
                     GridId = gridId,
                     Id = id,
                     Message =
-                        String.Format("Are you sure you want to delete the staged record for {0} {1}",
-                            ((MonthEnums) m.Month).ToString(), m.Year)
+                        String.Format("Are you sure you want to delete the staged record for {0} {1} for Partner with Id P{2}",
+                            ((MonthEnums) m.Month).ToString(), m.Year, m.PartnerId)
                 };
                 return PartialView("Delete", model);
             }

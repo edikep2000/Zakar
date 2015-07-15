@@ -1,7 +1,24 @@
-﻿
+﻿@using Zakar.Common
+
 @{
-    ViewBag.Title = "Stage";
+    ViewBag.Title = "Verify and Log Partnership Records Uploaded With Bulk Utility";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
+@Html.Partial("_headerPartial")
+<br/>
+<br/>
+
+@Html.Awe().InitPopupForm().Name("create").Url(Url.Action("StageCreate","Partnership")).Success("refreshGrid('grid')").Title("New Record").CloseOnSuccess(true)
+@Html.Awe().InitPopupForm().Name("delete").Url(Url.Action("StageDelete","Partnership")).Success("refreshGrid('grid')").Title("Delete Staged Record").CloseOnSuccess(true)
+
+<hr/>
+
+@Html.Awe().Grid("grid").Url(Url.Action("StageRead", "Partnership")).Groupable(true).Sortable(true).Columns(
+    new Column() {Name = "PartnerId"},
+        new Column() {Name = "Month"},
+            new Column() { Name = "Year"},
+                new Column() {Name = "Amount"},
+                       new Column() { Width = 90, ClientFormat = @Utils.EditFormat("create") },
+            new Column() { Width = 90, ClientFormat = @Utils.DeleteFormat("delete") })
