@@ -27,9 +27,16 @@ namespace Zakar.Controllers
             _partnershipService = partnershipService;
         }
 
-        public ActionResult Index()
+        [HttpPost]
+        public ActionResult Index(String id)
         {
-            return View();
+            var m = _partnerService.GetByUniqueCode(id);
+            if (m != null)
+            {
+                return RedirectToAction("ViewAll", new {id = m.Id});
+            }
+            TempData["Message"] = "Could Not Find Any Records For The Requested Id";
+            return RedirectToAction("Login", "Account");
         }
 
         public ActionResult ViewAll(int? id)
@@ -42,6 +49,7 @@ namespace Zakar.Controllers
             }
             return View("Index");
         }
+
 
         public ActionResult BuildReportForAllPartnershipsByMonthAndByYearForPartner(GridParams g, int id)
         {

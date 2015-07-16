@@ -63,5 +63,11 @@ namespace Zakar.DataAccess.Service
         {
             return Find(i => i.ChurchId == churchId).AsQueryable();
         }
+
+        public Partner GetByUniqueCode(string id)
+        {
+            var m = Find(i => i.UniqueId.Equals(id)).FirstOrDefault();
+            return m;
+        }
     }
 }

@@ -4,51 +4,56 @@
 @{
     var isAuthenticated = User.Identity.IsAuthenticated;
 }
-<nav class="navbar-default navbar-static-side" role="navigation">
-    <div class="sidebar-collapse">
-        <ul class="nav" id="side-menu">
-            <li class="nav-header">
-                @if (isAuthenticated)
-                {
-                    <div class="dropdown profile-element">
-                      
 
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear">
-                                <span class="block m-t-xs">
-                                    <strong class="font-bold">@User.Identity.Name</strong>
-                                    @if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
-                                    {
-                                        <span class="text-muted text-xs block">Chapter Admin<b class="caret"></b></span>
-                                    }else if (User.IsInRole(RolesEnum.GROUP_ADMIN.ToString()))
-                                    {
-                                        <span class="text-muted text-xs block">Group Admin<b class="caret"></b></span>
-                                    }
-                                    else if (User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
-                                    {
-                                        <span class="text-muted text-xs block">Zonal Admin<b class="caret"></b></span>
-                                    }
-                                    else if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
-                                    {
-                                        <span class="text-muted text-xs block">Portal Admin<b class="caret"></b></span>
-                                    }
+@if (isAuthenticated)
+{
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    @if (isAuthenticated)
+                    {
+                        <div class="dropdown profile-element">
+
+
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                                    <span class="block m-t-xs">
+                                        <strong class="font-bold">@User.Identity.Name</strong>
+                                        @if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
+                                        {
+                                            <span class="text-muted text-xs block">Chapter Admin<b class="caret"></b></span>
+                                        }
+                                        else if (User.IsInRole(RolesEnum.GROUP_ADMIN.ToString()))
+                                        {
+                                            <span class="text-muted text-xs block">Group Admin<b class="caret"></b></span>
+                                        }
+                                        else if (User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
+                                        {
+                                            <span class="text-muted text-xs block">Zonal Admin<b class="caret"></b></span>
+                                        }
+                                        else if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
+                                        {
+                                            <span class="text-muted text-xs block">Portal Admin<b class="caret"></b></span>
+                                        }
+                                    </span>
                                 </span>
-                            </span>
-                        </a>
-                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a href="@Url.Action("ChangePassword", "Manage")">Change Password</a></li>
-                       
-                        </ul>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a href="@Url.Action("ChangePassword", "Manage")">Change Password</a></li>
+
+                            </ul>
+                        </div>
+                    }
+
+                    <div class="logo-element">
+                        LW+
                     </div>
-                }
-              
-                <div class="logo-element">
-                    LW+
-                </div>
-            </li>
-         @*   @if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
-            {
-                *@<li class="@Html.IsSelected(controller: "Setup")">
+                </li>
+                @*   @if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
+                    {
+                *@
+                <li class="@Html.IsSelected(controller: "Setup")">
                     <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">Portal Setup</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li class="@Html.IsSelected(action: "ZoneIndex")"><a href="@Url.Action("ZoneIndex", "Setup")">Zones</a></li>
@@ -58,17 +63,17 @@
                         <li class="@Html.IsSelected(action: "CurrencyIndex")"><a href="@Url.Action("CurrencyIndex", "Setup")">Currencies</a></li>
                     </ul>
                 </li>
-                
+
                 <li class="@Html.IsSelected(controller: "BulkUpload")">
                     <a href="#"><i class="fa fa-upload"></i> <span class="nav-label">Batch Setup</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li class="@Html.IsSelected(action: "Zone")"><a href="@Url.Action("Zone", "BulkUpload")">Zones</a></li>
                         <li class="@Html.IsSelected(action: "Group")"><a href="@Url.Action("Group", "BulkUpload")">Groups</a></li>
                         <li class="@Html.IsSelected(action: "Chapter")"><a href="@Url.Action("Chapter", "BulkUpload")">Chapters</a></li>
-                 
+
                     </ul>
                 </li>
-                
+
                 <li class="@Html.IsSelected(controller: "Users")">
                     <a href="#"><i class="fa fa-user-md"></i> <span class="nav-label">Users</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -78,54 +83,55 @@
                         <li class="@Html.IsSelected(action: "ChapterAdmins")"><a href="@Url.Action("ChapterAdmins", "Users")">Chapter Admins</a></li>
                     </ul>
                 </li>
-          @*  }
-            *@
-            @if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
-            {
-                <li class="@Html.IsSelected(controller: "PCFSetup")">
-                    <a href="#"><i class="fa fa fa-wrench"></i><span class="nav-label">PCF Setup</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "PCFSetup")">Manage PCFs</a></li>
-                        <li class="@Html.IsSelected(action: "Bulk")"><a href="@Url.Action("Bulk", "PCFSetup")">Bulk Upload PCFs</a></li>
-                    </ul>
-                </li>
-                
-                <li class="@Html.IsSelected(controller: "CellSetup")">
-                    <a href="#"><i class="fa fa fa-wrench"></i><span class="nav-label">Cell Setup</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                         <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "CellSetup")">Manage Cells</a></li>
-                        <li class="@Html.IsSelected(action: "Bulk")"><a href="@Url.Action("Bulk", "CellSetup")">Bulk Upload Cells</a></li>
-                    </ul>
-                </li>
-                
-          
-                <li class="@Html.IsSelected(controller: "Partners")">
-                    <a href="#"><i class="fa fa-users"></i><span class="nav-label">Partners</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                 
-                        <li class="@Html.IsSelected(action: "Bulk")"><a href="@Url.Action("Bulk", "Partner")">Upload Partners</a></li>
-                        <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Partner")">Manage Partners</a></li>
-                    </ul>
-                </li>
-            }
+                @*  }
+                *@
+                @if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
+                {
+                    <li class="@Html.IsSelected(controller: "PCFSetup")">
+                        <a href="#"><i class="fa fa fa-wrench"></i><span class="nav-label">PCF Setup</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "PCFSetup")">Manage PCFs</a></li>
+                            <li class="@Html.IsSelected(action: "Bulk")"><a href="@Url.Action("Bulk", "PCFSetup")">Bulk Upload PCFs</a></li>
+                        </ul>
+                    </li>
 
-            <li class="@Html.IsSelected(controller: "Partnership")">
-                <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">Partnership Records</span></a>
-                <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(action: "New")"><a href="@Url.Action("New", "Partnership")">New Partnership Record</a></li>
-                    <li class="@Html.IsSelected(action: "Bulk")"><a href="@Url.Action("Bulk", "Partnership")">Bulk Upload Partnership Records</a></li>
-                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Partnership")">Manage Partnership Records</a></li>
-                </ul>
-            </li>
-            <li class="@Html.IsSelected(controller: "Reports")">
-                <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">Partnership Reports</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(action: "SearchResults")"><a href="@Url.Action("SearchResults", "Pages")">Search results</a></li>
-                    <li class="@Html.IsSelected(action: "LockScreen")"><a href="@Url.Action("LockScreen", "Pages")">Lockscreen</a></li>
-                    <li class="@Html.IsSelected(action: "Invoice")"><a href="@Url.Action("Invoice", "Pages")">Invoice</a></li>
-                    <li class="@Html.IsSelected(action: "Login")"><a href="@Url.Action("Login", "Pages")">Login</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</nav>
+                    <li class="@Html.IsSelected(controller: "CellSetup")">
+                        <a href="#"><i class="fa fa fa-wrench"></i><span class="nav-label">Cell Setup</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "CellSetup")">Manage Cells</a></li>
+                            <li class="@Html.IsSelected(action: "Bulk")"><a href="@Url.Action("Bulk", "CellSetup")">Bulk Upload Cells</a></li>
+                        </ul>
+                    </li>
+
+
+                    <li class="@Html.IsSelected(controller: "Partners")">
+                        <a href="#"><i class="fa fa-users"></i><span class="nav-label">Partners</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+
+                            <li class="@Html.IsSelected(action: "Bulk")"><a href="@Url.Action("Bulk", "Partner")">Upload Partners</a></li>
+                            <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Partner")">Manage Partners</a></li>
+                        </ul>
+                    </li>
+                }
+
+                <li class="@Html.IsSelected(controller: "Partnership")">
+                    <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">Partnership Records</span></a>
+                    <ul class="nav nav-second-level">
+                        <li class="@Html.IsSelected(action: "New")"><a href="@Url.Action("New", "Partnership")">New Partnership Record</a></li>
+                        <li class="@Html.IsSelected(action: "Bulk")"><a href="@Url.Action("Bulk", "Partnership")">Bulk Upload Partnership Records</a></li>
+                        <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Partnership")">Manage Partnership Records</a></li>
+                    </ul>
+                </li>
+                <li class="@Html.IsSelected(controller: "Reports")">
+                    <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">Partnership Reports</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li class="@Html.IsSelected(action: "SearchResults")"><a href="@Url.Action("SearchResults", "Pages")">Search results</a></li>
+                        <li class="@Html.IsSelected(action: "LockScreen")"><a href="@Url.Action("LockScreen", "Pages")">Lockscreen</a></li>
+                        <li class="@Html.IsSelected(action: "Invoice")"><a href="@Url.Action("Invoice", "Pages")">Invoice</a></li>
+                        <li class="@Html.IsSelected(action: "Login")"><a href="@Url.Action("Login", "Pages")">Login</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+}

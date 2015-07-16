@@ -35,4 +35,26 @@ namespace Zakar.ViewModels
         [Display(Name = "Year")]
         public int Year { get; set; }
     }
+
+    public class PartnershipListModel
+    {
+        public long Id { get; set; }
+
+        public String TrackingId { get; set; }
+
+        public String PartnerFullName { get; set; }
+
+
+        public String PartnershipArm { get; set; }
+
+        public String Currency { get; set; }
+
+        public Decimal Amount { get; set; }
+
+        public int Month { get; set; }
+
+        public int Year { get; set; }
+
+        public DateTime DateCreated { get; set; }
+    }
 }

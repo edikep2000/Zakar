@@ -9,14 +9,15 @@
 <div class="wrapper wrapper-content">
     <div class="ibox float-e-margins">
         <div class="row">
+            @Html.Partial("_validationSummary")
             <div class="col-md-7 col-xs-6 ">
                 <div class="panel-body white-bg">
-                    @Html.Partial("_validationSummary")
+                 
                     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {  <h4>Enter your username and your password.</h4>
                         <hr />
                     
-                      @Html.AntiForgeryToken()
+                        @Html.AntiForgeryToken()
                         <div class="form-group">
                             @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                             <div class="col-md-10">
@@ -50,14 +51,13 @@
             </div>
             <div class="col-md-5 col-xs-6">
                 <div class="panel-body white-bg">
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    @using (Html.BeginForm("Index", "PartnerReports", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {  <h4>Find My Partnership Records</h4>
                         <hr />
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                            @Html.Label("id", "Partnership Id", new{@class="col-md-3 control-label"})
                             <div class="col-md-10">
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" , placeholder = "Your Partnership Id"})
-                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                @Html.TextBox("id", null, new { @class = "form-control", placeholder = "Your Partnership Id", required = true })
                             </div>
                         </div>
                       
