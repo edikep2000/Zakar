@@ -377,9 +377,12 @@ namespace Zakar.Controllers
             return PartialView(model);
         }
 
-        public PartialViewResult ChapterDetails(int id)
+        public ActionResult ChapterDetails(int id)
         {
-            return PartialView();
+            var chapter = _churchService.GetSingle(id);
+            if (chapter != null)
+                ViewBag.Title = String.Format("Partnership Summary For: {0}", chapter.Name);
+            return View();
         }
 
         public PartialViewResult ChapterEdit(int id)

@@ -240,7 +240,7 @@
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\GridController\PartnerGridController.cs" />
     <Compile Include="Controllers\GridController\PartnershipGridController.cs" />
-    <Compile Include="Controllers\GridController\PartnershipReportsController.cs" />
+    <Compile Include="Controllers\GridController\PartnershipReportsGridController.cs" />
     <Compile Include="Controllers\GroupReportsController.cs" />
     <Compile Include="Controllers\LookupControllers\AjaxListController.cs" />
     <Compile Include="Controllers\ArmsController.cs" />
@@ -1948,12 +1948,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ChapterSetup\" />
-    <Folder Include="Views\CurrencyAjaxDropDown\" />
-    <Folder Include="Views\PartnerGrid\" />
-    <Folder Include="Views\PartnerLookUp\" />
-    <Folder Include="Views\PartnershipGrid\" />
-    <Folder Include="Views\PartnershipReports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

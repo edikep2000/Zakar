@@ -11,12 +11,12 @@ using Zakar.ViewModels;
 
 namespace Zakar.Controllers.GridController
 {
-    public class PartnershipReportsController : Controller
+    public class PartnershipReportsGridController : Controller
     {
         private readonly PartnershipService _partnershipService;
         private readonly CurrencyService _correncyService;
 
-        public PartnershipReportsController(PartnershipService partnershipService, CurrencyService correncyService)
+        public PartnershipReportsGridController(PartnershipService partnershipService, CurrencyService correncyService)
         {
             _partnershipService = partnershipService;
             _correncyService = correncyService;
@@ -189,9 +189,5 @@ namespace Zakar.Controllers.GridController
                 }
             }.Build());
         }
-
-
-
-
     }
 }

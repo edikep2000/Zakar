@@ -9,7 +9,7 @@
 
 @Html.Awe().InitPopupForm().Url(Url.Action("ZoneDelete", "Setup")).Name("deleteZone").Group("Zone").Modal(true).Title("Confirm Delete").OkText("Yes").CancelText("NO").Parameter("gridId", "grdZone").Success("refreshGrid('grdZone')")
 @Html.Awe().InitPopupForm().Url(Url.Action("ZoneEdit", "Setup")).Name("editZone").Group("Zone").Modal(true).Title("Edit Zone").OkText("Save Changes").CancelText("Discard Changes").Success("refreshGrid('grdZone')")
-@Html.Awe().InitPopup().Name("detailsZone").Url(Url.Action("ZoneDetails", "Setup")).Group("Zone").Modal(true).Title("Zone Details")
+@Html.Awe().InitPopup().Name("detailsZone").Url(Url.Action("ZoneDetails", "Setup")).Group("Zone").Modal(true).Title("Zone Details").Fullscreen(true)
 
 
 <br/>
