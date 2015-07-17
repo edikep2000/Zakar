@@ -192,8 +192,13 @@ namespace Zakar.Controllers
             if (ModelState.IsValid)
             {
                 var group = Mapper.Map<Group>(model);
+                if (User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
+                {
+                    var zone = this.CurrentZoneAdministered().Result;
+                    group.ZoneId = zone.Id;
+                }
                 _groupService.Create(group);
-                this.AccessContext.FlushChanges();
+                AccessContext.FlushChanges();
                 group.UniqueId = "G" + group.Id.ToString();
                 return Json(new {});
             }

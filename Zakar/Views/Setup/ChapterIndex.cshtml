@@ -22,8 +22,7 @@
     <div class="row">
         <div class="col-lg-12">
           
-            @if (modelExists)
-            {
+          
                 <div class="ibox-content float-e-margins">
                     
                     <button type="button" class="btn btn-primary" onclick="awe.open('createChapter')"><i class="fa fa-plus-o"></i> New Chapter</button>
@@ -49,8 +48,14 @@
                     }
                     else if (User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
                     {
-                        var zoneId = ((Controller) this.ViewContext.Controller).CurrentZoneAdministered().Result.Id;
-                        @Html.Awe().Grid("grdChapters").Groupable(true).Url(Url.Action("ChapterRead", "ChapterGrid")).Parameter("zoneId", zoneId).PageSize(20).Columns(
+                        var zoneId = ((Controller)this.ViewContext.Controller).CurrentZoneAdministered().Result.Id;
+
+                        <div class="form-group">
+                            @Html.Awe().AjaxDropdown("groupId").Url(Url.Action("GetGroups", "AjaxList")).Parameter("zoneId", zoneId).HtmlAttributes(new { @class = "form-control" })
+                        </div>
+                        
+
+                        @Html.Awe().Grid("grdChapters").Groupable(true).Url(Url.Action("ChapterRead", "ChapterGrid")).Parent("groupId","groupId").Parameter("zoneId", zoneId).PageSize(20).Columns(
                     new Column() { Name = "Id", Hidden = true },
                     new Column() { Name = "UniqueId", Width = 180, Hidden = false, Header = "Id", Groupable = false },
                     new Column() { Name = "ZoneName", Groupable = true, Header = "Zone" },
@@ -77,21 +82,7 @@
                    
                 </div>
                
-            }
-            else
-            {
-                @Html.Awe().InitPopupForm().Name("createChapter").Url(Url.Action("ChapterCreate","Setup")).Modal(true).OkText("Save").Title("New Chapter").Group("Chapter").RefreshOnSuccess(true)
-                <div class="ibox-content float-e-margins">
-                    <div class="well">
-                        <h3>Sorry</h3>
-                        But there is nothing to display. 
-                        <br/>
-                        <br/>
-                        <button type="button" class="btn btn-primary" onclick="awe.open('createChapter')">Create Chapter</button>
-                    </div>
-                </div>
-            
-            }
+           
         </div>
     </div>
 </div>

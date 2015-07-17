@@ -121,7 +121,7 @@
                   
                 }
                 
-                <li class="@Html.IsSelected(controller: "Partners")">
+                <li class="@Html.IsSelected(controller: "Partner")">
                     <a href="#"><i class="fa fa-users"></i><span class="nav-label">Partners</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
 @if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
@@ -176,10 +176,10 @@
                     <li class="@Html.IsSelected(controller: "ZoneReports")">
                         <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="@Html.IsSelected(action: "NoCurrencyYearlySummary")"><a href="@Url.Action("NoCurrencyYearlySummary", "ZoneReports")">Search results</a></li>
-                            <li class="@Html.IsSelected(action: "YearlySummary")"><a href="@Url.Action("YearlySummary", "ZoneReports")">Lockscreen</a></li>
-                            <li class="@Html.IsSelected(action: "NoCurrencySummary")"><a href="@Url.Action("NoCurrencySummary", "ZoneReports")">Invoice</a></li>
-                            <li class="@Html.IsSelected(action: "Summary")"><a href="@Url.Action("Summary", "ZoneReports")">Login</a></li>
+                            <li class="@Html.IsSelected(action: "NoCurrencyYearlySummary")"><a href="@Url.Action("NoCurrencyYearlySummary", "ZoneReports")">Yearly Summary (Local Currency)</a></li>
+                            <li class="@Html.IsSelected(action: "YearlySummary")"><a href="@Url.Action("YearlySummary", "ZoneReports")">Summary (Year)</a></li>
+                            <li class="@Html.IsSelected(action: "NoCurrencySummary")"><a href="@Url.Action("NoCurrencySummary", "ZoneReports")">Summary (Local Currency)</a></li>
+                            <li class="@Html.IsSelected(action: "Summary")"><a href="@Url.Action("Summary", "ZoneReports")">Summary</a></li>
                         </ul>
                     </li>
                 }
