@@ -1,9 +1,13 @@
 ﻿@using Zakar.Common
+@using Zakar.Common.Enums
+@using Zakar.Controllers.Extensions
 
 @{
     ViewBag.Title = "Manage Groups";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var isModelExisting = ViewBag.ModelExists is bool && (bool)ViewBag.ModelExists;
+ 
+
 }
 
 
@@ -20,42 +24,45 @@
     <div class="row">
         <div class="col-lg-12">
           
-            @if (isModelExisting)
-            {
+       
                 <div class="ibox-content float-e-margins">
                     
-                    <button type="button" class="btn btn-primary" onclick="awe.open('createGroup')"><i class="fa fa-plus-o"></i> Group</button>
+                    <button type="button" class="btn btn-primary" onclick="awe.open('createGroup')"><i class="fa fa-plus-o"></i>New Group</button>
                     <br/>
                     @Html.Awe().InitPopupForm().Name("createGroup").Url(Url.Action("GroupCreate","Setup")).Modal(true).OkText("Save").Title("New Group").Group("Group").Success("refreshGrid('grdGroups')")
                      
                 
+                    @if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
+                    {
+                        <div class="form-group">
+                            @Html.Awe().Lookup("zoneId").GetItemUrl(Url.Action("GetItem", "ZoneLookup")).SearchUrl(Url.Action("Search", "ZoneLookup"))
+                        </div>
+                        @Html.Awe().Grid("grdGroups").Groupable(true).Url(Url.Action("GroupRead", "GroupGrid")).PageSize(20).Parent("zoneId","zoneId").LoadOnParentChange(true).Columns(
+                    new Column() { Name = "Id", Hidden = true },
+                    new Column() { Name = "UniqueId", Width = 180, Hidden = false, Header = "Id" },
+                    new Column() { Name = "ZoneName", Groupable = true, Header = "Zone" },
+                    new Column() { Name = "Name", Groupable = false },
+                    new Column() { Width = 60, ClientFormat = @Utils.EditFormat("editGroup") },
+                    new Column() { Width = 60, ClientFormat = @Utils.DeleteFormat("deleteGroup") },
+                    new Column() { Width = 60, ClientFormat = @Utils.DetailsFormat("detailsGroup") })
+                    }
+                    else if (User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
+                    {
+
+                        var zoneId = ((Controller)this.ViewContext.Controller).CurrentZoneAdministered().Result.Id;
+                        @Html.Awe().Grid("grdGroups").Groupable(true).Url(Url.Action("GroupRead", "GroupGrid")).Parameter("zoneId", zoneId).PageSize(20).Columns(
+                    new Column() { Name = "Id", Hidden = true },
+                    new Column() { Name = "UniqueId", Width = 180, Hidden = false, Header = "Id" },
+                    new Column() { Name = "ZoneName", Groupable = true, Header = "Zone" },
+                    new Column() { Name = "Name", Groupable = false },
+                    new Column() { Width = 60, ClientFormat = @Utils.EditFormat("editGroup") },
+                    new Column() { Width = 60, ClientFormat = @Utils.DeleteFormat("deleteGroup") },
+                    new Column() { Width = 60, ClientFormat = @Utils.DetailsFormat("detailsGroup") })
+                    }
                   
-                    @Html.Awe().Grid("grdGroups").Groupable(true).Url(Url.Action("GroupRead", "Setup")).PageSize(20).Columns(
-                    new Column(){Name = "Id",Hidden = true}, 
-                    new Column(){Name = "UniqueId",Width = 180,Hidden = false, Header = "Id"},
-                    new Column(){Name = "ZoneName",Groupable = true, Header = "Zone"},
-                    new Column(){Name = "Name",Groupable = false},
-                    new Column(){Width = 60,ClientFormat = @Utils.EditFormat("editGroup")},
-                    new Column(){Width = 60,ClientFormat = @Utils.DeleteFormat("deleteGroup")},
-                    new Column(){Width = 60,ClientFormat = @Utils.DetailsFormat("detailsGroup")})
+                  
                 </div>
                
-            }
-            else
-            {
-                @Html.Awe().InitPopupForm().Name("createGroup").Url(Url.Action("GroupCreate","Setup")).Modal(true).OkText("Save").Title("New Group").Group("Group").RefreshOnSuccess(true)
-
-                <div class="ibox-content float-e-margins">
-                    <div class="well">
-                        <h3>Sorry</h3>
-                        But there is nothing to display. 
-                        <br/>
-                        <br/>
-                        <button type="button" class="btn btn-primary" onclick="awe.open('createGroup')">Create Group</button>
-                    </div>
-                </div>
-            
-            }
         </div>
     </div>
 </div>

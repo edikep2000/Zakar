@@ -29,9 +29,7 @@
             new Column(){Name = "Name"},
             new Column(){Name = "Symbol"},
             new Column(){ ClientFormat = "<input type='checkbox' class='i-checks' name='id' value='.IsDefaultCurrency'/>", Header = "Default Currency"},
-            new Column(){ClientFormat = @Utils.EditFormat("editCurrency"), Width = 60},
-            new Column(){ClientFormat = @Utils.DeleteFormat("deleteCurrency"), Width = 60},
-            new Column(){ClientFormat = @Utils.DetailsFormat("detailsCurrency"), Width = 60})
+            new Column(){ClientFormat = @Utils.EditFormat("editCurrency"), Width = 60})
             </div>
         </div>
     }

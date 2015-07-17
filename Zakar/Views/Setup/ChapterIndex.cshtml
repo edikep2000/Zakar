@@ -1,4 +1,7 @@
-﻿@using Zakar.Common
+﻿@using Microsoft.Ajax.Utilities
+@using Zakar.Common
+@using Zakar.Common.Enums
+@using Zakar.Controllers.Extensions
 
 @{
     ViewBag.Title = "Manage Churches";
@@ -27,15 +30,51 @@
                     <br/>
                     @Html.Awe().InitPopupForm().Name("createChapter").Url(Url.Action("ChapterCreate","Setup")).Modal(true).OkText("Save").Title("New Chapter").Group("Chapter").Success("refreshGrid('grdChapters')")
               
-                    @Html.Awe().Grid("grdChapters").Groupable(true).Url(Url.Action("ChapterRead", "Setup")).PageSize(20).Columns(
-                    new Column(){Name = "Id",Hidden = true}, 
-                    new Column(){Name = "UniqueId",Width = 180,Hidden = false, Header = "Id", Groupable = false},
-                    new Column(){Name = "ZoneName",Groupable = true, Header = "Zone"},
-                    new Column(){Name="GroupName", Groupable = true, Header = "Group"},
-                    new Column(){Name = "Name",Groupable = false},
-                    new Column(){Width = 60,ClientFormat = @Utils.EditFormat("editChapter")},
-                    new Column(){Width = 60,ClientFormat = @Utils.DeleteFormat("deleteChapter")},
-                    new Column(){Width = 150,ClientFormat = "<a href=\"/Setup/ChapterDetails/.Id\" class='btn btn-primary' title='Reports'>Partnership</a>"})
+                    @if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
+                    {
+                        <div class="form-group">
+                            @Html.Awe().AjaxDropdown("zoneId").Url(Url.Action("GetZones","AjaxList")).HtmlAttributes(new{@class="form-control"})
+                            @Html.Awe().AjaxDropdown("groupId").Url(Url.Action("GetGroups","AjaxList")).Parent("zoneId", "zoneId").HtmlAttributes(new{@class="form-control"})
+                        </div>
+                        
+                        @Html.Awe().Grid("grdChapters").Groupable(true).Parent("zoneId", "zoneId").Parent("groupId","groupId").LoadOnParentChange(true).Url(Url.Action("ChapterRead", "ChapterGrid")).PageSize(20).Columns(
+                    new Column() { Name = "Id", Hidden = true },
+                    new Column() { Name = "UniqueId", Width = 180, Hidden = false, Header = "Id", Groupable = false },
+                    new Column() { Name = "ZoneName", Groupable = true, Header = "Zone" },
+                    new Column() { Name = "GroupName", Groupable = true, Header = "Group" },
+                    new Column() { Name = "Name", Groupable = false },
+                    new Column() { Width = 60, ClientFormat = @Utils.EditFormat("editChapter") },
+                    new Column() { Width = 60, ClientFormat = @Utils.DeleteFormat("deleteChapter") },
+                    new Column() { Width = 150, ClientFormat = "<a href=\"/Setup/ChapterDetails/.Id\" class='btn btn-primary' title='Reports'>Partnership</a>" })
+                    }
+                    else if (User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
+                    {
+                        var zoneId = ((Controller) this.ViewContext.Controller).CurrentZoneAdministered().Result.Id;
+                        @Html.Awe().Grid("grdChapters").Groupable(true).Url(Url.Action("ChapterRead", "ChapterGrid")).Parameter("zoneId", zoneId).PageSize(20).Columns(
+                    new Column() { Name = "Id", Hidden = true },
+                    new Column() { Name = "UniqueId", Width = 180, Hidden = false, Header = "Id", Groupable = false },
+                    new Column() { Name = "ZoneName", Groupable = true, Header = "Zone" },
+                    new Column() { Name = "GroupName", Groupable = true, Header = "Group" },
+                    new Column() { Name = "Name", Groupable = false },
+                    new Column() { Width = 60, ClientFormat = @Utils.EditFormat("editChapter") },
+                    new Column() { Width = 60, ClientFormat = @Utils.DeleteFormat("deleteChapter") },
+                    new Column() { Width = 150, ClientFormat = "<a href=\"/Setup/ChapterDetails/.Id\" class='btn btn-primary' title='Reports'>Partnership</a>" })
+                    }
+                    else if (User.IsInRole(RolesEnum.GROUP_ADMIN.ToString()))
+                    {
+                        var groupId = ((Controller) this.ViewContext.Controller).CurrentGroupAdministered().Result.Id;
+                        @Html.Awe().Grid("grdChapters").Groupable(true).Url(Url.Action("ChapterRead", "ChapterGrid")).Parameter("groupId", groupId).PageSize(20).Columns(
+                    new Column() { Name = "Id", Hidden = true },
+                    new Column() { Name = "UniqueId", Width = 180, Hidden = false, Header = "Id", Groupable = false },
+                    new Column() { Name = "ZoneName", Groupable = true, Header = "Zone" },
+                    new Column() { Name = "GroupName", Groupable = true, Header = "Group" },
+                    new Column() { Name = "Name", Groupable = false },
+                    new Column() { Width = 60, ClientFormat = @Utils.EditFormat("editChapter") },
+                    new Column() { Width = 60, ClientFormat = @Utils.DeleteFormat("deleteChapter") },
+                    new Column() { Width = 150, ClientFormat = "<a href=\"/Setup/ChapterDetails/.Id\" class='btn btn-primary' title='Reports'>Partnership</a>" })
+                    }
+                   
+                   
                 </div>
                
             }

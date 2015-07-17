@@ -56,33 +56,47 @@
                 <li class="@Html.IsSelected(controller: "Setup")">
                     <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">Portal Setup</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li class="@Html.IsSelected(action: "ZoneIndex")"><a href="@Url.Action("ZoneIndex", "Setup")">Zones</a></li>
-                        <li class="@Html.IsSelected(action: "GroupIndex")"><a href="@Url.Action("GroupIndex", "Setup")">Groups</a></li>
+                        @if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
+                        {
+                            <li class="@Html.IsSelected(action: "ZoneIndex")"><a href="@Url.Action("ZoneIndex", "Setup")">Zones</a></li>
+                        }
+                        @if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()) || User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
+                        {
+                            <li class="@Html.IsSelected(action: "GroupIndex")"><a href="@Url.Action("GroupIndex", "Setup")">Groups</a></li>
+                        }
                         <li class="@Html.IsSelected(action: "ChapterIndex")"><a href="@Url.Action("ChapterIndex", "Setup")">Chapters</a></li>
-                        <li class="@Html.IsSelected(action: "ArmIndex")"><a href="@Url.Action("ArmIndex", "Setup")">Partnership Arms</a></li>
-                        <li class="@Html.IsSelected(action: "CurrencyIndex")"><a href="@Url.Action("CurrencyIndex", "Setup")">Currencies</a></li>
+                        @if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
+                        {
+                            <li class="@Html.IsSelected(action: "ArmIndex")"><a href="@Url.Action("ArmIndex", "Setup")">Partnership Arms</a></li>
+                            <li class="@Html.IsSelected(action: "CurrencyIndex")"><a href="@Url.Action("CurrencyIndex", "Setup")">Currencies</a></li>
+                        }
                     </ul>
                 </li>
+@if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()) || User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()) || User.IsInRole(RolesEnum.GROUP_ADMIN.ToString()))
+{
+    <li class="@Html.IsSelected(controller: "BulkUpload")">
+        <a href="#"><i class="fa fa-upload"></i> <span class="nav-label">Batch Setup</span> <span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+            <li class="@Html.IsSelected(action: "Zone")"><a href="@Url.Action("Zone", "BulkUpload")">Zones</a></li>
+            <li class="@Html.IsSelected(action: "Group")"><a href="@Url.Action("Group", "BulkUpload")">Groups</a></li>
+            <li class="@Html.IsSelected(action: "Chapter")"><a href="@Url.Action("Chapter", "BulkUpload")">Chapters</a></li>
 
-                <li class="@Html.IsSelected(controller: "BulkUpload")">
-                    <a href="#"><i class="fa fa-upload"></i> <span class="nav-label">Batch Setup</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li class="@Html.IsSelected(action: "Zone")"><a href="@Url.Action("Zone", "BulkUpload")">Zones</a></li>
-                        <li class="@Html.IsSelected(action: "Group")"><a href="@Url.Action("Group", "BulkUpload")">Groups</a></li>
-                        <li class="@Html.IsSelected(action: "Chapter")"><a href="@Url.Action("Chapter", "BulkUpload")">Chapters</a></li>
+        </ul>
+    </li>
+    <li class="@Html.IsSelected(controller: "Users")">
+        <a href="#"><i class="fa fa-user-md"></i> <span class="nav-label">Users</span><span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+            <li class="@Html.IsSelected(action: "PortalAdmins")"><a href="@Url.Action("PortalAdmins", "Users")">Portal Admins</a></li>
+            <li class="@Html.IsSelected(action: "ZoneAdmins")"><a href="@Url.Action("ZoneAdmins", "Users")">Zone Admins</a></li>
+            <li class="@Html.IsSelected(action: "GroupAdmins")"><a href="@Url.Action("GroupAdmins", "Users")">Group Admins</a></li>
+            <li class="@Html.IsSelected(action: "ChapterAdmins")"><a href="@Url.Action("ChapterAdmins", "Users")">Chapter Admins</a></li>
+        </ul>
+    </li>
+    
+}
 
-                    </ul>
-                </li>
 
-                <li class="@Html.IsSelected(controller: "Users")">
-                    <a href="#"><i class="fa fa-user-md"></i> <span class="nav-label">Users</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li class="@Html.IsSelected(action: "PortalAdmins")"><a href="@Url.Action("PortalAdmins", "Users")">Portal Admins</a></li>
-                        <li class="@Html.IsSelected(action: "ZoneAdmins")"><a href="@Url.Action("ZoneAdmins", "Users")">Zone Admins</a></li>
-                        <li class="@Html.IsSelected(action: "GroupAdmins")"><a href="@Url.Action("GroupAdmins", "Users")">Group Admins</a></li>
-                        <li class="@Html.IsSelected(action: "ChapterAdmins")"><a href="@Url.Action("ChapterAdmins", "Users")">Chapter Admins</a></li>
-                    </ul>
-                </li>
+
                 @*  }
                 *@
                 @if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
@@ -134,7 +148,7 @@
                         </ul>
                     </li>
                 }
-                
+
 
                 @if (User.IsInRole(RolesEnum.GROUP_ADMIN.ToString()))
                 {
@@ -148,8 +162,8 @@
                         </ul>
                     </li>
                 }
-                
-                
+
+
                 @if (User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
                 {
                     <li class="@Html.IsSelected(controller: "ZoneReports")">
@@ -162,7 +176,7 @@
                         </ul>
                     </li>
                 }
-                
+
                 @if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
                 {
                     <li class="@Html.IsSelected(controller: "Reports")">
@@ -176,7 +190,7 @@
                     </li>
                 }
 
-             
+
             </ul>
         </div>
     </nav>

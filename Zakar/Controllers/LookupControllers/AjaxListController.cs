@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using Omu.AwesomeMvc;
+using OpenAccessRuntime.util.classhelper;
 using Zakar.DataAccess.Service;
 
 namespace Zakar.Controllers.LookupControllers
@@ -40,27 +41,24 @@ namespace Zakar.Controllers.LookupControllers
             return Json(model);
         }
 
-        public ActionResult GetGroups(int? v, int zoneId = 0)
+        public ActionResult GetGroups(int? v, int? zoneId)
         {
-            if (zoneId == 0)
-            {
-                var model =
-                _groupService.GetAll().Select(i => new SelectableItem(i.Id, i.Name, v == i.Id)).AsEnumerable();
-                return Json(model);
-            }
-            else
-            {
-                var model =
-               _groupService.GetForZone(zoneId).Select(i => new SelectableItem(i.Id, i.Name, v == i.Id)).AsEnumerable();
-                return Json(model);
-            }
+           
+                var model = _groupService.GetAll();
+                model = zoneId.HasValue ? model.Where(i => i.ZoneId == zoneId) : model;
+                var m = model.Select(i => new SelectableItem(i.Id, i.Name, v == i.Id)).AsEnumerable();
+                return Json(m);
+           
         }
 
-        public ActionResult GetChurches(int? v, int groupId = 0)
+        public ActionResult GetChurches(int? v, int? zoneId, int? groupId)
         {
             var model = _churchService.GetAll();
-            if (groupId != 0)
-                model = model.Where(i => i.GroupId == groupId);
+
+            model = zoneId.HasValue ? model.Where(i => i.Group.ZoneId == zoneId) : model;
+
+            model = groupId.HasValue ? model.Where(i => i.GroupId == groupId) : model;
+
             var resultModel = model.Select(i => new SelectableItem()
                 {
                     Text = i.Name,
@@ -70,11 +68,12 @@ namespace Zakar.Controllers.LookupControllers
             return Json(resultModel);
         }
 
-        public ActionResult GetPCFs(int? v, int churchId = 0)
+        public ActionResult GetPCFs(int? v, int? zoneId, int? groupId, int? churchId)
         {
             var model = _pcfService.GetAll();
-            if (churchId != 0)
-                model = model.Where(i => i.ChurchId == churchId);
+            model = zoneId.HasValue ? model.Where(i => i.Church.Group.ZoneId == zoneId) : model;
+            model = groupId.HasValue ? model.Where(i => i.Church.GroupId == groupId) : model;
+            model = churchId.HasValue ? model.Where(i => i.ChurchId == churchId) : model;
             var returnValue = model.Select(i => new SelectableItem()
                 {
                     Value = i.Id,

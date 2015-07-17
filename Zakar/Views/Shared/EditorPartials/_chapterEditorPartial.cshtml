@@ -1,4 +1,6 @@
-﻿@model Zakar.ViewModels.ChurchViewModel
+﻿@using Zakar.Common.Enums
+@using Zakar.Controllers.Extensions
+@model Zakar.ViewModels.ChurchViewModel
 
 
 <div class="form-group">
@@ -21,6 +23,16 @@
 <div class="form-group">
     @Html.LabelFor(m => m.GroupId, new{@class="control-label"})
     <br/>
-    @Html.Awe().AjaxDropdownFor(m => m.GroupId).Url(Url.Action("GetGroups", "AjaxList")).HtmlAttributes(new{@class="form-control"})
+    @if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
+    {
+        @Html.Awe().AjaxDropdownFor(m => m.GroupId).Url(Url.Action("GetGroups", "AjaxList")).HtmlAttributes(new { @class = "form-control" })
     <small class="text-danger">@Html.ValidationMessageFor(m => m.GroupId)</small>
+    }
+    else if (User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
+    {
+        @Html.Awe().AjaxDropdownFor(m => m.GroupId).Url(Url.Action("GetGroups", "AjaxList")).Parameter("zoneId",((Controller)this.ViewContext.Controller).CurrentZoneAdministered().Result.Id).HtmlAttributes(new { @class = "form-control" })
+    <small class="text-danger">@Html.ValidationMessageFor(m => m.GroupId)</small>
+    }
+
+
 </div>

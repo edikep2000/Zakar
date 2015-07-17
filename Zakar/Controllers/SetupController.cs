@@ -9,6 +9,8 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Omu.AwesomeMvc;
 using Telerik.OpenAccess;
+using Zakar.Common.Enums;
+using Zakar.Controllers.Extensions;
 using Zakar.DataAccess.Service;
 using Zakar.Models;
 using Zakar.ViewModels;
@@ -167,57 +169,7 @@ namespace Zakar.Controllers
             return View();
         } 
 
-        public ActionResult GroupRead(GridParams g, string search, int zoneId = 0)
-        {
-            if (zoneId == 0)
-            {
-                var m = _groupService.GetAll().Select(i => new GroupListModel()
-                    {
-                        Id = i.Id,
-                        UniqueId = i.UniqueId,
-                        Name = i.Name,
-                        ZoneId = i.ZoneId,
-                        ZoneName = i.Zone.Name
-                    });
-                return Json(new GridModelBuilder<GroupListModel>(m, g)
-                {
-                    Key = "Id",
-                    Map = o => new
-                    {
-                        o.Id,
-                        o.Name,
-                        o.UniqueId,
-                        o.ZoneId,
-                        o.ZoneName
-                    }
-                }.Build());
-            }
-            else
-            {
-                var m = _groupService.GetForZone(zoneId).Select(i => new GroupListModel()
-                {
-                    Id = i.Id,
-                    UniqueId = i.UniqueId,
-                    Name = i.Name,
-                    ZoneId = i.ZoneId,
-                    ZoneName = i.Zone.Name
-                });
-
-
-                return Json(new GridModelBuilder<GroupListModel>(m, g)
-                {
-                    Key = "Id",
-                    Map = o => new
-                    {
-                        o.Id,
-                        o.Name,
-                        o.UniqueId,
-                        o.ZoneId,
-                        o.ZoneName
-                    }
-                }.Build());
-            }
-        }
+   
 
         public PartialViewResult GroupCreate(int zoneId = 0)
         {
@@ -322,37 +274,7 @@ namespace Zakar.Controllers
             return View();
         } 
 
-        public ActionResult ChapterRead(GridParams g, int zoneId = 0, int groupId = 0)
-        {
-
-            var i = _churchService.GetAll();
-            if (zoneId > 0)
-                i = i.Where(j => j.Group.ZoneId == zoneId);
-            if (groupId > 0)
-                i = i.Where(j => j.GroupId == groupId);
-                var m = i.Select(j => new ChapterListModel
-                    {
-                        Id = j.Id,
-                        UniqueId = j.UniqueId,
-                        Name = j.Name,
-                        GroupId = j.GroupId,
-                        ZoneName = j.Group.Zone.Name,
-                        GroupName = j.Group.Name
-                    });
-                return Json(new GridModelBuilder<ChapterListModel>(m, g)
-                {
-                    Key = "Id",
-                    Map = o => new
-                    {
-                        o.Id,
-                        o.Name,
-                        o.UniqueId,
-                        o.GroupId,
-                        o.GroupName,
-                        o.ZoneName
-                    }
-                }.Build());
-        }
+      
 
         public PartialViewResult ChapterCreate(int groupId = 0)
         {
@@ -373,7 +295,13 @@ namespace Zakar.Controllers
             if (ModelState.IsValid)
             {
                 var m = Mapper.Map<Church>(model);
+                if (User.IsInRole(RolesEnum.GROUP_ADMIN.ToString()))
+                {
+                    var groupId = this.CurrentGroupAdministered().Result.Id;
+                    m.GroupId = groupId;
+                }
                 _churchService.Create(m);
+                this.AccessContext.FlushChanges();
                 m.UniqueId = "C" + m.Id.ToString();
                 return Json(new {});
             }

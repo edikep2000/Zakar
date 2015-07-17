@@ -238,6 +238,8 @@
     <Compile Include="Controllers\AjaxList\YearAjaxDropDownController.cs" />
     <Compile Include="Controllers\ChurchReportsController.cs" />
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
+    <Compile Include="Controllers\GridController\ChapterGridController.cs" />
+    <Compile Include="Controllers\GridController\GroupGridController.cs" />
     <Compile Include="Controllers\GridController\PartnershipReportsGridController.cs" />
     <Compile Include="Controllers\GroupReportsController.cs" />
     <Compile Include="Controllers\LookupControllers\AjaxListController.cs" />
@@ -1957,6 +1959,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\GroupGrid\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
