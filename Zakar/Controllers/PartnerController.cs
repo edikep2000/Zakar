@@ -39,8 +39,7 @@ namespace Zakar.Controllers
         #region Partner Crud
         public async Task<ActionResult> Index()
         {
-            var church = await this.CurrentChurchAdministered();
-            ViewBag.ModelExists = _partnerService.GetForChurch(church.Id).Any();
+          
             return View();
         }
 

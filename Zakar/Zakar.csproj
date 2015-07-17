@@ -240,6 +240,7 @@
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\GridController\ChapterGridController.cs" />
     <Compile Include="Controllers\GridController\GroupGridController.cs" />
+    <Compile Include="Controllers\GridController\PartnerGridController.cs" />
     <Compile Include="Controllers\GridController\PartnershipReportsGridController.cs" />
     <Compile Include="Controllers\GroupReportsController.cs" />
     <Compile Include="Controllers\LookupControllers\AjaxListController.cs" />
@@ -1956,6 +1957,12 @@
     <Content Include="Views\ZoneReports\NoCurrencyYearlySummary.cshtml" />
     <Content Include="Views\ZoneReports\NoCurrencySummary.cshtml" />
     <Content Include="Views\ZoneReports\NoCurrencyAmountSummary.cshtml" />
+    <Content Include="Views\Reports\YearlySummary.cshtml" />
+    <Content Include="Views\Reports\Summary.cshtml" />
+    <Content Include="Views\Reports\NoCurrencyYearlySummary.cshtml" />
+    <Content Include="Views\Reports\NoCurrencySummary.cshtml" />
+    <Content Include="Views\Reports\NoCurrencyAmountSummary.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

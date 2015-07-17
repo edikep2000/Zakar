@@ -18,7 +18,7 @@
 {@Html.Awe().InitPopupForm().Url(Url.Action("ZoneCreate", "Setup")).Name("createZone").Group("Zone").Modal(true).Title("New Zone").OkText("Save Changes").CancelText("Cancel").Success("refreshGrid('grdZone')")
     <button type="button" onclick="awe.open('createZone')" class="btn  btn-primary">New Zone</button>
     <br /><br/>
-    @Html.Awe().Grid("grdZone").Groupable(false).Url(Url.Action("ZoneRead", "Setup")).PageSize(20).Parent("txtSearch","Search").Columns(new Column()
+    @Html.Awe().Grid("grdZone").Groupable(false).Url(Url.Action("ZoneRead", "Setup")).PageSize(10).Parent("txtSearch","Search").Columns(new Column()
         {Name = "Id",Width = 70, Hidden=true},
         new Column(){Name = "UniqueId", Header = "Id", Width = 180},
         new Column(){Name = "Name", Header="Zone Name"},

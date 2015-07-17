@@ -234,6 +234,7 @@ namespace Zakar.Controllers
                 };
                 _stagedGroupService.Delete(model.Id);
                 _groupService.Create(mo);
+                this.AccessContext.FlushChanges();
                 mo.UniqueId = "G" + mo.Id;
                 return Json(new { });
             }

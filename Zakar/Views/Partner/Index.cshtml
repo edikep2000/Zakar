@@ -1,5 +1,6 @@
 ﻿@using Zakar.Common
 @using Zakar.Common.Enums
+@using Zakar.Controllers.Extensions
 
 @{
     ViewBag.Title = "Manage Partners";
@@ -14,44 +15,85 @@
 @Html.Awe().InitPopupForm().Name("delete").Url(Url.Action("Delete","Partner")).OkText("Yes").CancelText("No").Title("Confirm Partner Delete").Success("refreshGrid('grid')")
 <br/>
 <br/>
-@if (modelExists)
+
+   
+    
+@if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
+{
+    <div class="form-group">
+        @Html.Awe().AjaxDropdown("zoneId").Url(Url.Action("GetZones", "AjaxList")).HtmlAttributes(new { @class = "form-control" })
+        @Html.Awe().AjaxDropdown("groupId").Url(Url.Action("GetGroups", "AjaxList")).Parent("zoneId", "zoneId").HtmlAttributes(new { @class = "form-control" })
+        @Html.Awe().AjaxDropdown("churchId").Url(Url.Action("GetChurches", "AjaxList")).Parent("zoneId", "zoneId").Parent("groupId", "groupId").HtmlAttributes(new { @class = "form-control" })
+    </div>
+    
+    @Html.Awe().Grid("grid").Url(Url.Action("PartnerRead", "PartnerGrid")).Parent("zoneId","zoneId").Parent("groupId", "groupId").Parent("churchId","churchId").Groupable(true).LoadOnParentChange(true).Parent("textSearch", "search").LoadOnParentChange(true).Columns(
+    new Column() { Header = "Id", Name = "UniqueId", Width = 70 },
+    new Column() { Header = "Full Name", Name = "FullName", Width = 150 },
+    new Column() { Header = "Church", Name = "ChurchName", Hidden = User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()) },
+    new Column() { Header = "EmailAddress", Name = "Email" },
+    new Column() { Header = "Phone", Name = "Phone" },
+    new Column() { Header = "Gender", Name = "Gender" },
+    new Column() { ClientFormat = @Utils.EditFormat("edit"), Width = 80 },
+    new Column() { ClientFormat = @Utils.DeleteFormat("delete"), Width = 80 },
+    new Column() { ClientFormat = "<a href=\"/PartnerReports/ViewAll/.Id\" class='btn btn-primary' title='Reports'>View</a>", Width = 80 })
+}
+else if (User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
+{
+    var zoneId = ((Controller)this.ViewContext.Controller).CurrentZoneAdministered().Result.Id;
+    <br />
+    @Html.Awe().Grid("grid").Url(Url.Action("PartnerRead", "PartnerGrid")).Groupable(true).Parameter("zoneId", zoneId).LoadOnParentChange(true).Parent("textSearch", "search").LoadOnParentChange(true).Columns(
+    new Column() { Header = "Id", Name = "UniqueId", Width = 70 },
+    new Column() { Header = "Full Name", Name = "FullName", Width = 150 },
+    new Column() { Header = "Church", Name = "ChurchName", Hidden = User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()) },
+    new Column() { Header = "EmailAddress", Name = "Email" },
+    new Column() { Header = "Phone", Name = "Phone" },
+    new Column() { Header = "Gender", Name = "Gender" },
+    new Column() { ClientFormat = @Utils.EditFormat("edit"), Width = 80 },
+    new Column() { ClientFormat = @Utils.DeleteFormat("delete"), Width = 80 },
+    new Column() { ClientFormat = "<a href=\"/PartnerReports/ViewAll/.Id\" class='btn btn-primary' title='Reports'>View</a>", Width = 80 })
+}
+else if (User.IsInRole(RolesEnum.GROUP_ADMIN.ToString()))
+{
+    var groupId = ((Controller)this.ViewContext.Controller).CurrentGroupAdministered().Result.Id;
+    <br />
+    @Html.Awe().Grid("grid").Url(Url.Action("PartnerRead", "PartnerGrid")).Groupable(true).Parameter("groupId", groupId).LoadOnParentChange(true).Parent("textSearch", "search").LoadOnParentChange(true).Columns(
+    new Column() { Header = "Id", Name = "UniqueId", Width = 70 },
+    new Column() { Header = "Full Name", Name = "FullName", Width = 150 },
+    new Column() { Header = "Church", Name = "ChurchName", Hidden = User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()) },
+    new Column() { Header = "EmailAddress", Name = "Email" },
+    new Column() { Header = "Phone", Name = "Phone" },
+    new Column() { Header = "Gender", Name = "Gender" },
+    new Column() { ClientFormat = @Utils.EditFormat("edit"), Width = 80 },
+    new Column() { ClientFormat = @Utils.DeleteFormat("delete"), Width = 80 },
+    new Column() { ClientFormat = "<a href=\"/PartnerReports/ViewAll/.Id\" class='btn btn-primary' title='Reports'>View</a>", Width = 80 })
+}
+else if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
 {
     @Html.Awe().InitPopupForm().Name("create").Url(Url.Action("New", "Partner")).Group("Partner").Modal(true).Title("New Partner").Success("refreshGrid('grid')")
-    <br/>
-    <button type="button" class="btn btn-primary" onclick=" awe.open('create') " >
+    <br />
+    <button type="button" class="btn btn-primary" onclick=" awe.open('create') ">
         New Partner
         <i class="fa fa-plus-circle"></i>
     </button>
+    <br />
+    <br />
+    
+    
+    var churchId = ((Controller)this.ViewContext.Controller).CurrentChurchAdministered().Result.Id;
     <br/>
-    <br/>
-    @Html.Awe().Grid("grid").Url(Url.Action("PartnerRead","Partner")).Groupable(true).LoadOnParentChange(true).Parent("textSearch","search").LoadOnParentChange(true).Columns(
-    new Column(){Header="Id", Name = "UniqueId", Width=70},
-    new Column(){Header = "Full Name", Name = "FullName", Width = 150},
-    new Column(){Header = "Cell", Name = "CellName"},
-    new Column(){Header = "PCF",Name = "PCFName"},
-    new Column(){Header = "Church", Name = "ChurchName", Hidden = User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString())},
-    new Column(){Header = "EmailAddress", Name = "Email"},
-    new Column(){Header = "Phone", Name = "Phone"},
-    new Column(){Header = "Gender",Name = "Gender"},
-    new Column(){ClientFormat = @Utils.EditFormat("edit"), Width = 80},
-    new Column(){ClientFormat = @Utils.DeleteFormat("delete"), Width = 80},
-    new Column(){ClientFormat = "<a href=\"/PartnerReports/ViewAll/.Id\" class='btn btn-primary' title='Reports'>View</a>", Width = 80})
+    @Html.Awe().Grid("grid").Url(Url.Action("PartnerRead", "PartnerGrid")).Groupable(true).Parameter("churchId", churchId).LoadOnParentChange(true).Parent("textSearch", "search").LoadOnParentChange(true).Columns(
+    new Column() { Header = "Id", Name = "UniqueId", Width = 70 },
+    new Column() { Header = "Full Name", Name = "FullName", Width = 150 },
+    new Column() { Header = "Church", Name = "ChurchName", Hidden = User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()) },
+    new Column() { Header = "EmailAddress", Name = "Email" },
+    new Column() { Header = "Phone", Name = "Phone" },
+    new Column() { Header = "Gender", Name = "Gender" },
+    new Column() { ClientFormat = @Utils.EditFormat("edit"), Width = 80 },
+    new Column() { ClientFormat = @Utils.DeleteFormat("delete"), Width = 80 },
+    new Column() { ClientFormat = "<a href=\"/PartnerReports/ViewAll/.Id\" class='btn btn-primary' title='Reports'>View</a>", Width = 80 })
+    
 }
-else
-{
-   
-    <div class="well">
-        <h3>Sorry</h3>
-        There is nothing to display
-        <br/>
-        <br/>
-        @Html.Awe().InitPopupForm().Name("create").Url(Url.Action("New", "Partner")).Group("Partner").Modal(true).Title("New Partner").RefreshOnSuccess(true)
-        <button type="button" class="btn btn-primary" onclick=" awe.open('create') " >
-            New Partner
-            <i class="fa fa-plus-circle"></i>
-        </button>
-    </div>
-}
+
 
 @section Styles
 {

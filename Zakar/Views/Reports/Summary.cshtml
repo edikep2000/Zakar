@@ -1,0 +1,24 @@
+﻿@using Zakar.Controllers.Extensions
+
+@{
+    ViewBag.Title = "Partnership Summary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@Html.Partial("_headerPartial")
+<br />
+<br />
+<div class="wrapper wrapper-content white-bg">
+    <div class="ibox">
+
+        <div class="ibox-content">
+            @Html.Awe().Grid("grid").Url(Url.Action("BuildReportForPartnershipArmByMonthAndYear", "PartnershipReportsGrid")).GroupRemovable(true).PageSize(15).Columns(
+            new Column { Name = "PartnershipArmName", Header = "Partnership Arm" },
+            new Column() { Name = "Month", Header = "Month" },
+            new Column() { Name = "Year", Header = "Year" },
+            new Column() { Header = "Amount", ClientFormat = ".CurrencyName.Amount" },
+            new Column() { Header = "Amount (Local Currency)", ClientFormat = ".DenominatedCurrencyName.DenominatedAmount" })
+        </div>
+    </div>
+</div>
