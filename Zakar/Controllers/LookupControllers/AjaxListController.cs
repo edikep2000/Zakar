@@ -6,6 +6,7 @@ using Zakar.DataAccess.Service;
 
 namespace Zakar.Controllers.LookupControllers
 {
+      [Authorize]
     public class AjaxListController : Controller
     {
         private readonly ZoneService _zoneService;

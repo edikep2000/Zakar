@@ -8,6 +8,7 @@ using Microsoft.Owin.Security.Provider;
 namespace Zakar.Controllers
 {
     [RoutePrefix("church-reports")]
+    [Authorize]
     public class ChurchReportsController : Controller
     {
         // GET: ChurchReports

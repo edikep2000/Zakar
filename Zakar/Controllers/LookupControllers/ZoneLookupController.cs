@@ -7,6 +7,7 @@ using Zakar.Models;
 
 namespace Zakar.Controllers.LookupControllers
 {
+      [Authorize]
     public class ZoneLookupController : Controller
     {
         private readonly ZoneService _zoneService;

@@ -58,11 +58,28 @@ namespace Zakar.Controllers.Extensions
             }
         }
 
+        public static async Task<Zone> CurrentZoneAdministered(this Controller controller)
+        {
+            var userService = DependencyResolver.Current.GetService<ApplicationUserManager>();
+            var churchService = DependencyResolver.Current.GetService<ZoneService>();
+            var user = await userService.FindByIdAsync(controller.User.Identity.GetUserId<Int32>());
+            if (
+                user.IdentityUserInRoles.FirstOrDefault(i => i.IdentityRole.Name == RolesEnum.ZONE_ADMIN.ToString()) ==
+                null)
+                return null;
+
+            else
+            {
+                var groupId = user.ZoneId.HasValue ? user.ZoneId.Value : 0;
+                var c = churchService.GetSingle(groupId);
+                return c;
+            }
+        }
+
         public static decimal Round(this decimal d)
         {
             return Decimal.Round(d, 2);
         }
-
 
     }
 }

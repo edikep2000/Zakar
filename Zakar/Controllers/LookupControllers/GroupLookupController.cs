@@ -7,6 +7,7 @@ using Zakar.Models;
 
 namespace Zakar.Controllers.LookupControllers
 {
+      [Authorize]
     public class GroupLookupController : Controller
     {
         private readonly GroupService _groupService;

@@ -11,6 +11,7 @@ using Zakar.ViewModels;
 
 namespace Zakar.Controllers.GridController
 {
+      [Authorize]
     public class PartnershipReportsGridController : Controller
     {
         private readonly PartnershipService _partnershipService;

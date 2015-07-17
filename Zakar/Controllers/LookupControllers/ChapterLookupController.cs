@@ -7,6 +7,7 @@ using Zakar.Models;
 
 namespace Zakar.Controllers.LookupControllers
 {
+      [Authorize]
     public class ChapterLookupController : Controller
     {
         private readonly ChurchService _churchService;

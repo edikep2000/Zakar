@@ -5,6 +5,7 @@ using Zakar.DataAccess.Service;
 
 namespace Zakar.Controllers.AjaxList
 {
+      [Authorize]
     public class PartnershipArmAjaxDropDownController : Controller
     {
         private readonly PartnershipArmService _partnershipArmService;

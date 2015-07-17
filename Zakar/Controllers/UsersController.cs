@@ -16,6 +16,7 @@ using Zakar.ViewModels;
 
 namespace Zakar.Controllers
 {
+    [Authorize]
     public class UsersController : BaseController
     {
         private ApplicationSignInManager _signInManager;

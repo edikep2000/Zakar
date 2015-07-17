@@ -7,6 +7,7 @@ using Telerik.OpenAccess;
 
 namespace Zakar.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

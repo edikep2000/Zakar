@@ -14,6 +14,7 @@ using Zakar.ViewModels;
 
 namespace Zakar.Controllers
 {
+    [Authorize]
     public class BulkUploadController : BaseController
     {
         private readonly ZoneExcelFileHandler _zoneExcelFileHandler;
@@ -118,10 +119,11 @@ namespace Zakar.Controllers
                 var mo = new Zone()
                     {
                         Name = model.Name,
-                        UniqueId = model.UniqueId,
                     };
                 _stagedZoneService.Delete(model.Id);
                 _zoneService.Create(mo);
+                this.AccessContext.FlushChanges();
+                mo.UniqueId = "Z" + mo.Id;
                 return Json(new {});
             }
             ModelState.AddModelError("", "There are validation Errors");
@@ -228,11 +230,11 @@ namespace Zakar.Controllers
                 var mo = new Group()
                 {
                     Name = model.Name,
-                    UniqueId = model.UniqueId,
                     ZoneId = model.ZoneId
                 };
                 _stagedGroupService.Delete(model.Id);
                 _groupService.Create(mo);
+                mo.UniqueId = "G" + mo.Id;
                 return Json(new { });
             }
             ModelState.AddModelError("", "There are validation Errors");
@@ -341,12 +343,13 @@ namespace Zakar.Controllers
                 var mo = new Church
                 {
                     Name = model.Name,
-                    UniqueId = model.UniqueId,
                     GroupId = model.GroupId,
                     DefaultCurrencyId = model.DefaultCurrencyId,
                 };
                 _stagedChurchService.Delete(model.Id);
                 _churchService.Create(mo);
+                this.AccessContext.FlushChanges();
+                mo.UniqueId = "C" + mo.Id;
                 return Json(new { });
             }
             ModelState.AddModelError("", "There are validation Errors");

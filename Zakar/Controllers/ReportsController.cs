@@ -2,6 +2,7 @@
 
 namespace Zakar.Controllers
 {
+    [Authorize]
     public class ReportsController : Controller
     {
         

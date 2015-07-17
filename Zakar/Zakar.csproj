@@ -80,7 +80,7 @@
     </Reference>
     <Reference Include="Omu.AwesomeMvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=9c6fbba722ea1caf, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\edikep2000\Desktop\bin\mvc5\Omu.AwesomeMvc.dll</HintPath>
+      <HintPath>C:\Users\edikep2000\Desktop\awe\bin\mvc5\Omu.AwesomeMvc.dll</HintPath>
     </Reference>
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -238,8 +238,6 @@
     <Compile Include="Controllers\AjaxList\YearAjaxDropDownController.cs" />
     <Compile Include="Controllers\ChurchReportsController.cs" />
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
-    <Compile Include="Controllers\GridController\PartnerGridController.cs" />
-    <Compile Include="Controllers\GridController\PartnershipGridController.cs" />
     <Compile Include="Controllers\GridController\PartnershipReportsGridController.cs" />
     <Compile Include="Controllers\GroupReportsController.cs" />
     <Compile Include="Controllers\LookupControllers\AjaxListController.cs" />
@@ -652,6 +650,7 @@
     <Content Include="Content\themes\bui\awe_icons.png" />
     <Content Include="Content\themes\bui\editdel.png" />
     <Content Include="Content\themes\bui\loading.gif" />
+    <Content Include="Content\themes\bui\mods.css" />
     <Content Include="Content\themes\bui\pm.png" />
     <Content Include="Content\themes\bui\Site.css" />
     <Content Include="favicon.ico" />
@@ -1945,6 +1944,16 @@
     <Content Include="Views\ChurchReports\NoCurrencyYearlySummary.cshtml" />
     <Content Include="Views\ChurchReports\NoCurrencySummary.cshtml" />
     <Content Include="Views\ChurchReports\NoCurrencyAmountSummary.cshtml" />
+    <Content Include="Views\GroupReports\YearlySummary.cshtml" />
+    <Content Include="Views\GroupReports\Summary.cshtml" />
+    <Content Include="Views\GroupReports\NoCurrencyYearlySummary.cshtml" />
+    <Content Include="Views\GroupReports\NoCurrencySummary.cshtml" />
+    <Content Include="Views\GroupReports\NoCurrencyAmountSummary.cshtml" />
+    <Content Include="Views\ZoneReports\YearlySummary.cshtml" />
+    <Content Include="Views\ZoneReports\Summary.cshtml" />
+    <Content Include="Views\ZoneReports\NoCurrencyYearlySummary.cshtml" />
+    <Content Include="Views\ZoneReports\NoCurrencySummary.cshtml" />
+    <Content Include="Views\ZoneReports\NoCurrencyAmountSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

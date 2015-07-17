@@ -7,6 +7,7 @@ using Zakar.DataAccess.Service;
 
 namespace Zakar.Controllers.AjaxList
 {
+    [Authorize]
     public class CurrencyAjaxDropDownController : Controller
     {
         private readonly CurrencyService _currencyService;

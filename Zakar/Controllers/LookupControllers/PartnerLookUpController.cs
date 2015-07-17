@@ -10,6 +10,7 @@ using Zakar.Models;
 
 namespace Zakar.Controllers.LookupControllers
 {
+      [Authorize]
     public class PartnerLookUpController : Controller
     {
         private readonly PartnerService _partnerService;

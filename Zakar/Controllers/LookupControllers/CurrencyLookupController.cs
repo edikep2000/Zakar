@@ -7,6 +7,7 @@ using Zakar.Models;
 
 namespace Zakar.Controllers.LookupControllers
 {
+      [Authorize]
     public class CurrencyLookupController : Controller
     {
         private readonly CurrencyService _currencyService;

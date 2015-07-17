@@ -15,6 +15,7 @@ using Zakar.ViewModels;
 
 namespace Zakar.Controllers
 {
+    [Authorize]
     public class SetupController : BaseController
     {
         private readonly ChurchService _churchService;
@@ -126,10 +127,11 @@ namespace Zakar.Controllers
         {
             if (ModelState.IsValid)
             {
-                var uniqueId = Zakar.Common.IDGenerators.UniqueIdGenerator.GenerateUniqueIdForZone(model.Name);
+                ;
                 var m = Mapper.Map<Zone>(model);
-                m.UniqueId = uniqueId;
                 _zoneService.Create(m);
+                this.AccessContext.FlushChanges();
+                m.UniqueId = "Z" + m.Id;
                 return Json(new {});
             }
             return PartialView(model);
@@ -238,8 +240,9 @@ namespace Zakar.Controllers
             if (ModelState.IsValid)
             {
                 var group = Mapper.Map<Group>(model);
-                group.UniqueId = Common.IDGenerators.UniqueIdGenerator.GenerateUniqueIdForGroup(model.Name);
                 _groupService.Create(group);
+                this.AccessContext.FlushChanges();
+                group.UniqueId = "G" + group.Id.ToString();
                 return Json(new {});
             }
             return PartialView(model: model);
@@ -370,8 +373,8 @@ namespace Zakar.Controllers
             if (ModelState.IsValid)
             {
                 var m = Mapper.Map<Church>(model);
-                m.UniqueId = Zakar.Common.IDGenerators.UniqueIdGenerator.GenerateUniqueIdForChapter(model.Name);
                 _churchService.Create(m);
+                m.UniqueId = "C" + m.Id.ToString();
                 return Json(new {});
             }
             return PartialView(model);

@@ -12,6 +12,7 @@ using Zakar.ViewModels;
 
 namespace Zakar.Controllers
 {
+    [Authorize]
     public class PartnerReportsController : Controller
     {
         private readonly PartnerService _partnerService;

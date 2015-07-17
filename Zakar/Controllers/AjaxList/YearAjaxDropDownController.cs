@@ -6,6 +6,7 @@ using Omu.AwesomeMvc;
 
 namespace Zakar.Controllers.AjaxList
 {
+      [Authorize]
     public class YearAjaxDropDownController : Controller
     {
         public ActionResult GetItems(string v)
