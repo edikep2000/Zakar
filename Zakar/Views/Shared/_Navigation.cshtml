@@ -122,15 +122,61 @@
                         <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Partnership")">Manage Partnership Records</a></li>
                     </ul>
                 </li>
-                <li class="@Html.IsSelected(controller: "Reports")">
-                    <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">Partnership Reports</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li class="@Html.IsSelected(action: "SearchResults")"><a href="@Url.Action("SearchResults", "Pages")">Search results</a></li>
-                        <li class="@Html.IsSelected(action: "LockScreen")"><a href="@Url.Action("LockScreen", "Pages")">Lockscreen</a></li>
-                        <li class="@Html.IsSelected(action: "Invoice")"><a href="@Url.Action("Invoice", "Pages")">Invoice</a></li>
-                        <li class="@Html.IsSelected(action: "Login")"><a href="@Url.Action("Login", "Pages")">Login</a></li>
-                    </ul>
-                </li>
+                @if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
+                {
+                    <li class="@Html.IsSelected(controller: "ChurchReports")">
+                        <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li class="@Html.IsSelected(action: "NoCurrencyYearlySummary")"><a href="@Url.Action("NoCurrencyYearlySummary", "ChurchReports")">Yearly Summary (Local Currency)</a></li>
+                            <li class="@Html.IsSelected(action: "YearlySummary")"><a href="@Url.Action("YearlySummary", "ChurchReports")">Summary (Year)</a></li>
+                            <li class="@Html.IsSelected(action: "NoCurrencySummary")"><a href="@Url.Action("NoCurrencySummary", "ChurchReports")">Summary (Local Currency)</a></li>
+                            <li class="@Html.IsSelected(action: "Summary")"><a href="@Url.Action("Summary", "ChurchReports")">Summary</a></li>
+                        </ul>
+                    </li>
+                }
+                
+
+                @if (User.IsInRole(RolesEnum.GROUP_ADMIN.ToString()))
+                {
+                    <li class="@Html.IsSelected(controller: "GroupReports")">
+                        <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li class="@Html.IsSelected(action: "NoCurrencyYearlySummary")"><a href="@Url.Action("NoCurrencyYearlySummary", "GroupReports")">Search results</a></li>
+                            <li class="@Html.IsSelected(action: "YearlySummary")"><a href="@Url.Action("YearlySummary", "GroupReports")">Lockscreen</a></li>
+                            <li class="@Html.IsSelected(action: "NoCurrencySummary")"><a href="@Url.Action("NoCurrencySummary", "GroupReports")">Invoice</a></li>
+                            <li class="@Html.IsSelected(action: "Summary")"><a href="@Url.Action("Summary", "GroupReports")">Login</a></li>
+                        </ul>
+                    </li>
+                }
+                
+                
+                @if (User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
+                {
+                    <li class="@Html.IsSelected(controller: "ZoneReports")">
+                        <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li class="@Html.IsSelected(action: "NoCurrencyYearlySummary")"><a href="@Url.Action("NoCurrencyYearlySummary", "ZoneReports")">Search results</a></li>
+                            <li class="@Html.IsSelected(action: "YearlySummary")"><a href="@Url.Action("YearlySummary", "ZoneReports")">Lockscreen</a></li>
+                            <li class="@Html.IsSelected(action: "NoCurrencySummary")"><a href="@Url.Action("NoCurrencySummary", "ZoneReports")">Invoice</a></li>
+                            <li class="@Html.IsSelected(action: "Summary")"><a href="@Url.Action("Summary", "ZoneReports")">Login</a></li>
+                        </ul>
+                    </li>
+                }
+                
+                @if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
+                {
+                    <li class="@Html.IsSelected(controller: "Reports")">
+                        <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li class="@Html.IsSelected(action: "NoCurrencyYearlySummary")"><a href="@Url.Action("NoCurrencyYearlySummary", "Reports")">Search results</a></li>
+                            <li class="@Html.IsSelected(action: "YearlySummary")"><a href="@Url.Action("YearlySummary", "Reports")">Lockscreen</a></li>
+                            <li class="@Html.IsSelected(action: "NoCurrencySummary")"><a href="@Url.Action("NoCurrencySummary", "Reports")">Invoice</a></li>
+                            <li class="@Html.IsSelected(action: "Summary")"><a href="@Url.Action("Summary", "Reports")">Login</a></li>
+                        </ul>
+                    </li>
+                }
+
+             
             </ul>
         </div>
     </nav>

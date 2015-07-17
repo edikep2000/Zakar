@@ -236,9 +236,12 @@
     <Compile Include="Controllers\AjaxList\MonthAjaxDropDownController.cs" />
     <Compile Include="Controllers\AjaxList\PartnershipArmAjaxDropDownController.cs" />
     <Compile Include="Controllers\AjaxList\YearAjaxDropDownController.cs" />
+    <Compile Include="Controllers\ChurchReportsController.cs" />
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\GridController\PartnerGridController.cs" />
     <Compile Include="Controllers\GridController\PartnershipGridController.cs" />
+    <Compile Include="Controllers\GridController\PartnershipReportsController.cs" />
+    <Compile Include="Controllers\GroupReportsController.cs" />
     <Compile Include="Controllers\LookupControllers\AjaxListController.cs" />
     <Compile Include="Controllers\ArmsController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
@@ -263,9 +266,11 @@
     <Compile Include="Controllers\PartnerReportsController.cs" />
     <Compile Include="Controllers\PartnershipController.cs" />
     <Compile Include="Controllers\PCFSetupController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Controllers\LookupControllers\ZoneLookupController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\ZoneReportsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1935,6 +1940,11 @@
     <Content Include="Views\Partnership\StageCreate.cshtml" />
     <Content Include="Views\Partnership\StageDelete.cshtml" />
     <Content Include="Views\PartnerReports\Index.cshtml" />
+    <Content Include="Views\ChurchReports\YearlySummary.cshtml" />
+    <Content Include="Views\ChurchReports\Summary.cshtml" />
+    <Content Include="Views\ChurchReports\NoCurrencyYearlySummary.cshtml" />
+    <Content Include="Views\ChurchReports\NoCurrencySummary.cshtml" />
+    <Content Include="Views\ChurchReports\NoCurrencyAmountSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1943,6 +1953,7 @@
     <Folder Include="Views\PartnerGrid\" />
     <Folder Include="Views\PartnerLookUp\" />
     <Folder Include="Views\PartnershipGrid\" />
+    <Folder Include="Views\PartnershipReports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
