@@ -8,6 +8,7 @@ using AutoMapper;
 using Omu.AwesomeMvc;
 using Telerik.OpenAccess;
 using Zakar.Common.FileHandlers;
+using Zakar.Controllers.Extensions;
 using Zakar.DataAccess.Service;
 using Zakar.Models;
 using Zakar.ViewModels;
@@ -24,10 +25,10 @@ namespace Zakar.Controllers
         private readonly PartnerService _partnerService;
         private readonly PCFExcelFileHandler _pcfExcelFileHandler;
 
-        public PCFSetupController(IUnitOfWork unitOfWork, StagedPCFService stagedPCFService, PCFService pcfService, ChurchService churchService, PartnerService partnerService, PCFExcelFileHandler pcfExcelFileHandler)
+        public PCFSetupController(IUnitOfWork unitOfWork, StagedPCFService stagedPcfService, PCFService pcfService, ChurchService churchService, PartnerService partnerService, PCFExcelFileHandler pcfExcelFileHandler)
             : base(unitOfWork)
         {
-            _stagedPCFService = stagedPCFService;
+            _stagedPCFService = stagedPcfService;
             _pcfService = pcfService;
             _churchService = churchService;
             _partnerService = partnerService;
@@ -68,6 +69,8 @@ namespace Zakar.Controllers
                 if (church != null)
                     m.ChurchId = church.Id;
                 _pcfService.Insert(m);
+                AccessContext.FlushChanges();
+                m.UniqueId = "P" + m.Id;
                 return Json(new {});
             }
             return PartialView(model);
@@ -208,15 +211,16 @@ namespace Zakar.Controllers
 
         public ActionResult StageRead(GridParams g, string search)
         {
+            var church = this.CurrentChurchAdministered().Result;
             search = (search ?? "").Trim().ToLower();
-            var model = _stagedPCFService.GetAll().Where(i => i.Name.Contains(search));
-
+            var model = _stagedPCFService.GetAll().Where(i => i.Name.Contains(search ) && i.ChurchId == church.Id);
             return Json(new GridModelBuilder<StagedPCFs>(model.OrderByDescending(i => i.Id).AsQueryable(), g)
                 {
                     Key = "Id",
                     GetItem = () => _stagedPCFService.GetSingle(Convert.ToInt32(g.Key))
                 }.Build());
         }
+
 
         public PartialViewResult StagePost(int id)
         {
@@ -234,6 +238,7 @@ namespace Zakar.Controllers
             return PartialView();
         }
 
+
         [HttpPost]
         public ActionResult StagePost(PCFViewModel model)
         {
@@ -241,6 +246,8 @@ namespace Zakar.Controllers
             {
                 var m = Mapper.Map<PCF>(model);
                 _pcfService.Insert(m);
+                AccessContext.FlushChanges();
+                m.UniqueId = "P" + m.Id.ToString();
                 _stagedPCFService.Delete(model.Id);
                 return Json(new {});
             }

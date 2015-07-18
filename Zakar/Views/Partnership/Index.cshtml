@@ -24,7 +24,7 @@
                 <div class="m-b-lg">
 
                     <div class="input-group">
-                        <input type="text" name="search" placeholder="Search by name..." class=" form-control">
+                        <input type="text" name="search" id="search" placeholder="Search by name..." class=" form-control">
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-white"> Search</button>
                         </span>
@@ -32,14 +32,13 @@
                 </div>
 
 
-                    @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead","Partnership")).Parent("search","txtSearch").Parameter("churchId", ((Controller)this.ViewContext.Controller).CurrentChurchAdministered().Result.Id).Groupable(true).Sortable(true).Columns(
+                    @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead", "Partnership")).LoadOnParentChange(true).Parent("search", "search").Parameter("churchId", ((Controller)this.ViewContext.Controller).CurrentChurchAdministered().Result.Id).Groupable(true).Sortable(true).Columns(
                 new Column(){Name = "TrackingId", Header = "Tracking Id"},
                      new Column() { Name = "PartnerFullName", Header = "Partner" },
                      new Column() { Name = "PartnershipArm", Header = "Arm" },
                 new Column(){Header = "Amount", ClientFormat = ".Currency .Amount"},
-                new Column(){Name = "Month", Header = "Month", Groupable = false},
-                new Column(){Name = "Year", Header = "Year"},
-                new Column() {Width = 90, ClientFormat = @Utils.DetailsFormat("delete") })
+                new Column(){Name = "Month", Header = "Month"},
+                new Column(){Name = "Year", Header = "Year"})
             }
             else if (User.IsInRole(RolesEnum.GROUP_ADMIN.ToString()))
             {
@@ -48,19 +47,19 @@
                 <div class="m-b-lg">
 
                     <div class="input-group">
-                        <input type="text" name="search" placeholder="Search by name..." class=" form-control">
+                        <input type="text" name="search" id="search" placeholder="Search by name..." class=" form-control">
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-white"> Search</button>
                         </span>
                     </div>
                 </div>
 
-                    @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead", "Partnership")).Parent("search", "txtSearch").Parameter("groupId", ((Controller)this.ViewContext.Controller).CurrentGroupAdministered().Result.Id).Groupable(true).Sortable(true).Columns(
+                    @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead", "Partnership")).Parent("search", "search").Parameter("groupId", ((Controller)this.ViewContext.Controller).CurrentGroupAdministered().Result.Id).Groupable(true).Sortable(true).Columns(
                 new Column() { Name = "TrackingId", Header = "Tracking Id" },
                      new Column() { Name = "PartnerFullName", Header = "Partner" },
                      new Column() { Name = "PartnershipArm", Header = "Arm" },
                 new Column() { Header = "Amount", ClientFormat = ".Currency .Amount" },
-                new Column() { Name = "Month", Header = "Month", Groupable = false },
+                   new Column() { Name = "Month", Header = "Month" },
                 new Column() { Name = "Year", Header = "Year" },
                 new Column() { Width = 90, ClientFormat = @Utils.DetailsFormat("delete") })
             }
@@ -70,18 +69,18 @@
                 <div class="m-b-lg">
 
                     <div class="input-group">
-                        <input type="text" name="search" placeholder="Search by name..." class=" form-control">
+                        <input type="text" name="search" id="search" placeholder="Search by name..." class=" form-control">
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-white"> Search</button>
                         </span>
                     </div>
                 </div>
-                    @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead", "Partnership")).Parent("search", "txtSearch").Parameter("zoneId", ((Controller)this.ViewContext.Controller).CurrentUser().ZoneId).Groupable(true).Sortable(true).Columns(
+                    @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead", "Partnership")).Parent("search", "search").Parameter("zoneId", ((Controller)this.ViewContext.Controller).CurrentUser().ZoneId).Groupable(true).Sortable(true).Columns(
                 new Column() { Name = "TrackingId", Header = "Tracking Id" },
                      new Column() { Name = "PartnerFullName", Header = "Partner" },
                      new Column() { Name = "PartnershipArm", Header = "Arm" },
                 new Column() { Header = "Amount", ClientFormat = ".Currency .Amount" },
-                new Column() { Name = "Month", Header = "Month", Groupable = false },
+                 new Column() { Name = "Month", Header = "Month" },
                 new Column() { Name = "Year", Header = "Year" },
                 new Column() { Width = 90, ClientFormat = @Utils.DetailsFormat("delete") })
             }
@@ -91,7 +90,7 @@
                 <div class="m-b-lg">
 
                     <div class="input-group">
-                        <input type="text" name="search" placeholder="Search by name..." class=" form-control">
+                        <input type="text" name="search" id="search" placeholder="Search by name..." class=" form-control">
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-white"> Search</button>
                         </span>
@@ -103,7 +102,7 @@
                      new Column() { Name = "PartnerFullName", Header = "Partner" },
                      new Column() { Name = "PartnershipArm", Header = "Arm" },
                 new Column() { Header = "Amount", ClientFormat = ".Currency .Amount" },
-                new Column() { Name = "Month", Header = "Month", Groupable = false },
+                     new Column() { Name = "Month", Header = "Month" },
                 new Column() { Name = "Year", Header = "Year" },
                 new Column() { Width = 90, ClientFormat = @Utils.DetailsFormat("delete") })
                     }

@@ -1,4 +1,5 @@
 ﻿@using Zakar.Common.Enums
+@using Zakar.Controllers.Extensions
 @model Zakar.ViewModels.CellViewModel
 
 @Html.HiddenFor(m => m.UniqueId)
@@ -9,5 +10,5 @@
 
 <div class="form-group">
     @Html.LabelFor(m => m.PCFId, new{@class="control-label"})
-    @Html.Awe().AjaxDropdownFor(m => m.PCFId).Url(Url.Action("GetPCFs","AjaxList")).Parameter("ChurchId", Convert.ToInt32(ViewBag.ChurchId)).HtmlAttributes(new{@class="form-control"})
+    @Html.Awe().AjaxDropdownFor(m => m.PCFId).Url(Url.Action("GetPCFs","AjaxList")).Parameter("ChurchId", ((Controller)ViewContext.Controller).CurrentChurchAdministered().Result.Id).HtmlAttributes(new{@class="form-control"})
 </div>

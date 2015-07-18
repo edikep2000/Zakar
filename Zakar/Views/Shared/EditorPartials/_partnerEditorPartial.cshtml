@@ -83,7 +83,7 @@
     @Html.LabelFor(m => m.CellId, new{@class="control-label"})
     <div class="row">
         <div class="col-md-6">
-            @Html.Awe().LookupFor(m => m.CellId).GetItemUrl(Url.Action("GetItem","CellLookup")).SearchUrl(Url.Action("Search","CellLookup")).Parent("PCFId", "pcfId").HtmlAttributes(new{@class="form-control"})
+            @Html.Awe().LookupFor(m => m.CellId).GetItemUrl(Url.Action("GetItem","CellLookup")).SearchUrl(Url.Action("Search","CellLookup")).Parent("pcfId", "pcfId").HtmlAttributes(new{@class="form-control"})
             @Html.ValidationMessageFor(m => m.CellId)
         </div>
     </div>
