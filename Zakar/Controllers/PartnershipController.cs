@@ -80,10 +80,9 @@ namespace Zakar.Controllers
                     o.PartnershipArm,
                     o.Currency,
                     o.Amount,
-                    o.Month,
+                    Month = ((MonthEnums)o.Month).ToString(),
                     o.Year,
-                    o.DateCreated,
-                    StringMonth = ((MonthEnums)o.Month).ToString()
+                    o.DateCreated
                 }
             }.Build());
         }

@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Partnership Summary";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var groupId = ((Controller)this.ViewContext.Controller).CurrentGroupAdministered().Result;
+    var groupId = ((Controller)this.ViewContext.Controller).CurrentGroupAdministered().Result.Id;
 }
 
 @Html.Partial("_headerPartial")
@@ -14,11 +14,11 @@
     <div class="ibox">
 
         <div class="ibox-content">
-            @Html.Awe().Grid("grid").Url(Url.Action("BuildReportForPartnershipArmByMonthAndYearWithDefault", "PartnershipReportsGrid")).Parameter("groupId", groupId).GroupRemovable(true).PageSize(15).Columns(
+            @Html.Awe().Grid("grid").Url(Url.Action("BuildReportForPartnershipArmByMonthAndYearWithDefault", "PartnershipReportsGrid")).Parameter("groupId", groupId).Columns(
             new Column { Name = "PartnershipArmName", Header = "Partnership Arm" },
             new Column() { Name = "Year", Header = "Year" },
             new Column() { Name = "Month", Header = "Month" },
-            new Column() { Header = "Amount (Local Currency)", ClientFormat = ".DenominatedCurrencyName.DenominatedAmount" })
+            new Column() { Header = "Amount (Local Currency)", ClientFormat = ".DenominatedCurrencyName .DenominatedAmount" })
         </div>
     </div>
 </div>

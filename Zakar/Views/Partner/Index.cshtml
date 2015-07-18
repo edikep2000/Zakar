@@ -60,8 +60,12 @@
     else if (User.IsInRole(RolesEnum.GROUP_ADMIN.ToString()))
     {
         var groupId = ((Controller)this.ViewContext.Controller).CurrentGroupAdministered().Result.Id;
+        <div class="form-group">
+          
+            @Html.Awe().AjaxDropdown("churchId").Url(Url.Action("GetChurches", "AjaxList")).Parameter("groupId", groupId).Parent("groupId", "groupId").HtmlAttributes(new { @class = "form-control" })
+        </div>
         <br />
-        @Html.Awe().Grid("grid").Url(Url.Action("PartnerRead", "PartnerGrid")).Groupable(true).Parameter("groupId", groupId).LoadOnParentChange(true).Parent("textSearch", "search").LoadOnParentChange(true).Columns(
+        @Html.Awe().Grid("grid").Url(Url.Action("PartnerRead", "PartnerGrid")).Groupable(true).Parent("churchId","churchId").Parameter("groupId", groupId).LoadOnParentChange(true).Parent("textSearch", "search").LoadOnParentChange(true).Columns(
     new Column() { Header = "Id", Name = "UniqueId", Width = 70 },
     new Column() { Header = "Full Name", Name = "FullName", Width = 150 },
     new Column() { Header = "Church", Name = "ChurchName", Hidden = User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()) },

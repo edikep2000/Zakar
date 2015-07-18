@@ -20,48 +20,93 @@
         <div class="ibox-content">
             @if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
             {
-                @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead","Partnership")).Parent("search","txtSearch").Parameter("churchId", ((Controller)this.ViewContext.Controller).CurrentChurchAdministered().Result.Id).Groupable(true).Sortable(true).Columns(
+
+                <div class="m-b-lg">
+
+                    <div class="input-group">
+                        <input type="text" name="search" placeholder="Search by name..." class=" form-control">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-white"> Search</button>
+                        </span>
+                    </div>
+                </div>
+
+
+                    @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead","Partnership")).Parent("search","txtSearch").Parameter("churchId", ((Controller)this.ViewContext.Controller).CurrentChurchAdministered().Result.Id).Groupable(true).Sortable(true).Columns(
                 new Column(){Name = "TrackingId", Header = "Tracking Id"},
                      new Column() { Name = "PartnerFullName", Header = "Partner" },
                      new Column() { Name = "PartnershipArm", Header = "Arm" },
                 new Column(){Header = "Amount", ClientFormat = ".Currency .Amount"},
-                new Column(){Name = "StringMonth", Header = "Month", Groupable = false},
+                new Column(){Name = "Month", Header = "Month", Groupable = false},
                 new Column(){Name = "Year", Header = "Year"},
                 new Column() {Width = 90, ClientFormat = @Utils.DetailsFormat("delete") })
             }
             else if (User.IsInRole(RolesEnum.GROUP_ADMIN.ToString()))
             {
-                @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead", "Partnership")).Parent("search", "txtSearch").Parameter("groupId", ((Controller)this.ViewContext.Controller).CurrentGroupAdministered().Result.Id).Groupable(true).Sortable(true).Columns(
+
+
+                <div class="m-b-lg">
+
+                    <div class="input-group">
+                        <input type="text" name="search" placeholder="Search by name..." class=" form-control">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-white"> Search</button>
+                        </span>
+                    </div>
+                </div>
+
+                    @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead", "Partnership")).Parent("search", "txtSearch").Parameter("groupId", ((Controller)this.ViewContext.Controller).CurrentGroupAdministered().Result.Id).Groupable(true).Sortable(true).Columns(
                 new Column() { Name = "TrackingId", Header = "Tracking Id" },
                      new Column() { Name = "PartnerFullName", Header = "Partner" },
                      new Column() { Name = "PartnershipArm", Header = "Arm" },
                 new Column() { Header = "Amount", ClientFormat = ".Currency .Amount" },
-                new Column() { Name = "StringMonth", Header = "Month", Groupable = false },
+                new Column() { Name = "Month", Header = "Month", Groupable = false },
                 new Column() { Name = "Year", Header = "Year" },
                 new Column() { Width = 90, ClientFormat = @Utils.DetailsFormat("delete") })
             }
             else if (User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
             {
-                @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead", "Partnership")).Parent("search", "txtSearch").Parameter("zoneId", ((Controller)this.ViewContext.Controller).CurrentUser().ZoneId).Groupable(true).Sortable(true).Columns(
+
+                <div class="m-b-lg">
+
+                    <div class="input-group">
+                        <input type="text" name="search" placeholder="Search by name..." class=" form-control">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-white"> Search</button>
+                        </span>
+                    </div>
+                </div>
+                    @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead", "Partnership")).Parent("search", "txtSearch").Parameter("zoneId", ((Controller)this.ViewContext.Controller).CurrentUser().ZoneId).Groupable(true).Sortable(true).Columns(
                 new Column() { Name = "TrackingId", Header = "Tracking Id" },
                      new Column() { Name = "PartnerFullName", Header = "Partner" },
                      new Column() { Name = "PartnershipArm", Header = "Arm" },
                 new Column() { Header = "Amount", ClientFormat = ".Currency .Amount" },
-                new Column() { Name = "StringMonth", Header = "Month", Groupable = false },
+                new Column() { Name = "Month", Header = "Month", Groupable = false },
                 new Column() { Name = "Year", Header = "Year" },
                 new Column() { Width = 90, ClientFormat = @Utils.DetailsFormat("delete") })
             }
             else if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
             {
-                @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead", "Partnership")).Parent("search", "txtSearch").Groupable(true).Sortable(true).Columns(
+
+                <div class="m-b-lg">
+
+                    <div class="input-group">
+                        <input type="text" name="search" placeholder="Search by name..." class=" form-control">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-white"> Search</button>
+                        </span>
+                    </div>
+                </div>
+                
+                    @Html.Awe().Grid("grid").Url(Url.Action("PartnershipRead", "Partnership")).Parent("search", "search").Groupable(true).Sortable(true).Columns(
                 new Column() { Name = "TrackingId", Header = "Tracking Id" },
                      new Column() { Name = "PartnerFullName", Header = "Partner" },
                      new Column() { Name = "PartnershipArm", Header = "Arm" },
                 new Column() { Header = "Amount", ClientFormat = ".Currency .Amount" },
-                new Column() { Name = "StringMonth", Header = "Month", Groupable = false },
+                new Column() { Name = "Month", Header = "Month", Groupable = false },
                 new Column() { Name = "Year", Header = "Year" },
                 new Column() { Width = 90, ClientFormat = @Utils.DetailsFormat("delete") })
-            }
-        </div>
+                    }
+                </div>
     </div>
 </div>

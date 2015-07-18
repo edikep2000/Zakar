@@ -7,8 +7,10 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Microsoft.AspNet.Identity;
 using Omu.AwesomeMvc;
 using Telerik.OpenAccess;
+using Zakar.App_Start;
 using Zakar.Common.Enums;
 using Zakar.Controllers.Extensions;
 using Zakar.DataAccess.Service;
@@ -27,9 +29,10 @@ namespace Zakar.Controllers
         private readonly PCFService _pcfService;
         private readonly CellService _cellService;
         private readonly CurrencyService _currencyService;
+        private readonly ApplicationUserManager _userManager;
 
         // GET: Zone
-        public SetupController(IUnitOfWork unitOfWork, ChurchService churchService, GroupService groupService, ZoneService zoneService, PartnershipArmService armService, PCFService pcfService, CellService cellService, CurrencyService currencyService)
+        public SetupController(IUnitOfWork unitOfWork, ChurchService churchService, GroupService groupService, ZoneService zoneService, PartnershipArmService armService, PCFService pcfService, CellService cellService, CurrencyService currencyService, ApplicationUserManager userManager)
             : base(unitOfWork)
         {
             _churchService = churchService;
@@ -39,6 +42,7 @@ namespace Zakar.Controllers
             _pcfService = pcfService;
             _cellService = cellService;
             _currencyService = currencyService;
+            _userManager = userManager;
         }
 
         #region ZoneMethods
@@ -114,6 +118,9 @@ namespace Zakar.Controllers
             if (ModelState.IsValid)
             {
                 _zoneService.Delete(Convert.ToInt32(model.Id));
+                var user = _userManager.Users.FirstOrDefault(i => i.ZoneId == model.Id && i.IdentityUserInRoles.Any(k => k.IdentityRole.Name == RolesEnum.ZONE_ADMIN.ToString()));
+                if (user != null)
+                    _userManager.Delete(user);
                 return Json(new {});
             }
             return PartialView();
@@ -261,6 +268,13 @@ namespace Zakar.Controllers
             if (ModelState.IsValid)
             {
                 _groupService.Delete(Convert.ToInt32(model.Id));
+                var m =
+                    _userManager.Users.FirstOrDefault(
+                        i =>
+                            i.GroupId == model.Id &&
+                            i.IdentityUserInRoles.Any(k => k.IdentityRole.Name == RolesEnum.GROUP_ADMIN.ToString()));
+                if (m != null)
+                    _userManager.Delete(m);
                 return Json(new {});
             }
             return PartialView("Delete",model);
@@ -283,12 +297,14 @@ namespace Zakar.Controllers
 
         public PartialViewResult ChapterCreate(int groupId = 0)
         {
-            if (groupId > 0)
+          
+
+            if (User.IsInRole(RolesEnum.GROUP_ADMIN.ToString()))
             {
-                var m = new ChurchViewModel()
-                    {
-                        GroupId = groupId
-                    };
+                var m = new ChurchViewModel
+                {
+                    GroupId = this.CurrentGroupAdministered().Result.Id
+                };
                 return PartialView(m);
             }
             return PartialView();
@@ -373,6 +389,11 @@ namespace Zakar.Controllers
             if (ModelState.IsValid)
             {
                 _churchService.Delete(Convert.ToInt32(input.Id));
+                var m =
+                    _userManager.Users.FirstOrDefault(
+                        i => i.ChurchId == input.Id && i.IdentityUserInRoles.Any(k => k.IdentityRole.Name == RolesEnum.CHAPTER_ADMIN.ToString()));
+                if (m != null)
+                    _userManager.Delete(m);
                 return Json(new {});
             }
             return PartialView("Delete");

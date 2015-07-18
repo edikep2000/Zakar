@@ -64,77 +64,77 @@ namespace Zakar.Controllers
                     //TODO, Send SMS And Or Email To the Partner with New Id
                     return Json(new { });
                 }
- 
+                ModelState.AddModelError("","You Must be Logged In as Church Admin Before you can add Partners");
             }
             return PartialView(model);
         }
 
 
-        public async Task<ActionResult> PartnerRead(GridParams g, string search, int cellId = 0, int pcfId = 0, int churchId = 0, int groupId = 0, int zoneId = 0)
-        {
-            search = (search ?? "").Trim();
-            var query = _partnerService.GetAll().Where(i => i.FirstName.Contains(search) || i.LastName.Contains(search));
+        //public async Task<ActionResult> PartnerRead(GridParams g, string search, int cellId = 0, int pcfId = 0, int churchId = 0, int groupId = 0, int zoneId = 0)
+        //{
+        //    search = (search ?? "").Trim();
+        //    var query = _partnerService.GetAll().Where(i => i.FirstName.Contains(search) || i.LastName.Contains(search));
 
-            if (churchId != 0)
-            {
-                query = query.Where(i => i.ChurchId == churchId);
-            }
-            else if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
-            {
-                var church = await this.CurrentChurchAdministered();
-                query = query.Where(i => i.ChurchId == church.Id);
-            }
-            if (pcfId != 0)
-                query = query.Where(i => i.PCFId == pcfId);
-            if (cellId != 0)
-                query = query.Where(i => i.CellId == cellId);
-            var cells = GetCells();
-            var pcfs = GetPcFs();
+        //    if (churchId != 0)
+        //    {
+        //        query = query.Where(i => i.ChurchId == churchId);
+        //    }
+        //    else if (User.IsInRole(RolesEnum.CHAPTER_ADMIN.ToString()))
+        //    {
+        //        var church = await this.CurrentChurchAdministered();
+        //        query = query.Where(i => i.ChurchId == church.Id);
+        //    }
+        //    if (pcfId != 0)
+        //        query = query.Where(i => i.PCFId == pcfId);
+        //    if (cellId != 0)
+        //        query = query.Where(i => i.CellId == cellId);
+        //    var cells = GetCells();
+        //    var pcfs = GetPcFs();
 
-            var model = query.Select(i => new PartnerListModel
-            {
-                Id = i.Id,
-                CellId = i.CellId,
-                ChurchId = i.ChurchId,
-                ChurchName = i.Church.Name,
-                DateCreated = i.DateCreated,
-                DateOfBirth = i.DateOfBirth,
-                Email = i.Email,
-                FullName = i.LastName + " " + i.FirstName,
-                Gender = i.Gender,
-                Phone = i.Phone,
-                Title = i.Title,
-                UniqueId = i.UniqueId,
-                GroupName = i.Church.Group.Name,
-                ZoneName = i.Church.Group.Zone.Name,
-                CellName = i.CellId.HasValue ? cells.FirstOrDefault(m => m.Key == i.CellId.Value).Value : "No Cell",
-                PCFName = i.PCFId.HasValue ? pcfs.FirstOrDefault(m => m.Key == i.PCFId.Value).Value : "No PCF"
-            });
-            return Json(new GridModelBuilder<PartnerListModel>(model.OrderByDescending(I => I.DateCreated), g)
-            {
-                Key = "Id",
-                Map = o => new
-                {
-                    o.Id,
-                    o.CellId,
-                    o.CellName,
-                    o.ChurchId,
-                    o.ChurchName,
-                    o.DateCreated,
-                    o.DateOfBirth,
-                    o.Email,
-                    o.FullName,
-                    o.Gender,
-                    o.Phone,
-                    o.Title,
-                    o.UniqueId,
-                    o.GroupName,
-                    o.ZoneName,
-                    o.PCFName,
-                    o.PCFId
-                }
-            }.Build());
-        }
+        //    var model = query.Select(i => new PartnerListModel
+        //    {
+        //        Id = i.Id,
+        //        CellId = i.CellId,
+        //        ChurchId = i.ChurchId,
+        //        ChurchName = i.Church.Name,
+        //        DateCreated = i.DateCreated,
+        //        DateOfBirth = i.DateOfBirth,
+        //        Email = i.Email,
+        //        FullName = i.LastName + " " + i.FirstName,
+        //        Gender = i.Gender,
+        //        Phone = i.Phone,
+        //        Title = i.Title,
+        //        UniqueId = i.UniqueId,
+        //        GroupName = i.Church.Group.Name,
+        //        ZoneName = i.Church.Group.Zone.Name,
+        //        CellName = i.CellId.HasValue ? cells.FirstOrDefault(m => m.Key == i.CellId.Value).Value : "No Cell",
+        //        PCFName = i.PCFId.HasValue ? pcfs.FirstOrDefault(m => m.Key == i.PCFId.Value).Value : "No PCF"
+        //    });
+        //    return Json(new GridModelBuilder<PartnerListModel>(model.OrderByDescending(I => I.DateCreated), g)
+        //    {
+        //        Key = "Id",
+        //        Map = o => new
+        //        {
+        //            o.Id,
+        //            o.CellId,
+        //            o.CellName,
+        //            o.ChurchId,
+        //            o.ChurchName,
+        //            o.DateCreated,
+        //            o.DateOfBirth,
+        //            o.Email,
+        //            o.FullName,
+        //            o.Gender,
+        //            o.Phone,
+        //            o.Title,
+        //            o.UniqueId,
+        //            o.GroupName,
+        //            o.ZoneName,
+        //            o.PCFName,
+        //            o.PCFId
+        //        }
+        //    }.Build());
+        //}
         
         public PartialViewResult Edit(int id)
         {
@@ -325,6 +325,9 @@ namespace Zakar.Controllers
             if (ModelState.IsValid)
             {
                 var m = Mapper.Map<Partner>(model);
+                var church = this.CurrentChurchAdministered().Result;
+                if (church != null) m.ChurchId = church.Id;
+
                 _partnerService.Insert(m);
                 base.AccessContext.FlushChanges();
                 m.UniqueId = "P" + m.Id;

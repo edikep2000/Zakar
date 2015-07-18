@@ -21,17 +21,23 @@
 
 
 <div class="form-group">
-    @Html.LabelFor(m => m.GroupId, new{@class="control-label"})
-    <br/>
+   
     @if (User.IsInRole(RolesEnum.PORTAL_ADMIN.ToString()))
-    {
+    { @Html.LabelFor(m => m.GroupId, new { @class = "control-label" })
+        <br />
         @Html.Awe().AjaxDropdownFor(m => m.GroupId).Url(Url.Action("GetGroups", "AjaxList")).HtmlAttributes(new { @class = "form-control" })
     <small class="text-danger">@Html.ValidationMessageFor(m => m.GroupId)</small>
     }
     else if (User.IsInRole(RolesEnum.ZONE_ADMIN.ToString()))
     {
-        @Html.Awe().AjaxDropdownFor(m => m.GroupId).Url(Url.Action("GetGroups", "AjaxList")).Parameter("zoneId",((Controller)this.ViewContext.Controller).CurrentZoneAdministered().Result.Id).HtmlAttributes(new { @class = "form-control" })
-    <small class="text-danger">@Html.ValidationMessageFor(m => m.GroupId)</small>
+        @Html.LabelFor(m => m.GroupId, new {@class = "control-label"})
+        <br />
+        @Html.Awe().AjaxDropdownFor(m => m.GroupId).Url(Url.Action("GetGroups", "AjaxList")).Parameter("zoneId", ((Controller) this.ViewContext.Controller).CurrentZoneAdministered().Result.Id).HtmlAttributes(new {@class = "form-control"})
+        <small class="text-danger">@Html.ValidationMessageFor(m => m.GroupId)</small>
+    }
+    else
+    {
+        @Html.HiddenFor(m => m.GroupId)
     }
 
 

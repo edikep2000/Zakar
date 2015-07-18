@@ -147,7 +147,7 @@ namespace Zakar.Controllers.GridController
                     Year = j.Key.Year,
                     Month = j.Key.Month,
                     DenominatedCurrencyName = defaultCurrency.Symbol,
-                    DenominatedAmount = j.Sum((o => (o.Currency.ConversionRateToDefault * o.Amount)))
+                    DenominatedAmount = j.Sum(o => (o.Currency.ConversionRateToDefault * o.Amount))
                 });
             return Json(new GridModelBuilder<PartnershipArmReportObject>(model.OrderByDescending(k => k.Year), g)
             {
